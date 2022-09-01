@@ -1,0 +1,46 @@
+.burger-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    width: 272px;
+    height: 208px;
+    flex: none;
+    order: 0;
+    flex-grow: 1;
+}
+
+.burger-card__img {
+    width: 240px;
+    height: 120px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.burger-card__price {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    width: 62px;
+    height: 24px;
+    background: #131316;
+    flex: none;
+    flex-grow: 0;
+}
+
+.burger-card__name {
+    width: 272px;
+    height: 48px;
+    background: #131316;
+    flex: none;
+    order: 2;
+    flex-grow: 1;
+    text-align: center;
+    color: #F2F2F3;
+}
+
