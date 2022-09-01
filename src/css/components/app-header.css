@@ -1,9 +1,5 @@
-.app-header_navigation__panel p {
-    font-size: 15px !important
-}
-
 .app-header_navigation__panel {
-    position: absolute;
+    position: fixed;
     height: 88px;
     left: 0%;
     right: 0%;
@@ -20,21 +16,19 @@
 }
 
 .app-header__links-left {
+    position: absolute;
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 0px;
     gap: 8px;
-    position: absolute;
     width: 383px;
     height: 56px;
     left: 0px;
     top: calc(50% - 56px/2);
-    background: #1C1C21;
 }
 
 .app-header__link {
-    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -43,7 +37,6 @@
     width: 197px;
     height: 56px;
     background: #1C1C21;
-    border: 1px dashed #4C4CFF;
     border-radius: 40px;
     flex: none;
     order: 1;
@@ -57,10 +50,15 @@
 
 .app-header__links-right {
     position: absolute;
-    width: 200px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    width: 383px;
     height: 56px;
     left: 1073px;
-    top: 0px;
+    top: calc(50% - 56px/2);
 }
 
 .app-header__logo {  
@@ -68,7 +66,6 @@
     width: 289.15px;
     height: 50px;
     left: 495px;
-    top: 4px;
-    background: #1C1C21;
-    border: 1px dashed #4C4CFF;
+    top: 6px;
+
 }

@@ -11,7 +11,7 @@ import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 function AppHeader () {
     return (
         <header className="app-header_navigation__panel">
-            <div className="app-header_navigation__panel-container">
+            <nav className="app-header_navigation__panel-container">
                 <div className="app-header__links-left">
                     <div className="app-header__link app-header__link-active">
                         <BurgerIcon type="primary"/>
@@ -29,7 +29,7 @@ function AppHeader () {
                         <ProfileIcon type="secondary"/>
                         <p className="text text_type_main-default">Личный кабинет</p>
                     </div>
-            </div>
+            </nav>
             
         </header>
     )

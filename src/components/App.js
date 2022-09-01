@@ -8,10 +8,10 @@ function App () {
     return (
         <>
         <AppHeader/>
-            <div className='wrapper'>
+            <main className='wrapper'>
                 <BurgerIngredients items = {menu}/>
                 <BurgerConstructor/>
-            </div>
+            </main>
         </>
     )
 }

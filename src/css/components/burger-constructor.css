@@ -1,5 +1,5 @@
 .burger-constructor_container {
-    position: absolute;
+    position: fixed;
     width: 600px;
     height: 912px;
     left: 690px;

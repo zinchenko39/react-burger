@@ -4,8 +4,9 @@ import '../css/components/burger-ingredients.css';
 import '../css/components/burger-card.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Tab }from '@ya.praktikum/react-developer-burger-ui-components';
 
-const buns = [], main = [], sauce = [];
+
 
 function BurgerIngredientsHeadline ({categoryName, items}) {
     return (
@@ -39,7 +40,10 @@ function BurgerCard ({image, price, name, keys}) {
 
 
 function BurgerIngredients ({items}) {
-    
+    const [current, setCurrent] = React.useState('one') //@ya.praktikum/react-developer-burger-ui-components
+
+    const buns = [], main = [], sauce = [];
+
     items.forEach(elem => {
         if (elem.type === 'bun') {
             buns.push(elem);
@@ -56,15 +60,24 @@ function BurgerIngredients ({items}) {
                 <div className="burger-ingredients__title">
                     <h1 className="text text_type_main-medium">Соберите бургер</h1>
                 </div>
-                <ul className="burger-ingredients__tabs_list">
-                    <li className="burger-ingredients__tab burger-ingredients__tab_active text text_type_main-default">Булки</li>
-                    <li className="burger-ingredients__tab text text_type_main-default">Соусы</li>
-                    <li className="burger-ingredients__tab text text_type_main-default">Начинки</li>
-                </ul>
+                <div className="burger-ingredients__tabs_list">
+                    <div style={{ display: 'flex' }}>
+                        <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+                            Булки
+                        </Tab>
+                        <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+                            Соусы
+                        </Tab>
+                        <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+                            Начинки
+                        </Tab>
+                    </div>
+                </div>
+                
                 <div className="burger-ingredients__main">
                     <BurgerIngredientsHeadline categoryName={"Булки"} items ={buns}/>
                     <BurgerIngredientsHeadline categoryName={"Соусы"} items ={sauce}/>
-                    <BurgerIngredientsHeadline categoryName={"Основное"} items ={main}/>
+                    <BurgerIngredientsHeadline categoryName={"Начинки"} items ={main}/>
                 </div>
                 
             </section>
