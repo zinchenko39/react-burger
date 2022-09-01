@@ -1,7 +1,7 @@
 import React from "react";
 
-import menu from './utils/data.js';
-import { AppHeader, BurgerConstructor, BurgerIngredients } from './components';
+import menu from '../utils/data.js';
+import { AppHeader, BurgerConstructor, BurgerIngredients } from '.';
 
 
 function App () {

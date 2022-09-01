@@ -1,7 +1,7 @@
 import React from "react";
 
 
-import '../css/app-header.css';
+import '../css/components/app-header.css';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';

@@ -1,5 +1,5 @@
 import React from "react";
-import '../css/burger-constructor.css';
+import '../css/components/burger-constructor.css';
 
 class BurgerConstructor extends React.Component {
     render () {

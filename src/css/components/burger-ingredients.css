@@ -25,6 +25,7 @@
     height: 56px;
     left: 0px;
     top: 100px;
+    margin: 0;
 }
 .burger-ingredients__tab {
     display: flex;
@@ -37,12 +38,16 @@
     flex: none;
     order: 0;
     flex-grow: 1;
+    color: #8585AD;
 }
 .burger-ingredients__tab_active {
     box-shadow: inset 0px -2px 0px #4C4CFF;
+    color: #F2F2F3;
 }
 
 .burger-ingredients__main {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     width: 600px;
     height: 756px;
@@ -52,26 +57,23 @@
     border-radius: 0px;
 }
 
-.burger-ingredients__main_headline {
-    position: absolute;
-    width: 600px;
-    height: 30px;
-    left: 0px;
-    top: 40px;
-    background: #131316;
+
+/* BurgerIngredientsHeadline */
+
+.burger-ingredients__main__category {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
 }
 
-.burger-ingredients__main_column-buns {
+.burger-ingredients__main_column {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
-    padding: 0px;
     gap: 24px;
-    position: absolute;
-    width: 600px;
-    height: 208px;
-    left: 0px;
-    top: 94px;
+    width: 592px;
     flex-wrap: wrap;
 }
+
+
