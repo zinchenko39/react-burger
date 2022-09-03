@@ -1,7 +1,6 @@
 import React from "react";
 
-
-import '../css/components/app-header.css';
+import styles from './app_header.module.css';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,22 +9,22 @@ import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 function AppHeader () {
     return (
-        <header className="app-header_navigation__panel">
-            <nav className="app-header_navigation__panel-container">
-                <div className="app-header__links-left">
-                    <div className="app-header__link app-header__link-active">
+        <header className={styles.app_header_navigation__panel}>
+            <nav className={styles.app_header_navigation__panel_container}>
+                <div className={styles.app_header__links_left}>
+                    <div className={styles.app_header__link_active}>
                         <BurgerIcon type="primary"/>
                         <p className="text text_type_main-default">Конструктор</p>
                     </div>
-                    <div className="app-header__link">
+                    <div className={styles.app_header__link}>
                         <ListIcon type="secondary"/>
                         <p className="text text_type_main-default">Лента заказов</p>
                     </div>
                 </div>
-                    <div className="app-header__logo">
+                    <div className={styles.app_header__logo}>
                         <Logo/>
                     </div>
-                    <div className="app-header__link app-header__links-right">
+                    <div className={styles.app_header__links_right}>
                         <ProfileIcon type="secondary"/>
                         <p className="text text_type_main-default">Личный кабинет</p>
                     </div>

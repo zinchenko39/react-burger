@@ -1,9 +1,8 @@
 ::-webkit-scrollbar {
-  width: 8px; /* ширина для вертикального скролла */
+  width: 8px;
   background-color: #2F2F37;;
 }
 
-/* ползунок скроллбара */
 ::-webkit-scrollbar-thumb {
   background-color: #8585AD;
   height: 492px;
@@ -28,6 +27,8 @@ code {
 }
 
 .wrapper {
+  display: flex;
+  justify-content: space-between;
   position: relative;
   width: 1280px;
   height: 100vh;
@@ -36,4 +37,6 @@ code {
   margin: 0 auto;
   border-radius: 10px;
   max-width: 1400px;
+  box-sizing: border-box;
+  overflow: hidden;
 }

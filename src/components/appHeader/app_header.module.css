@@ -1,4 +1,4 @@
-.app-header_navigation__panel {
+.app_header_navigation__panel {
     position: fixed;
     height: 88px;
     left: 0%;
@@ -7,7 +7,7 @@
     background: #1C1C21;
 }
 
-.app-header_navigation__panel-container {
+.app_header_navigation__panel_container {
     position: absolute;
     max-width: 1280px;
     height: 56px;
@@ -15,7 +15,7 @@
     top: calc(50% - 56px/2);
 }
 
-.app-header__links-left {
+.app_header__links_left {
     position: absolute;
     display: flex;
     flex-direction: row;
@@ -28,7 +28,7 @@
     top: calc(50% - 56px/2);
 }
 
-.app-header__link {
+.app_header__link {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -44,24 +44,43 @@
     color: #8585AD;
 }
 
-.app-header__link-active {
-    color: #F2F2F3;
-}
-
-.app-header__links-right {
-    position: absolute;
+.app_header__link_active {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 0px;
+    padding: 16px 20px;
     gap: 8px;
+    width: 197px;
+    height: 56px;
+    background: #1C1C21;
+    border-radius: 40px;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    color: #8585AD;
+    color: #F2F2F3;
+}
+
+.app_header__links_right {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    background: #1C1C21;
+    border-radius: 40px;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    color: #8585AD;
+    position: absolute;
+    display: flex;
+    padding: 0px;
     width: 383px;
     height: 56px;
     left: 1073px;
     top: calc(50% - 56px/2);
 }
 
-.app-header__logo {  
+.app_header__logo {  
     position: absolute;
     width: 289.15px;
     height: 50px;
