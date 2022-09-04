@@ -1,0 +1,88 @@
+.burger_constructor__container {
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    width: 600px;
+    height: 912px;
+    top: 180px;
+}
+
+.burger_constructor__main {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    gap: 10px;
+    width: 568px;
+    height: calc(100% - 504px);
+    top: 280px;
+    overflow: scroll;
+    overflow-x: hidden;
+    align-items: flex-end;
+}
+
+.burger_constructor__main div {
+    max-height: 33px;
+    width: 536px;
+    margin-right: 3px;
+}
+
+.burger_constructor__main div::after {
+    content: url('../../images/before.png');
+    position: relative;
+    right: 50px;
+    bottom: 36px;
+    display: block;
+}
+
+
+.burger_constructor__top {
+    position: absolute;
+    height: 80px;
+    width: 568px;
+    text-align: center;
+}
+
+.burger_constructor__bottom {
+    position: absolute;
+    height: 80px;
+    top: calc(100vh  - 383px);
+    width: 568px;
+    text-align: center;
+}
+
+.burger_constructor__icon {
+    width: 36px;
+    height: 36px;
+}
+
+.burger_constructor__info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+    gap: 40px;
+    position: relative;
+    width: 536px;
+    height: 64px;
+    top: calc(100vh  - 267px);
+}
+.burger_constructor__info_price {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    width: 119px;
+    height: 64px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.burger_constructor__info svg {
+    width: 36px;
+    height: 36px;
+}
