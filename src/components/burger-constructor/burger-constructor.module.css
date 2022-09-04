@@ -22,6 +22,8 @@
 }
 
 .burger_constructor__main div {
+    max-height: 33px;
+    width: 536px;
     margin-right: 3px;
 }
 

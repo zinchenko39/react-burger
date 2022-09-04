@@ -2,8 +2,8 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import styles from './burger_ingredients.module.css';
-import stylesBurgerCard from './burger_card.module.css';
+import styles from './burger-ingredients.module.css';
+import stylesBurgerCard from './burger-card.module.css';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -28,7 +28,7 @@ function BurgerIngredientsHeadline ({categoryName, items}) {
 
 BurgerIngredientsHeadline.propTypes = {
     categoryName: PropTypes.string.isRequired,
-    items: PropTypes.arrayOf(PropTypes.object),
+    items: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 
@@ -51,16 +51,17 @@ function BurgerCard ({ingridient}) {
 }
 
 BurgerCard.propTypes = {
-    ingridient: PropTypes.object,
+    ingridient: PropTypes.object.isRequired,
 }
 
 
 
 function BurgerIngredients ({items}) {
     const [current, setCurrent] = React.useState('one') //@ya.praktikum/react-developer-burger-ui-components
-
+    
+    const categories = ["Булки", "Соусы", "Начинки"];
     const buns = [], main = [], sauce = [];
-
+    
     items.forEach(elem => {
         if (elem.type === 'bun') {
             buns.push(elem);
@@ -70,7 +71,6 @@ function BurgerIngredients ({items}) {
             sauce.push(elem);
         }
     });
-
 
     return (
         <section className={styles.burger_ingredients__container}>
@@ -90,9 +90,26 @@ function BurgerIngredients ({items}) {
                 </div>
                 
                 <div className={styles.burger_ingredients__main}>
-                    <BurgerIngredientsHeadline categoryName={"Булки"} items ={buns}/>
-                    <BurgerIngredientsHeadline categoryName={"Соусы"} items ={sauce}/>
-                    <BurgerIngredientsHeadline categoryName={"Начинки"} items ={main}/>
+                    {
+                        categories.map((elem, index) => {
+                            if (elem === "Булки") {
+                                return (
+                                    <BurgerIngredientsHeadline categoryName={elem} items ={buns} key = {`${index}_${elem}`}/>
+                                )
+                            }
+                            if (elem === "Соусы") {
+                                return (
+                                    <BurgerIngredientsHeadline categoryName={elem} items ={sauce} key = {`${index}_${elem}`}/>
+                                )
+                            }
+                            if (elem === "Начинки") {
+                                return (
+                                    <BurgerIngredientsHeadline categoryName={elem} items ={main} key = {`${index}_${elem}`}/>
+                                )
+                            }
+                            return null;
+                        })
+                    }
                 </div>
                 
             </section>
@@ -100,7 +117,7 @@ function BurgerIngredients ({items}) {
 }
 
 BurgerIngredients.prototype = {
-    items: PropTypes.arrayOf(PropTypes.object),
+    items: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default BurgerIngredients;
