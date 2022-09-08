@@ -1,11 +1,11 @@
 ::-webkit-scrollbar {
   width: 8px;
-  background-color: #2F2F37;;
+  background-color: #2F2F37;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: #8585AD;
-  height: 492px;
+  height: 292px;
 }
 
 body {
@@ -39,4 +39,12 @@ code {
   max-width: 1400px;
   box-sizing: border-box;
   overflow: hidden;
+}
+
+.loading {
+  font-size: 25px;
+  height: 35px;
+  width: 100%;
+  margin: auto auto;
+  text-align: center;
 }

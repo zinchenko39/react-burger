@@ -1,17 +1,60 @@
-import React from "react";
-
-import menu from '../utils/data.js';
+import React, { useEffect } from "react";
 import { AppHeader, BurgerConstructor, BurgerIngredients } from '.';
 
 
 function App () {
+    const url = 'https://norma.nomoreparties.space/api/ingredients'
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
+    const [data, updateData] = React.useState([{}]);
+
+    const getData = (url) => {
+        setIsLoading(true)
+        fetch(url)
+            .then((responce) => responce.json())
+            .then((res) => {
+                setIsLoading(false)
+                updateData(res.data)
+            })
+            .catch((error) => {
+                setIsLoading(false)
+                setIsError(true)
+                console.log(`Ошибка ${error}`)
+            })
+    }
+
+
+    useEffect(() => {
+        getData(url)
+    },[]);
+
+    
+    if (isLoading === false && isError === true) {
+        return (
+            <>
+                <AppHeader/>
+                <main className='wrapper'>
+                    <div className="loading">Что-то пошло не так...</div>
+                </main>
+            </>
+        )
+    }
+
+    if (isLoading === true && isError === false) {
+        <main className='wrapper'>
+            <div className="loading">Загружаю бургеры...</div>
+        </main>
+    }
+
+    
     return (
         <>
         <AppHeader/>
-            <main className='wrapper'>
-                <BurgerIngredients items = {menu}/>
-                <BurgerConstructor/>
-            </main>
+        <main className='wrapper'>
+            <BurgerIngredients items = {data}/>
+            <BurgerConstructor items = {data}/>
+        </main>
+                
         </>
     )
 }
