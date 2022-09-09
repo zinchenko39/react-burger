@@ -9,6 +9,14 @@ import useModalControls from '../../hooks/modal-controls';
 
 
 function BurgerConstructor ({items}) {
+
+    const filteredItems = [];
+    items.forEach((elem) => {
+        if (elem.type !== 'bun') {
+            filteredItems.push(elem);
+        }
+    });
+
     const modalControls = useModalControls();
     return (
         <section className={styles.burger_constructor__container}>
@@ -23,10 +31,10 @@ function BurgerConstructor ({items}) {
             </div>
             <main className={styles.burger_constructor__main}>
                 {
-                    items.map (elem => {
+                    filteredItems.map (elem => {
                         return (
                             <ConstructorElement
-                            key={elem.id}
+                            key = {`${elem._id}`}
                             text = {elem.name}
                             price = {elem.price}
                             thumbnail = {elem.image}
@@ -53,7 +61,7 @@ function BurgerConstructor ({items}) {
                     Оформить заказ
                 </Button>
                 <Modal isOpen={modalControls.isModalOpen} close = {modalControls.close}>
-                    <OrderDetails></OrderDetails>
+                    <OrderDetails/>
                 </Modal>
             </div>
         </section>

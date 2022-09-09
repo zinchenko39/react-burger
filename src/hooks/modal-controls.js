@@ -1,14 +1,14 @@
 import React from "react";
 
 function useModalControls () {
-    const [isModalOpen, SetIsModalOpen] = React.useState(false);
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
     
     function handleModalOpen() {
-        SetIsModalOpen(true);
+        setIsModalOpen(true);
     }
 
     function handleModalClose() {
-        SetIsModalOpen(false);
+        setIsModalOpen(false);
     }
 
     return {

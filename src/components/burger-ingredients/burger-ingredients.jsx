@@ -18,7 +18,7 @@ function BurgerIngredientsHeadline ({categoryName, items, selectItem, activeItem
         <div className={styles.burger_ingredients__main_column}>
             {
             items.map((obj) => (
-                <BurgerCard activeItem={activeItem} selectItem = {selectItem} ingridient = {obj} key = {obj._id}/>
+                <BurgerCard activeItem={activeItem} selectItem = {selectItem} ingridient = {obj} key = {`${obj._id}`}/>
                 ))
             }
             </div>

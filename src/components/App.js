@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 
-import { AppHeader, BurgerConstructor, BurgerIngredients, Modal, IngridientDetails, OrderDetails} from '.';
-
-import useModalControls from '../hooks/modal-controls.js';
+import { AppHeader, BurgerConstructor, BurgerIngredients} from '.';
 
 
 
@@ -11,52 +9,52 @@ function App () {
     const [isLoading, setIsLoading] = React.useState(false);
     const [isError, setIsError] = React.useState(false);
     const [data, updateData] = React.useState([{}]);    
-    // const modalControls = useModalControls();
 
     const getData = (url) => {
         setIsLoading(true)
         fetch(url)
-            .then((responce) => responce.json())
+            .then((responce) => {
+                if(responce.ok) {
+                    return responce.json()
+                }
+                return Promise.reject(`Ошибка ${responce.status}`);
+            })
             .then((res) => {
                 setIsLoading(false)
                 updateData(res.data)
             })
             .catch((error) => {
-                setIsLoading(false)
                 setIsError(true)
                 console.log(`Ошибка ${error}`)
             })
+            .finally(() => setIsLoading(false))
     }
 
     useEffect(() => {
         getData(url)
     },[]);
-
-    
-    if (isLoading === false && isError === true) {
-        return (
-            <>
-                <AppHeader/>
-                <main className='wrapper'>
-                    <div className="loading">Что-то пошло не так...</div>
-                </main>
-            </>
-        )
-    }
-
-    if (isLoading === true && isError === false) {
-        <main className='wrapper'>
-            <div className="loading">Загружаю бургеры...</div>
-        </main>
-    }
     
     return (
         <>
-        <AppHeader/>
-        <main className='wrapper'>
-            <BurgerIngredients items = {data}/>
-            <BurgerConstructor items = {data}/>
-        </main>
+            <AppHeader/>
+            <main className='wrapper'>
+            {
+                isError &&
+                <div className="loading">Что-то пошло не так...</div>
+            }
+            {
+                isLoading &&
+                <div className="loading">Загружаю бургеры...</div>
+            }
+            {
+                !isLoading && !isError ?
+                <>
+                <BurgerIngredients items = {data}/>
+                <BurgerConstructor items = {data}/>
+                </>
+                : ""
+            }
+            </main>
         </>
     )
 }
