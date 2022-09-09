@@ -1,0 +1,122 @@
+.ingridient_details__wrapper {
+    height: 540px;
+}
+
+.ingridient_details_main {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 580px;
+    height: 64px;
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    display: flex;
+    align-items: center;
+    color: #F2F2F3;
+    flex: none;
+    order: 0;
+    flex-grow: 1;
+}
+
+.ingridient_details_img img {
+    position: absolute;
+    width: 520px;
+    height: 240px;
+    left: 100px;
+    top: 104px;
+    background: #1C1C21;
+}
+
+.ingridient_details_name {
+    position: absolute;
+    height: 30px;
+    left: 0px;
+    right: 0px;
+    top: 360px;
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    text-align: center;
+    color: #F2F2F3;
+}
+
+.ingridient_details_callories {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    width: 120px;
+    height: 56px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    position: absolute;
+    top: 422px;
+    left: 100px;
+    color: #8585AD;
+    width: 125px;
+}
+
+.ingridient_details_protein {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    width: 120px;
+    height: 56px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    position: absolute;
+    top: 422px;
+    left: 240px;
+    color: #8585AD;
+    width: 125px;
+}
+
+.ingridient_details_fats {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    width: 120px;
+    height: 56px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    position: absolute;
+    top: 422px;
+    left: 372px;
+    color: #8585AD;
+    width: 125px;
+}
+
+.ingridient_details_carb {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px;
+    gap: 8px;
+    width: 120px;
+    height: 56px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    position: absolute;
+    top: 422px;
+    left: 504px;
+    color: #8585AD;
+    width: 125px;
+}

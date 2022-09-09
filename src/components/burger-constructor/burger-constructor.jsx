@@ -4,10 +4,12 @@ import styles from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Modal, OrderDetails } from '../index.js';
+import useModalControls from '../../hooks/modal-controls';
 
 
 function BurgerConstructor ({items}) {
- 
+    const modalControls = useModalControls();
     return (
         <section className={styles.burger_constructor__container}>
             <div className={styles.burger_constructor__top}>
@@ -47,9 +49,12 @@ function BurgerConstructor ({items}) {
                     <span className="text text_type_digits-medium">610</span>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button type="primary" size="large">
+                <Button onClick={modalControls.open} name="order_btn" type="primary" size="large">
                     Оформить заказ
                 </Button>
+                <Modal isOpen={modalControls.isModalOpen} close = {modalControls.close}>
+                    <OrderDetails></OrderDetails>
+                </Modal>
             </div>
         </section>
     )

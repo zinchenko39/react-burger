@@ -1,12 +1,17 @@
 import React, { useEffect } from "react";
-import { AppHeader, BurgerConstructor, BurgerIngredients } from '.';
+
+import { AppHeader, BurgerConstructor, BurgerIngredients, Modal, IngridientDetails, OrderDetails} from '.';
+
+import useModalControls from '../hooks/modal-controls.js';
+
 
 
 function App () {
     const url = 'https://norma.nomoreparties.space/api/ingredients'
     const [isLoading, setIsLoading] = React.useState(false);
     const [isError, setIsError] = React.useState(false);
-    const [data, updateData] = React.useState([{}]);
+    const [data, updateData] = React.useState([{}]);    
+    // const modalControls = useModalControls();
 
     const getData = (url) => {
         setIsLoading(true)
@@ -22,7 +27,6 @@ function App () {
                 console.log(`Ошибка ${error}`)
             })
     }
-
 
     useEffect(() => {
         getData(url)
@@ -45,7 +49,6 @@ function App () {
             <div className="loading">Загружаю бургеры...</div>
         </main>
     }
-
     
     return (
         <>
@@ -53,8 +56,10 @@ function App () {
         <main className='wrapper'>
             <BurgerIngredients items = {data}/>
             <BurgerConstructor items = {data}/>
+            {/* <Modal isOpen={modalControls.isModalOpen} close = {modalControls.close} escClose = {modalControls.escClose}>
+
+            </Modal> */}
         </main>
-                
         </>
     )
 }
