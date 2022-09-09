@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './modal.module.css';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 const modalsElement = document.getElementById('modal');
 
@@ -29,6 +30,10 @@ function Modal(props) {
     </div>,
     modalsElement
   )
+}
+
+Modal.propTypes = {
+    props: PropTypes.object
 }
  
 export default Modal;

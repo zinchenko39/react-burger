@@ -1,6 +1,6 @@
 import React from "react";
 
-function useModalControls (e) {
+function useModalControls () {
     const [isModalOpen, SetIsModalOpen] = React.useState(false);
     
     function handleModalOpen() {

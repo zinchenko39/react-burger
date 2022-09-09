@@ -56,9 +56,6 @@ function App () {
         <main className='wrapper'>
             <BurgerIngredients items = {data}/>
             <BurgerConstructor items = {data}/>
-            {/* <Modal isOpen={modalControls.isModalOpen} close = {modalControls.close} escClose = {modalControls.escClose}>
-
-            </Modal> */}
         </main>
         </>
     )

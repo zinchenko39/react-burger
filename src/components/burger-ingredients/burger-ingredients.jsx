@@ -11,14 +11,14 @@ import { Tab }from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal, IngridientDetails } from '../index.js';
 import useModalControls from '../../hooks/modal-controls';
 
-function BurgerIngredientsHeadline ({categoryName, items, selectItem}) {
+function BurgerIngredientsHeadline ({categoryName, items, selectItem, activeItem}) {
     return (
         <div className={styles.burger_ingredients__main__category}>
         <p className="text text_type_main-medium">{categoryName}</p>
         <div className={styles.burger_ingredients__main_column}>
             {
             items.map((obj) => (
-                <BurgerCard selectItem = {selectItem} ingridient = {obj} key = {obj._id}/>
+                <BurgerCard activeItem={activeItem} selectItem = {selectItem} ingridient = {obj} key = {obj._id}/>
                 ))
             }
             </div>
@@ -32,9 +32,11 @@ BurgerIngredientsHeadline.propTypes = {
 }
 
 
-function BurgerCard ({ingridient, selectItem, }) {
+function BurgerCard ({ingridient, selectItem, activeItem}) {
+    const modalControls = useModalControls();
     return (
-            <div onClick={() => selectItem (ingridient)} name="burger_card" className={stylesBurgerCard.burger_card}>
+        <div onClick={() => selectItem (ingridient)} className={stylesBurgerCard.burger_card_wrapper}>
+            <div onClick={modalControls.open} name="burger_card" className={stylesBurgerCard.burger_card}>
                 <Counter count={1} size="default" />
                 <img src={ingridient.image} className={stylesBurgerCard.burger_card__img} alt="Картинка"></img>
                 <div className={stylesBurgerCard.burger_card__price}>
@@ -47,6 +49,10 @@ function BurgerCard ({ingridient, selectItem, }) {
                     <div className="text_type_main-default">{ingridient.name}</div>
                 </div>
             </div>
+            <Modal isOpen={modalControls.isModalOpen} close = {modalControls.close}>
+                <IngridientDetails item={activeItem}></IngridientDetails>
+            </Modal>
+        </div>
     )
 }
 
@@ -56,13 +62,11 @@ BurgerCard.propTypes = {
 
 
 
-function BurgerIngredients ({items, openModal}) {
+function BurgerIngredients ({items}) {
     const [current, setCurrent] = React.useState('one') //@ya.praktikum/react-developer-burger-ui-components
     
     const categories = ["Булки", "Соусы", "Начинки"];
     const buns = [], main = [], sauce = [];
-
-    const modalControls = useModalControls();
 
     const [activeItem, setActiveItem] = React.useState({});
 
@@ -97,31 +101,28 @@ function BurgerIngredients ({items, openModal}) {
                     </Tab>
                 </div>
                 
-                <div onClick={modalControls.open} className={styles.burger_ingredients__main}>
+                <div className={styles.burger_ingredients__main}>
                     {
                         categories.map((elem, index) => {
                             if (elem === "Булки") {
                                 return (
-                                    <BurgerIngredientsHeadline selectItem={onSelectItem} openModal={openModal} categoryName={elem} items ={buns} key = {`${index}_${elem}`}/>
+                                    <BurgerIngredientsHeadline activeItem={activeItem} selectItem={onSelectItem} categoryName={elem} items ={buns} key = {`${index}_${elem}`}/>
                                 )
                             }
                             if (elem === "Соусы") {
                                 return (
-                                    <BurgerIngredientsHeadline selectItem={onSelectItem} openModal={openModal}  categoryName={elem} items ={sauce} key = {`${index}_${elem}`}/>
+                                    <BurgerIngredientsHeadline activeItem={activeItem} selectItem={onSelectItem} categoryName={elem} items ={sauce} key = {`${index}_${elem}`}/>
                                 )
                             }
                             if (elem === "Начинки") {
                                 return (
-                                    <BurgerIngredientsHeadline selectItem={onSelectItem} openModal={openModal}  categoryName={elem} items ={main} key = {`${index}_${elem}`}/>
+                                    <BurgerIngredientsHeadline activeItem={activeItem} selectItem={onSelectItem} categoryName={elem} items ={main} key = {`${index}_${elem}`}/>
                                 )
                             }
                             return null;
                         })
                     }
                 </div>
-                <Modal isOpen={modalControls.isModalOpen} close = {modalControls.close}>
-                    <IngridientDetails item = {activeItem}></IngridientDetails>
-                </Modal>
             </section>
     )
 }

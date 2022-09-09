@@ -1,5 +1,6 @@
 import React from "react";
 import styles from './ingridient-details.module.css';
+import PropTypes from 'prop-types';
 
 function ingridientDetails({item}) {
     return (
@@ -32,6 +33,10 @@ function ingridientDetails({item}) {
         
         </div>
     )
+}
+
+ingridientDetails.propTypes = {
+    item: PropTypes.object.isRequired
 }
 
 export default ingridientDetails;
