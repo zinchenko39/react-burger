@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-constructor */
 import React from "react";
 import PropTypes from 'prop-types';
 
@@ -9,16 +8,17 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Tab }from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { Modal, IngridientDetails } from '../index.js';
+import useModalControls from '../../hooks/modal-controls';
 
-
-function BurgerIngredientsHeadline ({categoryName, items}) {
+function BurgerIngredientsHeadline ({categoryName, items, selectItem, activeItem}) {
     return (
         <div className={styles.burger_ingredients__main__category}>
         <p className="text text_type_main-medium">{categoryName}</p>
         <div className={styles.burger_ingredients__main_column}>
             {
             items.map((obj) => (
-                <BurgerCard ingridient = {obj} key = {obj._id}/>
+                <BurgerCard activeItem={activeItem} selectItem = {selectItem} ingridient = {obj} key = {`${obj._id}`}/>
                 ))
             }
             </div>
@@ -32,20 +32,26 @@ BurgerIngredientsHeadline.propTypes = {
 }
 
 
-function BurgerCard ({ingridient}) {
+function BurgerCard ({ingridient, selectItem, activeItem}) {
+    const modalControls = useModalControls();
     return (
-        <div className={stylesBurgerCard.burger_card}>
-            <Counter count={1} size="default" />
-            <img src={ingridient.image} className={stylesBurgerCard.burger_card__img} alt="Картинка"></img>
-            <div className={stylesBurgerCard.burger_card__price}>
-                <div className={stylesBurgerCard.burger_card__price_text}>
-                    <div className="text text_type_digits-default">{ingridient.price}</div>
+        <div onClick={() => selectItem (ingridient)} className={stylesBurgerCard.burger_card_wrapper}>
+            <div onClick={modalControls.open} name="burger_card" className={stylesBurgerCard.burger_card}>
+                <Counter count={1} size="default" />
+                <img src={ingridient.image} className={stylesBurgerCard.burger_card__img} alt="Картинка"></img>
+                <div className={stylesBurgerCard.burger_card__price}>
+                    <div className={stylesBurgerCard.burger_card__price_text}>
+                        <div className="text text_type_digits-default">{ingridient.price}</div>
+                    </div>
+                    <CurrencyIcon type="primary" />
                 </div>
-                <CurrencyIcon type="primary" />
+                <div className={styles.burger_card__name}>
+                    <div className="text_type_main-default">{ingridient.name}</div>
+                </div>
             </div>
-            <div className={styles.burger_card__name}>
-                <div className="text_type_main-default">{ingridient.name}</div>
-            </div>
+            <Modal isOpen={modalControls.isModalOpen} close = {modalControls.close}>
+                <IngridientDetails item={activeItem}></IngridientDetails>
+            </Modal>
         </div>
     )
 }
@@ -61,7 +67,13 @@ function BurgerIngredients ({items}) {
     
     const categories = ["Булки", "Соусы", "Начинки"];
     const buns = [], main = [], sauce = [];
-    
+
+    const [activeItem, setActiveItem] = React.useState({});
+
+    const onSelectItem = (elem) => {
+        setActiveItem(elem)
+    }
+
     items.forEach(elem => {
         if (elem.type === 'bun') {
             buns.push(elem);
@@ -94,24 +106,23 @@ function BurgerIngredients ({items}) {
                         categories.map((elem, index) => {
                             if (elem === "Булки") {
                                 return (
-                                    <BurgerIngredientsHeadline categoryName={elem} items ={buns} key = {`${index}_${elem}`}/>
+                                    <BurgerIngredientsHeadline activeItem={activeItem} selectItem={onSelectItem} categoryName={elem} items ={buns} key = {`${index}_${elem}`}/>
                                 )
                             }
                             if (elem === "Соусы") {
                                 return (
-                                    <BurgerIngredientsHeadline categoryName={elem} items ={sauce} key = {`${index}_${elem}`}/>
+                                    <BurgerIngredientsHeadline activeItem={activeItem} selectItem={onSelectItem} categoryName={elem} items ={sauce} key = {`${index}_${elem}`}/>
                                 )
                             }
                             if (elem === "Начинки") {
                                 return (
-                                    <BurgerIngredientsHeadline categoryName={elem} items ={main} key = {`${index}_${elem}`}/>
+                                    <BurgerIngredientsHeadline activeItem={activeItem} selectItem={onSelectItem} categoryName={elem} items ={main} key = {`${index}_${elem}`}/>
                                 )
                             }
                             return null;
                         })
                     }
                 </div>
-                
             </section>
     )
 }

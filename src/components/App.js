@@ -1,16 +1,59 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import menu from '../utils/data.js';
-import { AppHeader, BurgerConstructor, BurgerIngredients } from '.';
+import { AppHeader, BurgerConstructor, BurgerIngredients} from '.';
+
 
 
 function App () {
+    const url = 'https://norma.nomoreparties.space/api/ingredients'
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [isError, setIsError] = React.useState(false);
+    const [data, updateData] = React.useState([{}]);    
+
+    const getData = (url) => {
+        setIsLoading(true)
+        fetch(url)
+            .then((responce) => {
+                if(responce.ok) {
+                    return responce.json()
+                }
+                return Promise.reject(`Ошибка ${responce.status}`);
+            })
+            .then((res) => {
+                setIsLoading(false)
+                updateData(res.data)
+            })
+            .catch((error) => {
+                setIsError(true)
+                console.log(`Ошибка ${error}`)
+            })
+            .finally(() => setIsLoading(false))
+    }
+
+    useEffect(() => {
+        getData(url)
+    },[]);
+    
     return (
         <>
-        <AppHeader/>
+            <AppHeader/>
             <main className='wrapper'>
-                <BurgerIngredients items = {menu}/>
-                <BurgerConstructor/>
+            {
+                isError &&
+                <div className="loading">Что-то пошло не так...</div>
+            }
+            {
+                isLoading &&
+                <div className="loading">Загружаю бургеры...</div>
+            }
+            {
+                !isLoading && !isError ?
+                <>
+                <BurgerIngredients items = {data}/>
+                <BurgerConstructor items = {data}/>
+                </>
+                : ""
+            }
             </main>
         </>
     )
