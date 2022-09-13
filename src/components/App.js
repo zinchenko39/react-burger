@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { BurgersContext } from '../services/burgersContext';
 
 import { AppHeader, BurgerConstructor, BurgerIngredients} from '.';
 
@@ -49,8 +50,10 @@ function App () {
             {
                 !isLoading && !isError ?
                 <>
-                <BurgerIngredients items = {data}/>
-                <BurgerConstructor items = {data}/>
+                <BurgersContext.Provider value={data}>
+                    <BurgerIngredients />
+                    <BurgerConstructor />
+                </BurgersContext.Provider>
                 </>
                 : ""
             }

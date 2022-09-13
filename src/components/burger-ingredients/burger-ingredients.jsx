@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import { BurgersContext } from '../../services/burgersContext.js';
 
 import styles from './burger-ingredients.module.css';
 import stylesBurgerCard from './burger-card.module.css';
@@ -62,9 +63,11 @@ BurgerCard.propTypes = {
 
 
 
-function BurgerIngredients ({items}) {
+function BurgerIngredients () {
     const [current, setCurrent] = React.useState('one') //@ya.praktikum/react-developer-burger-ui-components
     
+    const items = React.useContext(BurgersContext);
+
     const categories = ["Булки", "Соусы", "Начинки"];
     const buns = [], main = [], sauce = [];
 
