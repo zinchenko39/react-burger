@@ -1,11 +1,12 @@
 import React from "react";
 import styles from './order-details.module.css';
+import PropTypes from 'prop-types';
 
-function orderDetails() {
+function orderDetails({orderNumber}) {
     return (
         <div className={styles.order_details__wrapper}>
                 <div className={styles.order_details__number}>
-                <p className="text text_type_digits-large">034536</p>
+                <p className="text text_type_digits-large">{orderNumber}</p>
                 <div className={styles.order_details__id}>
                     <p className="text text_type_main-medium">Идентификатор заказа</p>
                 </div>
@@ -19,6 +20,10 @@ function orderDetails() {
             </div>
         </div>
     )
+}
+
+orderDetails.prototype = {
+    orderNumber: PropTypes.number,
 }
 
 export default orderDetails;

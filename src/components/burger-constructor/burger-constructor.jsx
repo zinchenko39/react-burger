@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from 'prop-types';
+
 import { BurgersContext } from '../../services/burgersContext.js';
 
 import styles from './burger-constructor.module.css';
@@ -24,20 +26,25 @@ function reducer(state, action) {
   }
 
 
-
 function BurgerConstructor () {
     const items = React.useContext(BurgersContext);
-    const [sum, dispatchSum] = React.useReducer(reducer, initialSum);
+    const modalControls = useModalControls();
 
+    const [sum, dispatchSum] = React.useReducer(reducer, initialSum);
     const [filteredItems, setFilteredItems] = React.useState([]);
     const [buns, setBuns] = React.useState([]);
+    const [orderId, setOrderId] = React.useState({ingredients: []});
+    const [orderNumber, setOrderNumber] = React.useState();
 
     function filterItems (items) {
         let buns = []
         let notBuns = [];
+        let orderId = [];
+        
         items.forEach((elem => {
             if (elem.type !== 'bun') {
                 notBuns.push(elem);
+                orderId.push(elem._id);
             }
             if (elem.type === 'bun') {
                 buns.push(elem);
@@ -45,6 +52,36 @@ function BurgerConstructor () {
         }))
         setFilteredItems(notBuns);
         setBuns(buns);
+        setOrderId({ingredients: orderId});
+    }
+
+    filterItems.prototype = {
+        items: PropTypes.objectOf(PropTypes.array)
+    }
+    async function postOrder (items) {
+        await fetch ('https://norma.nomoreparties.space/api/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(items)
+        })
+        .then((responce) => {
+            if(responce.ok) {
+                return responce.json()
+            }
+            return Promise.reject(`Ошибка ${responce.status}`);
+        })
+        .then((res) => {
+            setOrderNumber(res.order.number);
+        })
+        .catch((error) => {
+            setOrderNumber("Ошибка")
+            console.log(`Ошибка ${error}`)
+        })
+    }
+    postOrder.prototype = {
+        items: PropTypes.objectOf(PropTypes.array)
     }
 
     function calculatePrice () {
@@ -61,16 +98,15 @@ function BurgerConstructor () {
         calculatePrice();
     },[items]);
 
-
-    const modalControls = useModalControls();
     return (
         <section className={styles.burger_constructor__container}>
             {
-                buns.map(bun => {
+                buns.map((bun)=> {
                     return (
                         <>
-                        <div key={`${bun._id}_top`} className={styles.burger_constructor__top}>
+                        <div className={styles.burger_constructor__top}>
                             <ConstructorElement
+                                key={`${bun._id}_top`}
                                 type="top"
                                 isLocked={true}
                                 text= {bun.name}
@@ -78,8 +114,9 @@ function BurgerConstructor () {
                                 thumbnail= {bun.image}
                             />
                         </div>
-                        <div key={`${bun._id}_bottom`}  className={styles.burger_constructor__bottom}>
+                        <div className={styles.burger_constructor__bottom}>
                             <ConstructorElement
+                                key={`${bun._id}_bottom`}
                                 type="bottom"
                                 isLocked={true}
                                 text= {bun.name}
@@ -110,14 +147,20 @@ function BurgerConstructor () {
                     <span className="text text_type_digits-medium">{sum.count}</span>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button onClick={modalControls.open} name="order_btn" type="primary" size="large">
+                <Button onClick={() => {postOrder(orderId); modalControls.open()}} name="order_btn" type="primary" size="large">
                     Оформить заказ
                 </Button>
                 <Modal isOpen={modalControls.isModalOpen} close = {modalControls.close}>
-                    <OrderDetails/>
+                    <OrderDetails orderNumber={orderNumber}/>
                 </Modal>
             </div>
         </section>
     )
 }
+
+reducer.prototype = {
+    state: PropTypes.object.isRequired,
+    action: PropTypes.object.isRequired,
+}
+
 export default BurgerConstructor;
