@@ -3,5 +3,7 @@ export {default as BurgerConstructor} from './burger-constructor/burger-construc
 export {default as BurgerIngredients} from './burger-ingredients/burger-ingredients';
 export {default as Modal} from './modal/modal';
 export {default as ModalOverlay} from './modal/modal-overlay.jsx';
-export {default as IngridientDetails} from './modal/ingridient-details/ingridient-details';
-export {default as OrderDetails} from './modal/order-details/order-details';
+export {default as IngridientDetails} from './ingridient-details/ingridient-details';
+export {default as OrderDetails} from './order-details/order-details';
+export {default as BurgerCard} from './burger-ingredients/burger-card/burger-card.jsx';
+export {default as BurgerIngredientsHeadline} from './burger-ingredients/burger-ingredients-headline/burger-ingredients-headline.jsx';

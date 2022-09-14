@@ -1,38 +1,27 @@
 import React, { useEffect } from "react";
-import { BurgersContext } from '../services/burgersContext';
+import { BurgersContext } from '../../services/burgersContext';
 
-import { AppHeader, BurgerConstructor, BurgerIngredients} from '.';
-
+import { AppHeader, BurgerConstructor, BurgerIngredients} from '..';
+import { loadIngredients } from '../../utils/api.js'
 
 
 function App () {
-    const url = 'https://norma.nomoreparties.space/api/ingredients'
     const [isLoading, setIsLoading] = React.useState(false);
     const [isError, setIsError] = React.useState(false);
-    const [data, updateData] = React.useState([{}]);    
-
-    const getData = (url) => {
-        setIsLoading(true)
-        fetch(url)
-            .then((responce) => {
-                if(responce.ok) {
-                    return responce.json()
-                }
-                return Promise.reject(`Ошибка ${responce.status}`);
-            })
-            .then((res) => {
-                setIsLoading(false)
-                updateData(res.data)
-            })
-            .catch((error) => {
-                setIsError(true)
-                console.log(`Ошибка ${error}`)
-            })
-            .finally(() => setIsLoading(false))
-    }
+    const [data, updateData] = React.useState([{}]);
 
     useEffect(() => {
-        getData(url)
+        setIsLoading(true)
+        loadIngredients()
+          .then((res) => {
+            setIsLoading(false)
+            updateData(res.data)
+          })
+          .catch((error) => {
+                setIsError(true)
+                console.log(`Ошибка ${error.statusText}`)
+            })
+         .finally(() => setIsLoading(false))
     },[]);
     
     return (
