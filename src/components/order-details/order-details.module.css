@@ -33,7 +33,7 @@
     width: 120px;
     left: 300px;
     height: 120px;
-    background: url('../../../images/done.png');
+    background: url('../../images/done.png');
 }
 
 .order_details__start {
