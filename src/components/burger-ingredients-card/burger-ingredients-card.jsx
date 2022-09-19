@@ -1,14 +1,14 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import stylesBurgerCard from './burger-card.module.css';
+import stylesBurgerCard from './burger-ingredients-card.module.css';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { Modal, IngridientDetails } from '../../index.js';
+import { Modal, IngridientDetails } from '../index.js';
 
-import useModalControls from '../../../hooks/modal-controls';
+import useModalControls from '../../hooks/modal-controls';
 
 function BurgerCard({ ingridient, selectItem, activeItem }) {
   const modalControls = useModalControls();

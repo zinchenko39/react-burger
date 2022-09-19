@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styles from '../burger-ingredients.module.css';
-import { BurgerCard } from '../..';
+import { BurgerIngredientCard } from '../../index.js';
 
 function BurgerIngredientsHeadline({
   categoryName,
@@ -15,7 +15,7 @@ function BurgerIngredientsHeadline({
       <p className="text text_type_main-medium">{categoryName}</p>
       <div className={styles.burger_ingredients__main_column}>
         {items.map((obj) => (
-          <BurgerCard
+          <BurgerIngredientCard
             activeItem={activeItem}
             selectItem={selectItem}
             ingridient={obj}
