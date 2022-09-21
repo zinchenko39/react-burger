@@ -1,24 +1,32 @@
 import React from 'react';
-
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import stylesBurgerCard from './burger-ingredients-card.module.css';
-
+import { OPEN_CURRENT_ITEM_DETAILS } from '../../services/actions/ingridient-details-action.js';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { Modal, IngridientDetails } from '../index.js';
-
 import useModalControls from '../../hooks/modal-controls';
 
-function BurgerCard({ ingridient, selectItem, activeItem }) {
+function BurgerIngredientCard({ ingridient }) {
   const modalControls = useModalControls();
+  const dispatch = useDispatch();
+
+  const activeItem = useSelector(
+    (state) => state.currentIngredient.currentItem
+  );
+
   return (
-    <div
-      onClick={() => selectItem(ingridient)}
-      className={stylesBurgerCard.burger_card_wrapper}
-    >
+    <div className={stylesBurgerCard.burger_card_wrapper}>
       <div
-        onClick={modalControls.open}
+        onClick={() => {
+          dispatch({
+            type: OPEN_CURRENT_ITEM_DETAILS,
+            item: ingridient,
+          });
+          modalControls.open();
+        }}
         name="burger_card"
         className={stylesBurgerCard.burger_card}
       >
@@ -41,16 +49,14 @@ function BurgerCard({ ingridient, selectItem, activeItem }) {
         </div>
       </div>
       <Modal isOpen={modalControls.isModalOpen} close={modalControls.close}>
-        <IngridientDetails item={activeItem}></IngridientDetails>
+        <IngridientDetails item={activeItem} />
       </Modal>
     </div>
   );
 }
 
-BurgerCard.propTypes = {
+BurgerIngredientCard.propTypes = {
   ingridient: PropTypes.object.isRequired,
-  selectItem: PropTypes.func.isRequired,
-  activeItem: PropTypes.object.isRequired,
 };
 
-export default BurgerCard;
+export default BurgerIngredientCard;

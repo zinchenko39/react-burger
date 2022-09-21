@@ -1,28 +1,18 @@
 import React, { useEffect } from "react";
-import { BurgersContext } from '../../services/burgersContext';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { AppHeader, BurgerConstructor, BurgerIngredients} from '..';
-import { loadIngredients } from '../../utils/api.js'
+import { getItems } from '../../services/actions/ingredients-actions.js';
 
 
 function App () {
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [isError, setIsError] = React.useState(false);
-    const [data, updateData] = React.useState([{}]);
+    const dispatch = useDispatch();
+    const isLoading = useSelector(state => state.ingredients.isLoading);
+    const isError = useSelector(state => state.ingredients.isError);
 
     useEffect(() => {
-        setIsLoading(true)
-        loadIngredients()
-          .then((res) => {
-            setIsLoading(false)
-            updateData(res.data)
-          })
-          .catch((error) => {
-                setIsError(true)
-                console.log(`Ошибка ${error.statusText}`)
-            })
-         .finally(() => setIsLoading(false))
-    },[]);
+        dispatch(getItems());
+    },[dispatch]);
     
     return (
         <>
@@ -39,10 +29,8 @@ function App () {
             {
                 !isLoading && !isError ?
                 <>
-                <BurgersContext.Provider value={data}>
                     <BurgerIngredients />
                     <BurgerConstructor />
-                </BurgersContext.Provider>
                 </>
                 : ""
             }

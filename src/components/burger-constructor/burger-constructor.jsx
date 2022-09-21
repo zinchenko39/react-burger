@@ -1,13 +1,5 @@
-import {
-  React,
-  useEffect,
-  useReducer,
-  useState,
-  useContext,
-  useMemo,
-} from 'react';
-
-import { BurgersContext } from '../../services/burgersContext.js';
+import { React, useEffect, useReducer, useState, useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import styles from './burger-constructor.module.css';
 
@@ -16,7 +8,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal, OrderDetails } from '../index.js';
 import { makeOrder } from '../../utils/api.js';
-
+import { sendItems } from '../../services/actions/order-actions.js';
 import useModalControls from '../../hooks/modal-controls';
 
 const initialSum = { count: 0 };
@@ -33,12 +25,15 @@ function reducer(state, action) {
 }
 
 function BurgerConstructor() {
-  const items = useContext(BurgersContext);
+  const dispatch = useDispatch();
+
+  const items = useSelector((state) => state.ingredients.menu);
+
   const modalControls = useModalControls();
 
   const [sum, dispatchSum] = useReducer(reducer, initialSum);
   const [orderId, setOrderId] = useState({ ingredients: [] });
-  const [orderNumber, setOrderNumber] = useState();
+  // const [orderNumber, setOrderNumber] = useState();
 
   const buns = useMemo(
     () => items.filter((elem) => elem.type === 'bun'),
@@ -59,16 +54,16 @@ function BurgerConstructor() {
     setOrderId({ ingredients: arrOrderId });
   }
 
-  function sendOrder(items) {
-    makeOrder(items)
-      .then((res) => {
-        setOrderNumber(res.order.number);
-      })
-      .catch((error) => {
-        setOrderNumber('Ошибка');
-        console.log(`Ошибка ${error.statusText}`);
-      });
-  }
+  // function sendOrder(items) {
+  //   makeOrder(items)
+  //     .then((res) => {
+  //       setOrderNumber(res.order.number);
+  //     })
+  //     .catch((error) => {
+  //       setOrderNumber('Ошибка');
+  //       console.log(`Ошибка ${error.statusText}`);
+  //     });
+  // }
 
   function calculatePrice() {
     notBuns.forEach((elem) => {
@@ -132,7 +127,7 @@ function BurgerConstructor() {
         </div>
         <Button
           onClick={() => {
-            sendOrder(orderId);
+            dispatch(sendItems(orderId));
             modalControls.open();
           }}
           name="order_btn"
@@ -142,7 +137,7 @@ function BurgerConstructor() {
           Оформить заказ
         </Button>
         <Modal isOpen={modalControls.isModalOpen} close={modalControls.close}>
-          <OrderDetails orderNumber={orderNumber} />
+          <OrderDetails />
         </Modal>
       </div>
     </section>

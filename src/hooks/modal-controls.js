@@ -2,7 +2,7 @@ import { useState } from "react";
 
 function useModalControls () {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    
+
     function handleModalOpen() {
         setIsModalOpen(true);
     }
