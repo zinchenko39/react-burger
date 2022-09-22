@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -18,9 +18,12 @@ function BurgerIngredientCard({ ingridient }) {
   const modalControls = useModalControls();
   const dispatch = useDispatch();
 
+  const [itemQuantity, setItemQuantity] = useState(0);
+
   const activeItem = useSelector(
     (state) => state.currentIngredient.currentItem
   );
+  const cart = useSelector((state) => state.cart.items);
 
   //D&D
   const id = ingridient._id;
@@ -32,17 +35,24 @@ function BurgerIngredientCard({ ingridient }) {
     }),
   });
 
+  const calculateQuantity = (item) => {
+    const sortArray = cart.filter((elem) => elem._id === item._id);
+    console.log(sortArray);
+    setItemQuantity(sortArray.length);
+  };
+
+  useEffect(() => {
+    calculateQuantity(ingridient);
+  });
+
   return (
     <div className={stylesBurgerCard.burger_card_wrapper}>
       {!isDrag && (
         <div
           onClick={() => {
+            calculateQuantity(ingridient);
             dispatch({
               type: OPEN_CURRENT_ITEM_DETAILS,
-              item: ingridient,
-            });
-            dispatch({
-              type: ADD_ITEM,
               item: ingridient,
             });
             modalControls.open();
@@ -51,7 +61,7 @@ function BurgerIngredientCard({ ingridient }) {
           className={stylesBurgerCard.burger_card}
           ref={dragRef}
         >
-          <Counter count={1} size="default" />
+          {itemQuantity ? <Counter count={itemQuantity} size="default" /> : ''}
           <img
             src={ingridient.image}
             className={stylesBurgerCard.burger_card__img}

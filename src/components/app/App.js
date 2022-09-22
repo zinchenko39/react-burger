@@ -31,11 +31,6 @@ function App () {
             type: ADD_ITEM,
             item: ingredient
         })
-        //elements.filter(element => element._id === itemId.id)
-        // setDraggedElements([
-        //     ...draggedElements,
-        //     ...elements.filter(element => element._id === itemId.id)
-        // ]);
     };
 
     const dispatch = useDispatch();
