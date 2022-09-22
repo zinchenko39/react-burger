@@ -1,21 +1,9 @@
-import { ADD_ITEM} from '../actions/constructor-actions.js';
+import { ADD_ITEM } from '../actions/constructor-actions.js';
+import { DELETE_ITEM } from '../actions/constructor-actions.js';
+
 
 const constructorInitialState = {
-  constructor: {
-    items: [ {
-      "_id":"60666c42cc7b410027a1a9b1",
-      "name":"Краторная булка N-200i",
-      "type":"bun",
-      "proteins":80,
-      "fat":24,
-      "carbohydrates":53,
-      "calories":420,
-      "price":1255,
-      "image":"https://code.s3.yandex.net/react/code/bun-02.png",
-      "image_mobile":"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-      "image_large":"https://code.s3.yandex.net/react/code/bun-02-large.png",
-      "__v":0
-   },
+    items: [
    {
       "_id":"60666c42cc7b410027a1a9b5",
       "name":"Говяжий метеорит (отбивная)",
@@ -58,18 +46,30 @@ const constructorInitialState = {
   "image_large":"https://code.s3.yandex.net/react/code/sauce-02-large.png",
   "__v":0
 },],
-    buns: []
-  }
+    bun: ''
   
 }
 
-export const constructorReducer = (state = constructorInitialState, action) => {
+export const constructorReducer = (state = constructorInitialState, action, ) => {
   switch (action.type) {
     case ADD_ITEM: {
+      if(action.item.type === 'bun') {
+        if(state.bun.id === action.item._id) {
+          return state
+        } else {
+          return {
+            ...state,
+            bun: action.item
+          }
+        }
+      }
       return {
         ...state,
-        constructor: {...state.constructor, items: [...state.constructor.items, action.item]}
-      };
+        items: [...state.items, action.item]
+      }
+    }
+    case DELETE_ITEM: {
+      return state;
     }
     default: {
       return state;

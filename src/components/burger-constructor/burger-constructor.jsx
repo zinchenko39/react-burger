@@ -1,5 +1,6 @@
 import { React, useEffect, useReducer, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd';
 
 import styles from './burger-constructor.module.css';
 
@@ -7,7 +8,6 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal, OrderDetails } from '../index.js';
-import { makeOrder } from '../../utils/api.js';
 import { sendItems } from '../../services/actions/order-actions.js';
 import useModalControls from '../../hooks/modal-controls';
 
@@ -18,98 +18,86 @@ function reducer(state, action) {
     case 'increment':
       return { count: state.count + action.price };
     case 'reset':
-      return state.count;
+      return { count: 0 };
     default:
       throw new Error(`Wrong type of action: ${action.type}`);
   }
 }
 
-function BurgerConstructor() {
+function BurgerConstructor({ onDropHandler }) {
   const dispatch = useDispatch();
 
-  const items = useSelector((state) => state.ingredients.menu);
+  const items = useSelector((state) => state.cart.items);
+  const bun = useSelector((state) => state.cart.bun);
 
   const modalControls = useModalControls();
 
   const [sum, dispatchSum] = useReducer(reducer, initialSum);
   const [orderId, setOrderId] = useState({ ingredients: [] });
-  // const [orderNumber, setOrderNumber] = useState();
 
-  const buns = useMemo(
-    () => items.filter((elem) => elem.type === 'bun'),
-    [items]
-  );
-
-  const notBuns = useMemo(
-    () => items.filter((elem) => elem.type !== 'bun'),
-    [items]
-  );
-
-  function filterOrderId(items) {
+  function filterOrderId(items, buns) {
     const arrOrderId = [];
 
     items.forEach((elem) => {
       arrOrderId.push(elem._id);
     });
+
     setOrderId({ ingredients: arrOrderId });
   }
+  //D&D
+  const [, dropTarget] = useDrop({
+    accept: 'ingredient',
+    drop(itemId) {
+      onDropHandler(itemId);
+      // dispatch({
+      //   type: 'DRAGGED_ITEM',
+      //   item: itemId,
+      // });
+    },
+  });
 
-  // function sendOrder(items) {
-  //   makeOrder(items)
-  //     .then((res) => {
-  //       setOrderNumber(res.order.number);
-  //     })
-  //     .catch((error) => {
-  //       setOrderNumber('Ошибка');
-  //       console.log(`Ошибка ${error.statusText}`);
-  //     });
-  // }
-
-  function calculatePrice() {
-    notBuns.forEach((elem) => {
-      dispatchSum({ type: 'increment', price: elem.price });
+  function calculatePrice(items, bun) {
+    dispatchSum({
+      type: 'reset',
     });
-    buns.forEach((elem) => {
-      dispatchSum({ type: 'increment', price: elem.price });
+    //Claculate main, sauces
+    items.forEach((elem) => {
+      dispatchSum({
+        type: 'increment',
+        price: elem.price,
+      });
     });
+    //Calculate buns
+    if (bun) {
+      let bunsPrice = bun.price * 2;
+      dispatchSum({
+        type: 'increment',
+        price: bunsPrice,
+      });
+    }
   }
-
   useEffect(() => {
-    filterOrderId(notBuns);
-    calculatePrice();
+    filterOrderId(items);
+    calculatePrice(items, bun);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]);
+  }, [items, bun]);
 
   return (
-    <section className={styles.burger_constructor__container}>
-      {buns.map((bun) => {
-        return (
-          <>
-            <div className={styles.burger_constructor__top}>
-              <ConstructorElement
-                key={`${bun._id}_top`}
-                type="top"
-                isLocked={true}
-                text={bun.name}
-                price={bun.price}
-                thumbnail={bun.image}
-              />
-            </div>
-            <div className={styles.burger_constructor__bottom}>
-              <ConstructorElement
-                key={`${bun._id}_bottom`}
-                type="bottom"
-                isLocked={true}
-                text={bun.name}
-                price={bun.price}
-                thumbnail={bun.image}
-              />
-            </div>
-          </>
-        );
-      })}
+    <section ref={dropTarget} className={styles.burger_constructor__container}>
+      {bun && (
+        <div className={styles.burger_constructor__top}>
+          <ConstructorElement
+            key={`${bun._id}_top`}
+            type="top"
+            isLocked={true}
+            text={bun.name}
+            price={bun.price}
+            thumbnail={bun.image}
+          />
+        </div>
+      )}
       <main className={styles.burger_constructor__main}>
-        {notBuns.map((elem) => {
+        {items.map((elem) => {
           return (
             <ConstructorElement
               key={`${elem._id}`}
@@ -120,6 +108,18 @@ function BurgerConstructor() {
           );
         })}
       </main>
+      {bun && (
+        <div className={styles.burger_constructor__bottom}>
+          <ConstructorElement
+            key={`${bun._id}_bottom`}
+            type="bottom"
+            isLocked={true}
+            text={bun.name}
+            price={bun.price}
+            thumbnail={bun.image}
+          />
+        </div>
+      )}
       <div className={styles.burger_constructor__info}>
         <div className={styles.burger_constructor__info_price}>
           <span className="text text_type_digits-medium">{sum.count}</span>

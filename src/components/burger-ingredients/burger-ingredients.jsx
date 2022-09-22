@@ -1,7 +1,5 @@
 import { React, useState, useMemo, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -72,46 +70,44 @@ function BurgerIngredients() {
           Начинки
         </Tab>
       </div>
-      <DndProvider backend={HTML5Backend}>
-        <div className={styles.burger_ingredients__main}>
-          {categories.map((elem, index) => {
-            if (elem === 'Булки') {
-              return (
-                <BurgerIngredientsHeadline
-                  categoryName={elem}
-                  items={buns}
-                  key={`${index}_${elem}`}
-                  ref={bunRef}
-                  type={'buns'}
-                />
-              );
-            }
-            if (elem === 'Соусы') {
-              return (
-                <BurgerIngredientsHeadline
-                  categoryName={elem}
-                  items={sauce}
-                  key={`${index}_${elem}`}
-                  ref={sauceRef}
-                  type={'sauce'}
-                />
-              );
-            }
-            if (elem === 'Начинки') {
-              return (
-                <BurgerIngredientsHeadline
-                  categoryName={elem}
-                  items={main}
-                  key={`${index}_${elem}`}
-                  ref={mainRef}
-                  type={'main'}
-                />
-              );
-            }
-            return null;
-          })}
-        </div>
-      </DndProvider>
+      <div className={styles.burger_ingredients__main}>
+        {categories.map((elem, index) => {
+          if (elem === 'Булки') {
+            return (
+              <BurgerIngredientsHeadline
+                categoryName={elem}
+                items={buns}
+                key={`${index}_${elem}`}
+                ref={bunRef}
+                type={'buns'}
+              />
+            );
+          }
+          if (elem === 'Соусы') {
+            return (
+              <BurgerIngredientsHeadline
+                categoryName={elem}
+                items={sauce}
+                key={`${index}_${elem}`}
+                ref={sauceRef}
+                type={'sauce'}
+              />
+            );
+          }
+          if (elem === 'Начинки') {
+            return (
+              <BurgerIngredientsHeadline
+                categoryName={elem}
+                items={main}
+                key={`${index}_${elem}`}
+                ref={mainRef}
+                type={'main'}
+              />
+            );
+          }
+          return null;
+        })}
+      </div>
     </section>
   );
 }

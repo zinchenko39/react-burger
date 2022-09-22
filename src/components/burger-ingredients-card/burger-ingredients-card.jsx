@@ -3,7 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import stylesBurgerCard from './burger-ingredients-card.module.css';
+
 import { OPEN_CURRENT_ITEM_DETAILS } from '../../services/actions/ingridient-details-action.js';
+import { ADD_ITEM } from '../../services/actions/constructor-actions.js';
+
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
@@ -18,9 +21,12 @@ function BurgerIngredientCard({ ingridient }) {
   const activeItem = useSelector(
     (state) => state.currentIngredient.currentItem
   );
+
+  //D&D
+  const id = ingridient._id;
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredient',
-    item: activeItem._id,
+    item: { id },
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),
@@ -33,6 +39,10 @@ function BurgerIngredientCard({ ingridient }) {
           onClick={() => {
             dispatch({
               type: OPEN_CURRENT_ITEM_DETAILS,
+              item: ingridient,
+            });
+            dispatch({
+              type: ADD_ITEM,
               item: ingridient,
             });
             modalControls.open();
