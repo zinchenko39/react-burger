@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import stylesBurgerCard from './burger-ingredients-card.module.css';
 
 import { OPEN_CURRENT_ITEM_DETAILS } from '../../services/actions/ingridient-details-action.js';
-import { ADD_ITEM } from '../../services/actions/constructor-actions.js';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -18,12 +17,14 @@ function BurgerIngredientCard({ ingridient }) {
   const modalControls = useModalControls();
   const dispatch = useDispatch();
 
-  const [itemQuantity, setItemQuantity] = useState(0);
+  const [ingredientsQuantity, setIngredientsQuantity] = useState(0);
+  const [bunQuantity, setBunQuantity] = useState(0);
 
   const activeItem = useSelector(
     (state) => state.currentIngredient.currentItem
   );
   const cart = useSelector((state) => state.cart.items);
+  const bun = useSelector((state) => state.cart.bun);
 
   //D&D
   const id = ingridient._id;
@@ -36,9 +37,13 @@ function BurgerIngredientCard({ ingridient }) {
   });
 
   const calculateQuantity = (item) => {
-    const sortArray = cart.filter((elem) => elem._id === item._id);
-    console.log(sortArray);
-    setItemQuantity(sortArray.length);
+    const ingredientsArray = cart.filter((elem) => elem._id === item._id);
+    if (bun._id === item._id) {
+      setBunQuantity(1);
+    } else {
+      setBunQuantity(0);
+    }
+    setIngredientsQuantity(ingredientsArray.length);
   };
 
   useEffect(() => {
@@ -50,7 +55,6 @@ function BurgerIngredientCard({ ingridient }) {
       {!isDrag && (
         <div
           onClick={() => {
-            calculateQuantity(ingridient);
             dispatch({
               type: OPEN_CURRENT_ITEM_DETAILS,
               item: ingridient,
@@ -61,7 +65,16 @@ function BurgerIngredientCard({ ingridient }) {
           className={stylesBurgerCard.burger_card}
           ref={dragRef}
         >
-          {itemQuantity ? <Counter count={itemQuantity} size="default" /> : ''}
+          {ingridient.type === 'bun' && bunQuantity ? (
+            <Counter count={bunQuantity} size="default" />
+          ) : (
+            ''
+          )}
+          {ingredientsQuantity ? (
+            <Counter count={ingredientsQuantity} size="default" />
+          ) : (
+            ''
+          )}
           <img
             src={ingridient.image}
             className={stylesBurgerCard.burger_card__img}

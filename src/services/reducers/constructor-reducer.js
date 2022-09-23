@@ -1,34 +1,43 @@
 import { ADD_ITEM } from '../actions/constructor-actions.js';
 import { DELETE_ITEM } from '../actions/constructor-actions.js';
 
-
 const constructorInitialState = {
     items: [],
-    bun: ''
-  
+    bun: {}
 }
 
-export const constructorReducer = (state = constructorInitialState, action, ) => {
+export const constructorReducer = (state = constructorInitialState, action ) => {
   switch (action.type) {
     case ADD_ITEM: {
-      if(action.item.type === 'bun') {
-        if(state.bun.id === action.item._id) {
+
+      const uniqId = {uniqId: action.uniqId};
+      const ingredient = Object.assign(uniqId, action.item);
+
+      if(ingredient.type === 'bun') {
+        if(state.bun.id === ingredient._id) {
           return state
         } else {
           return {
             ...state,
-            bun: action.item
+            bun: ingredient
           }
         }
       }
       return {
         ...state,
-        items: [...state.items, action.item]
+        items: [...state.items, ingredient]
       }
     }
     case DELETE_ITEM: {
-      return state;
+      const newCart = state.items.filter(elem => elem.uniqId !== action.uniqId);
+      return {
+        ...state,
+        items: newCart,
+      }
     }
+    // case DRAG_ITEM: {
+
+    // }
     default: {
       return state;
     }

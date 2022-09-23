@@ -29,7 +29,8 @@ function App () {
         
         dispatch({
             type: ADD_ITEM,
-            item: ingredient
+            item: ingredient,
+            uniqId: Math.random(),
         })
     };
 

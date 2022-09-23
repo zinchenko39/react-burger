@@ -1,9 +1,10 @@
-import { React, useEffect, useReducer, useState, useMemo } from 'react';
+import { React, useEffect, useReducer, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 
 import styles from './burger-constructor.module.css';
 
+import { DELETE_ITEM } from '../../services/actions/constructor-actions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -49,10 +50,6 @@ function BurgerConstructor({ onDropHandler }) {
     accept: 'ingredient',
     drop(itemId) {
       onDropHandler(itemId);
-      // dispatch({
-      //   type: 'DRAGGED_ITEM',
-      //   item: itemId,
-      // });
     },
   });
 
@@ -68,7 +65,7 @@ function BurgerConstructor({ onDropHandler }) {
       });
     });
     //Calculate buns
-    if (bun) {
+    if (Object.keys(bun).length !== 0) {
       let bunsPrice = bun.price * 2;
       dispatchSum({
         type: 'increment',
@@ -84,7 +81,7 @@ function BurgerConstructor({ onDropHandler }) {
 
   return (
     <section ref={dropTarget} className={styles.burger_constructor__container}>
-      {bun && (
+      {Object.keys(bun).length !== 0 ? (
         <div className={styles.burger_constructor__top}>
           <ConstructorElement
             key={`${bun._id}_top`}
@@ -95,20 +92,28 @@ function BurgerConstructor({ onDropHandler }) {
             thumbnail={bun.image}
           />
         </div>
+      ) : (
+        ''
       )}
       <main className={styles.burger_constructor__main}>
         {items.map((elem) => {
           return (
             <ConstructorElement
-              key={`${elem._id}`}
+              key={`${elem.uniqId}`}
               text={elem.name}
               price={elem.price}
               thumbnail={elem.image}
+              handleClose={() =>
+                dispatch({
+                  type: DELETE_ITEM,
+                  uniqId: elem.uniqId,
+                })
+              }
             />
           );
         })}
       </main>
-      {bun && (
+      {Object.keys(bun).length !== 0 ? (
         <div className={styles.burger_constructor__bottom}>
           <ConstructorElement
             key={`${bun._id}_bottom`}
@@ -119,6 +124,8 @@ function BurgerConstructor({ onDropHandler }) {
             thumbnail={bun.image}
           />
         </div>
+      ) : (
+        ''
       )}
       <div className={styles.burger_constructor__info}>
         <div className={styles.burger_constructor__info_price}>
