@@ -23,7 +23,7 @@ const orderInitialState = {
 
         }
         case ORDER_REQUEST_FAILED: {
-            return { ...state, isError: true, isLoading: false, errorStatus: action.error };
+            return { ...state, isError: true, isLoading: false, errorStatus: action.error, orderNumber: 'Ошибка' };
         }
         default: {
             return state;

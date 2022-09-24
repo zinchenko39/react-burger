@@ -1,5 +1,4 @@
-import { ADD_ITEM } from '../actions/constructor-actions.js';
-import { DELETE_ITEM } from '../actions/constructor-actions.js';
+import { ADD_ITEM, DELETE_ITEM, DRAG_ITEM } from '../actions/constructor-actions.js';
 
 const constructorInitialState = {
     items: [],
@@ -35,7 +34,28 @@ export const constructorReducer = (state = constructorInitialState, action ) => 
         items: newCart,
       }
     }
-    // case DRAG_ITEM: {
+    case DRAG_ITEM: {
+      const newItems = [...state.items];
+      const dragginItem = action.dragginItem
+      const underItem = action.underItem
+      const dragginIndex = action.dragginIndex
+      const underIndex = action.underIndex
+
+
+      newItems.splice(dragginIndex, 1);
+      newItems.splice(underItem, 1);
+      newItems.splice(underIndex, 0, dragginItem);
+      newItems.splice(dragginIndex, 0, underItem);
+      // newItems.splice(index, 1) //Убираем элемент из массива который взят
+      // newItems.splice(index, 0, currentItem)
+      
+      // newItems.splice(0, 1, currentItem)
+      return {
+        ...state,
+        items: newItems
+      }
+    }
+    // case DROP_ITEM: {
 
     // }
     default: {

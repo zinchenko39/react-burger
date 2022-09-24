@@ -26,7 +26,6 @@ function App () {
             })
         }
         compareIngredient();
-        
         dispatch({
             type: ADD_ITEM,
             item: ingredient,

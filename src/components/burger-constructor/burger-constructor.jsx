@@ -1,14 +1,16 @@
 import { React, useEffect, useReducer, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import { useDrag } from 'react-dnd';
 
 import styles from './burger-constructor.module.css';
 
+import { DRAG_ITEM } from '../../services/actions/constructor-actions';
 import { DELETE_ITEM } from '../../services/actions/constructor-actions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Modal, OrderDetails } from '../index.js';
+import { Modal, OrderDetails, BurgerConstructorCard } from '../index.js';
 import { sendItems } from '../../services/actions/order-actions.js';
 import useModalControls from '../../hooks/modal-controls';
 
@@ -28,13 +30,15 @@ function reducer(state, action) {
 function BurgerConstructor({ onDropHandler }) {
   const dispatch = useDispatch();
 
-  const items = useSelector((state) => state.cart.items);
+  const cart = useSelector((state) => state.cart.items);
   const bun = useSelector((state) => state.cart.bun);
 
   const modalControls = useModalControls();
 
   const [sum, dispatchSum] = useReducer(reducer, initialSum);
   const [orderId, setOrderId] = useState({ ingredients: [] });
+  // const [currentDragingItem, setCurrentDragingItem] = useState();
+  // const [dragingItemIndex, setDragingItemIndex] = useState();
 
   function filterOrderId(items, buns) {
     const arrOrderId = [];
@@ -45,12 +49,21 @@ function BurgerConstructor({ onDropHandler }) {
 
     setOrderId({ ingredients: arrOrderId });
   }
-  //D&D
-  const [, dropTarget] = useDrop({
+
+  //D&D Drop
+  const [, dropContainer] = useDrop({
     accept: 'ingredient',
     drop(itemId) {
       onDropHandler(itemId);
     },
+  });
+
+  const [isOver, canDrop, dropConstructor] = useDrop({
+    accept: 'cart',
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
   });
 
   function calculatePrice(items, bun) {
@@ -73,14 +86,29 @@ function BurgerConstructor({ onDropHandler }) {
       });
     }
   }
+
+  // const findIndex = (elem) => {
+  //   const item = cart.filter((e) => e.uniqId === elem.uniqId)[0];
+  //   const index = cart.indexOf(item);
+  //   setCurrentDragingItem(elem);
+  //   setDragingItemIndex(index);
+  // };
+
+  // const handleDrigging = (elem) => {
+  //   findIndex(elem);
+  // };
+
   useEffect(() => {
-    filterOrderId(items);
-    calculatePrice(items, bun);
+    filterOrderId(cart);
+    calculatePrice(cart, bun);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items, bun]);
+  }, [cart, bun]);
 
   return (
-    <section ref={dropTarget} className={styles.burger_constructor__container}>
+    <section
+      ref={dropContainer}
+      className={styles.burger_constructor__container}
+    >
       {Object.keys(bun).length !== 0 ? (
         <div className={styles.burger_constructor__top}>
           <ConstructorElement
@@ -95,21 +123,28 @@ function BurgerConstructor({ onDropHandler }) {
       ) : (
         ''
       )}
-      <main className={styles.burger_constructor__main}>
-        {items.map((elem) => {
+      <main ref={dropConstructor} className={styles.burger_constructor__main}>
+        {cart.map((elem) => {
           return (
-            <ConstructorElement
-              key={`${elem.uniqId}`}
-              text={elem.name}
-              price={elem.price}
-              thumbnail={elem.image}
-              handleClose={() =>
-                dispatch({
-                  type: DELETE_ITEM,
-                  uniqId: elem.uniqId,
-                })
-              }
-            />
+            <BurgerConstructorCard key={elem.uniqId} ingredient={elem} />
+            // <div
+            //   onClick={() => findIndex(elem)}
+            //   className={styles.burger_constructor_element__wrapper}
+            //   ref={dragRef}
+            //   key={`${elem.uniqId}`}
+            // >
+            //   <ConstructorElement
+            //     text={elem.name}
+            //     price={elem.price}
+            //     thumbnail={elem.image}
+            //     handleClose={() =>
+            //       dispatch({
+            //         type: DELETE_ITEM,
+            //         uniqId: elem.uniqId,
+            //       })
+            //     }
+            //   />
+            // </div>
           );
         })}
       </main>

@@ -1,0 +1,19 @@
+.burger_constructor_element__wrapper {
+    height: 80px;
+    width: 536px;
+    margin-right: 3px;
+}
+
+.burger_constructor_element__wrapper div {
+    height: 30px;
+    width: 536px;
+    margin-right: 3px;
+}
+
+.burger_constructor_element__wrapper div::after {
+    content: url('../../images/before.png');
+    position: relative;
+    right: 50px;
+    bottom: 27px;
+    display: block;
+}
