@@ -35,29 +35,19 @@ export const constructorReducer = (state = constructorInitialState, action ) => 
       }
     }
     case DRAG_ITEM: {
-      const newItems = [...state.items];
-      const dragginItem = action.dragginItem
-      const underItem = action.underItem
-      const dragginIndex = action.dragginIndex
-      const underIndex = action.underIndex
-
-
-      newItems.splice(dragginIndex, 1);
-      newItems.splice(underItem, 1);
-      newItems.splice(underIndex, 0, dragginItem);
-      newItems.splice(dragginIndex, 0, underItem);
-      // newItems.splice(index, 1) //Убираем элемент из массива который взят
-      // newItems.splice(index, 0, currentItem)
-      
-      // newItems.splice(0, 1, currentItem)
+      const newItems = [...state.items]
+      const currentItem = action.currentItem
+      const index = action.index
+      const currentIndex = newItems.findIndex(
+        (i) => i.uniqId === currentItem.uniqId
+      )
+      newItems.splice(currentIndex, 1)
+      newItems.splice(index, 0, currentItem)
       return {
         ...state,
-        items: newItems
+        items: newItems,
       }
     }
-    // case DROP_ITEM: {
-
-    // }
     default: {
       return state;
     }

@@ -1,12 +1,9 @@
 import { React, useEffect, useReducer, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { useDrag } from 'react-dnd';
 
 import styles from './burger-constructor.module.css';
 
-import { DRAG_ITEM } from '../../services/actions/constructor-actions';
-import { DELETE_ITEM } from '../../services/actions/constructor-actions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -58,14 +55,6 @@ function BurgerConstructor({ onDropHandler }) {
     },
   });
 
-  const [isOver, canDrop, dropConstructor] = useDrop({
-    accept: 'cart',
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
-    }),
-  });
-
   function calculatePrice(items, bun) {
     dispatchSum({
       type: 'reset',
@@ -86,18 +75,6 @@ function BurgerConstructor({ onDropHandler }) {
       });
     }
   }
-
-  // const findIndex = (elem) => {
-  //   const item = cart.filter((e) => e.uniqId === elem.uniqId)[0];
-  //   const index = cart.indexOf(item);
-  //   setCurrentDragingItem(elem);
-  //   setDragingItemIndex(index);
-  // };
-
-  // const handleDrigging = (elem) => {
-  //   findIndex(elem);
-  // };
-
   useEffect(() => {
     filterOrderId(cart);
     calculatePrice(cart, bun);
@@ -123,29 +100,9 @@ function BurgerConstructor({ onDropHandler }) {
       ) : (
         ''
       )}
-      <main ref={dropConstructor} className={styles.burger_constructor__main}>
+      <main className={styles.burger_constructor__main}>
         {cart.map((elem) => {
-          return (
-            <BurgerConstructorCard key={elem.uniqId} ingredient={elem} />
-            // <div
-            //   onClick={() => findIndex(elem)}
-            //   className={styles.burger_constructor_element__wrapper}
-            //   ref={dragRef}
-            //   key={`${elem.uniqId}`}
-            // >
-            //   <ConstructorElement
-            //     text={elem.name}
-            //     price={elem.price}
-            //     thumbnail={elem.image}
-            //     handleClose={() =>
-            //       dispatch({
-            //         type: DELETE_ITEM,
-            //         uniqId: elem.uniqId,
-            //       })
-            //     }
-            //   />
-            // </div>
-          );
+          return <BurgerConstructorCard key={elem.uniqId} ingredient={elem} />;
         })}
       </main>
       {Object.keys(bun).length !== 0 ? (
