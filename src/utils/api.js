@@ -20,7 +20,6 @@ export function makeOrder(ingredients) {
       body: JSON.stringify(ingredients),
     })
       .then((responce) => {
-        console.log(responce)
         if (responce.ok) {
           return responce.json();
         }

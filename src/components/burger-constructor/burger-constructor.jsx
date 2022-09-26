@@ -4,6 +4,7 @@ import { useDrop } from 'react-dnd';
 
 import styles from './burger-constructor.module.css';
 
+import { ADD_ITEM } from '../../services/actions/constructor-actions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -24,7 +25,7 @@ function reducer(state, action) {
   }
 }
 
-function BurgerConstructor({ onDropHandler }) {
+function BurgerConstructor() {
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart.items);
@@ -34,12 +35,11 @@ function BurgerConstructor({ onDropHandler }) {
 
   const [sum, dispatchSum] = useReducer(reducer, initialSum);
   const [orderId, setOrderId] = useState({ ingredients: [] });
-  // const [currentDragingItem, setCurrentDragingItem] = useState();
-  // const [dragingItemIndex, setDragingItemIndex] = useState();
 
-  function filterOrderId(items, buns) {
+  function filterOrderId(items, bun) {
     const arrOrderId = [];
 
+    arrOrderId.push(bun._id);
     items.forEach((elem) => {
       arrOrderId.push(elem._id);
     });
@@ -51,7 +51,7 @@ function BurgerConstructor({ onDropHandler }) {
   const [, dropContainer] = useDrop({
     accept: 'ingredient',
     drop(itemId) {
-      onDropHandler(itemId);
+      handleDrop(itemId);
     },
   });
 
@@ -75,8 +75,31 @@ function BurgerConstructor({ onDropHandler }) {
       });
     }
   }
+  //D&D
+  const elements = useSelector((state) => state.ingredients.menu);
+
+  const handleDrop = (itemId) => {
+    let ingredient;
+
+    function compareIngredient() {
+      elements.forEach((element) => {
+        if (element._id === itemId.id) {
+          ingredient = element;
+        } else {
+          return;
+        }
+      });
+    }
+    compareIngredient();
+    dispatch({
+      type: ADD_ITEM,
+      item: ingredient,
+      uniqId: Math.random(),
+    });
+  };
+
   useEffect(() => {
-    filterOrderId(cart);
+    filterOrderId(cart, bun);
     calculatePrice(cart, bun);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart, bun]);
@@ -101,8 +124,14 @@ function BurgerConstructor({ onDropHandler }) {
         ''
       )}
       <main className={styles.burger_constructor__main}>
-        {cart.map((elem) => {
-          return <BurgerConstructorCard key={elem.uniqId} ingredient={elem} />;
+        {cart.map((elem, index) => {
+          return (
+            <BurgerConstructorCard
+              key={elem.uniqId}
+              item={elem}
+              index={index}
+            />
+          );
         })}
       </main>
       {Object.keys(bun).length !== 0 ? (

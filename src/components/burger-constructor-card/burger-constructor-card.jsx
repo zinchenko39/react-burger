@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 
 import styles from './burger-constructor-card.module.css';
 import {
@@ -9,60 +9,75 @@ import {
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
 
-function BurgerConstructorCard({ ingredient }) {
+function BurgerConstructorCard({ item, index }) {
   const dispatch = useDispatch();
 
-  const cart = useSelector((state) => state.cart.items);
-
-  //D&D Drag
-  const [{ isDrag }, dragRef] = useDrag({
-    type: 'drag',
-    item: { ingredient },
-    collect: (monitor) => ({
-      isDrag: monitor.isDragging(),
-    }),
-    end: (item, monitor) => {
-      const index = cart.indexOf(ingredient); //Индекс схваченного элемента
-      const didDrop = monitor.didDrop();
-      if (!didDrop) {
-        dispatch({
-          type: DRAG_ITEM,
-          currentItem: ingredient,
-          index: index,
-        });
+  //D&D
+  const ref = useRef(null);
+  const [{ handlerId }, drop] = useDrop({
+    accept: 'card',
+    collect(monitor) {
+      return {
+        handlerId: monitor.getHandlerId(),
+      };
+    },
+    hover(item, monitor) {
+      if (!ref.current) {
+        return;
       }
+      const dragIndex = item.index;
+      const hoverIndex = index;
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const clientOffset = monitor.getClientOffset();
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return;
+      }
+      dispatch({
+        type: DRAG_ITEM,
+        dragIndex: dragIndex,
+        hoverIndex: hoverIndex,
+      });
+      item.index = hoverIndex;
     },
   });
-
-  const [, drop] = useDrop(() => ({
-    accept: 'drag',
-    hover(component) {
-      if (component.ingredient.uniqId !== ingredient.uniqId) {
-        console.log(component);
-        const underIndex = cart.indexOf(component.ingredient);
-        console.log(underIndex);
-        dispatch({
-          type: DRAG_ITEM,
-          currentItem: component.ingredient,
-          index: underIndex,
-        });
-      }
+  const id = item.id;
+  const [{ isDragging }, drag] = useDrag({
+    type: 'card',
+    item: () => {
+      return { item, index };
     },
-  }));
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+  drag(drop(ref));
 
   return (
     <div
-      className={styles.burger_constructor_element__wrapper}
-      ref={(elem) => dragRef(drop(elem))}
+      className={
+        isDragging
+          ? styles.burger_constructor_element__wrapper_active
+          : styles.burger_constructor_element__wrapper
+      }
+      ref={ref}
     >
       <ConstructorElement
-        text={ingredient.name}
-        price={ingredient.price}
-        thumbnail={ingredient.image}
+        text={item.name}
+        price={item.price}
+        thumbnail={item.image}
         handleClose={() =>
           dispatch({
             type: DELETE_ITEM,
-            uniqId: ingredient.uniqId,
+            uniqId: item.uniqId,
           })
         }
       />

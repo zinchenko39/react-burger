@@ -1,4 +1,5 @@
 import { ADD_ITEM, DELETE_ITEM, DRAG_ITEM } from '../actions/constructor-actions.js';
+import update from 'immutability-helper';
 
 const constructorInitialState = {
     items: [],
@@ -35,17 +36,14 @@ export const constructorReducer = (state = constructorInitialState, action ) => 
       }
     }
     case DRAG_ITEM: {
-      const newItems = [...state.items]
-      const currentItem = action.currentItem
-      const index = action.index
-      const currentIndex = newItems.findIndex(
-        (i) => i.uniqId === currentItem.uniqId
-      )
-      newItems.splice(currentIndex, 1)
-      newItems.splice(index, 0, currentItem)
       return {
         ...state,
-        items: newItems,
+        items: update(state.items,{
+          $splice: [
+            [action.dragIndex, 1],
+            [action.hoverIndex, 0, state.items[action.dragIndex]],
+          ],
+        })
       }
     }
     default: {
