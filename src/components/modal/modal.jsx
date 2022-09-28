@@ -1,14 +1,17 @@
 import { React, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-
 import styles from './modal.module.css';
 
+import { useDispatch } from 'react-redux';
+import { CLOSE_CURRENT_ITEM_DETAILS } from '../../services/actions/ingridient-details-action.js';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ModalOverlay } from '../index.js';
 
 const modalsElement = document.getElementById('modal');
 function Modal({ isOpen, close, children }) {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     function closeByEscape(evt) {
       if (evt.key === 'Escape') {
@@ -31,7 +34,15 @@ function Modal({ isOpen, close, children }) {
         <ModalOverlay setClose={close} />
         <div className={styles.modal__content}>
           {children}
-          <div onClick={close} className={styles.modal__close}>
+          <div
+            onClick={() => {
+              dispatch({
+                type: CLOSE_CURRENT_ITEM_DETAILS,
+              });
+              close();
+            }}
+            className={styles.modal__close}
+          >
             <CloseIcon type="primary" />
           </div>
         </div>

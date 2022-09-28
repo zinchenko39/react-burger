@@ -1,18 +1,39 @@
-import { React, useState, useContext, useMemo } from 'react';
+import { React, useState, useMemo, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 
 import styles from './burger-ingredients.module.css';
-
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { BurgersContext } from '../../services/burgersContext.js';
+
 import { BurgerIngredientsHeadline } from '..';
 
 function BurgerIngredients() {
-  const items = useContext(BurgersContext);
+  const items = useSelector((state) => state.ingredients.menu);
 
-  const [current, setCurrent] = useState('one'); //@ya.praktikum/react-developer-burger-ui-components
-  const [activeItem, setActiveItem] = useState({});
+  const [currentTab, setCurrentTab] = useState('buns'); //@ya.praktikum/react-developer-burger-ui-components
 
   const categories = ['Булки', 'Соусы', 'Начинки'];
+
+  const bunRef = useRef(null);
+  const mainRef = useRef(null);
+  const sauceRef = useRef(null);
+
+  useEffect(() => {
+    const options = {
+      rootMargin: '-50% 0px -50%',
+    };
+    let observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setCurrentTab(entry.target.id);
+        }
+      });
+    }, options);
+
+    //Целевой элемент, который наблюдается
+    observer.observe(bunRef.current);
+    observer.observe(sauceRef.current);
+    observer.observe(mainRef.current);
+  }, [mainRef, sauceRef, bunRef]);
 
   const buns = useMemo(
     () => items.filter((elem) => elem.type === 'bun'),
@@ -29,59 +50,58 @@ function BurgerIngredients() {
     [items]
   );
 
-  const onSelectItem = (elem) => {
-    setActiveItem(elem);
-  };
-
   return (
     <section className={styles.burger_ingredients__container}>
       <div className={styles.burger_ingredients__title}>
         <h1 className="text text_type_main-medium">Соберите бургер</h1>
       </div>
       <div className={styles.burger_ingredients__tabs_list}>
-        <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+        <Tab value="one" active={currentTab === 'buns'} onClick={setCurrentTab}>
           Булки
         </Tab>
-        <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+        <Tab value="two" active={currentTab === 'sauce'}>
           Соусы
         </Tab>
-        <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+        <Tab
+          value="three"
+          active={currentTab === 'main'}
+          onClick={setCurrentTab}
+        >
           Начинки
         </Tab>
       </div>
-
       <div className={styles.burger_ingredients__main}>
         {categories.map((elem, index) => {
           if (elem === 'Булки') {
             return (
               <BurgerIngredientsHeadline
-                activeItem={activeItem}
-                selectItem={onSelectItem}
                 categoryName={elem}
                 items={buns}
                 key={`${index}_${elem}`}
+                ref={bunRef}
+                type={'buns'}
               />
             );
           }
           if (elem === 'Соусы') {
             return (
               <BurgerIngredientsHeadline
-                activeItem={activeItem}
-                selectItem={onSelectItem}
                 categoryName={elem}
                 items={sauce}
                 key={`${index}_${elem}`}
+                ref={sauceRef}
+                type={'sauce'}
               />
             );
           }
           if (elem === 'Начинки') {
             return (
               <BurgerIngredientsHeadline
-                activeItem={activeItem}
-                selectItem={onSelectItem}
                 categoryName={elem}
                 items={main}
                 key={`${index}_${elem}`}
+                ref={mainRef}
+                type={'main'}
               />
             );
           }

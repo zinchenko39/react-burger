@@ -1,22 +1,15 @@
-import {
-  React,
-  useEffect,
-  useReducer,
-  useState,
-  useContext,
-  useMemo,
-} from 'react';
-
-import { BurgersContext } from '../../services/burgersContext.js';
+import { React, useEffect, useReducer, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd';
 
 import styles from './burger-constructor.module.css';
 
+import { ADD_ITEM } from '../../services/actions/constructor-actions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Modal, OrderDetails } from '../index.js';
-import { makeOrder } from '../../utils/api.js';
-
+import { Modal, OrderDetails, BurgerConstructorCard } from '../index.js';
+import { sendItems } from '../../services/actions/order-actions.js';
 import useModalControls from '../../hooks/modal-controls';
 
 const initialSum = { count: 0 };
@@ -26,105 +19,135 @@ function reducer(state, action) {
     case 'increment':
       return { count: state.count + action.price };
     case 'reset':
-      return state.count;
+      return { count: 0 };
     default:
       throw new Error(`Wrong type of action: ${action.type}`);
   }
 }
 
 function BurgerConstructor() {
-  const items = useContext(BurgersContext);
+  const dispatch = useDispatch();
+
+  const cart = useSelector((state) => state.cart.items);
+  const bun = useSelector((state) => state.cart.bun);
+
   const modalControls = useModalControls();
 
   const [sum, dispatchSum] = useReducer(reducer, initialSum);
   const [orderId, setOrderId] = useState({ ingredients: [] });
-  const [orderNumber, setOrderNumber] = useState();
 
-  const buns = useMemo(
-    () => items.filter((elem) => elem.type === 'bun'),
-    [items]
-  );
-
-  const notBuns = useMemo(
-    () => items.filter((elem) => elem.type !== 'bun'),
-    [items]
-  );
-
-  function filterOrderId(items) {
+  function filterOrderId(items, bun) {
     const arrOrderId = [];
 
+    arrOrderId.push(bun._id);
     items.forEach((elem) => {
       arrOrderId.push(elem._id);
     });
+
     setOrderId({ ingredients: arrOrderId });
   }
 
-  function sendOrder(items) {
-    makeOrder(items)
-      .then((res) => {
-        setOrderNumber(res.order.number);
-      })
-      .catch((error) => {
-        setOrderNumber('Ошибка');
-        console.log(`Ошибка ${error.statusText}`);
-      });
-  }
+  //D&D Drop
+  const [, dropContainer] = useDrop({
+    accept: 'ingredient',
+    drop(itemId) {
+      handleDrop(itemId);
+    },
+  });
 
-  function calculatePrice() {
-    notBuns.forEach((elem) => {
-      dispatchSum({ type: 'increment', price: elem.price });
+  function calculatePrice(items, bun) {
+    dispatchSum({
+      type: 'reset',
     });
-    buns.forEach((elem) => {
-      dispatchSum({ type: 'increment', price: elem.price });
+    //Claculate main, sauces
+    items.forEach((elem) => {
+      dispatchSum({
+        type: 'increment',
+        price: elem.price,
+      });
     });
+    //Calculate buns
+    if (Object.keys(bun).length !== 0) {
+      let bunsPrice = bun.price * 2;
+      dispatchSum({
+        type: 'increment',
+        price: bunsPrice,
+      });
+    }
   }
+  //D&D
+  const elements = useSelector((state) => state.ingredients.menu);
+
+  const handleDrop = (itemId) => {
+    let ingredient;
+
+    function compareIngredient() {
+      elements.forEach((element) => {
+        if (element._id === itemId.id) {
+          ingredient = element;
+        } else {
+          return;
+        }
+      });
+    }
+    compareIngredient();
+    dispatch({
+      type: ADD_ITEM,
+      item: ingredient,
+      uniqId: Math.random(),
+    });
+  };
 
   useEffect(() => {
-    filterOrderId(notBuns);
-    calculatePrice();
+    filterOrderId(cart, bun);
+    calculatePrice(cart, bun);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]);
+  }, [cart, bun]);
 
   return (
-    <section className={styles.burger_constructor__container}>
-      {buns.map((bun) => {
-        return (
-          <>
-            <div className={styles.burger_constructor__top}>
-              <ConstructorElement
-                key={`${bun._id}_top`}
-                type="top"
-                isLocked={true}
-                text={bun.name}
-                price={bun.price}
-                thumbnail={bun.image}
-              />
-            </div>
-            <div className={styles.burger_constructor__bottom}>
-              <ConstructorElement
-                key={`${bun._id}_bottom`}
-                type="bottom"
-                isLocked={true}
-                text={bun.name}
-                price={bun.price}
-                thumbnail={bun.image}
-              />
-            </div>
-          </>
-        );
-      })}
+    <section
+      ref={dropContainer}
+      className={styles.burger_constructor__container}
+    >
+      {Object.keys(bun).length !== 0 ? (
+        <div className={styles.burger_constructor__top}>
+          <ConstructorElement
+            key={`${bun._id}_top`}
+            type="top"
+            isLocked={true}
+            text={bun.name}
+            price={bun.price}
+            thumbnail={bun.image}
+          />
+        </div>
+      ) : (
+        ''
+      )}
       <main className={styles.burger_constructor__main}>
-        {notBuns.map((elem) => {
+        {cart.map((elem, index) => {
           return (
-            <ConstructorElement
-              key={`${elem._id}`}
-              text={elem.name}
-              price={elem.price}
-              thumbnail={elem.image}
+            <BurgerConstructorCard
+              key={elem.uniqId}
+              item={elem}
+              index={index}
             />
           );
         })}
       </main>
+      {Object.keys(bun).length !== 0 ? (
+        <div className={styles.burger_constructor__bottom}>
+          <ConstructorElement
+            key={`${bun._id}_bottom`}
+            type="bottom"
+            isLocked={true}
+            text={bun.name}
+            price={bun.price}
+            thumbnail={bun.image}
+          />
+        </div>
+      ) : (
+        ''
+      )}
       <div className={styles.burger_constructor__info}>
         <div className={styles.burger_constructor__info_price}>
           <span className="text text_type_digits-medium">{sum.count}</span>
@@ -132,7 +155,7 @@ function BurgerConstructor() {
         </div>
         <Button
           onClick={() => {
-            sendOrder(orderId);
+            dispatch(sendItems(orderId));
             modalControls.open();
           }}
           name="order_btn"
@@ -142,7 +165,7 @@ function BurgerConstructor() {
           Оформить заказ
         </Button>
         <Modal isOpen={modalControls.isModalOpen} close={modalControls.close}>
-          <OrderDetails orderNumber={orderNumber} />
+          <OrderDetails />
         </Modal>
       </div>
     </section>
