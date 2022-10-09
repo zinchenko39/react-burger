@@ -48,3 +48,8 @@ code {
   margin: auto auto;
   text-align: center;
 }
+
+/* input for @ya.praktikum/react-developer-burger-ui-components */
+.input_size_default {
+  width: 480px;
+}
