@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -20,7 +20,7 @@ function App () {
     },[dispatch]);
     
     return (
-        <Router>
+        <BrowserRouter>
             <AppHeader/>
              <Switch>
                 <Route exact path="/">
@@ -61,7 +61,7 @@ function App () {
                     <Error404/>
                 </Route>
              </Switch>
-        </Router>
+        </BrowserRouter>
 
     )
 }
