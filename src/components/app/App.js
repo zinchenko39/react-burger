@@ -6,7 +6,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import { AppHeader, BurgerConstructor, BurgerIngredients} from '..';
-import { Register, Login, ForgotPassword ,ResetPassword, Error404 } from "../../pages";
+import { Register, Login, ForgotPassword ,ResetPassword, Error404, Profile } from "../../pages";
 import { getItems } from '../../services/actions/ingredients-actions.js';
 
 
@@ -56,6 +56,9 @@ function App () {
                 </Route>
                 <Route exact path="/reset-password">
                     <ResetPassword/>
+                </Route>
+                <Route exact path="/profile">
+                    <Profile/>
                 </Route>
                 <Route >
                     <Error404/>
