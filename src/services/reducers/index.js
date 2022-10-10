@@ -3,6 +3,7 @@ import { ingredientsReducer } from './ingredients-reducer.js';
 import { constructorReducer } from './constructor-reducer.js';
 import { ingridientDetailsReducer } from './ingridient-details-reducer.js';
 import { orderReducer } from './order-reducer.js';
+import { userReducer } from './user-reducer.js';
 
 
 export const rootReducer = combineReducers({
@@ -10,4 +11,5 @@ export const rootReducer = combineReducers({
     cart: constructorReducer,
     currentIngredient: ingridientDetailsReducer,
     order: orderReducer,
+    user: userReducer,
   });

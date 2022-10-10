@@ -5,7 +5,7 @@ import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 export default function ProfileMain() {
   const [name, setName] = useState('Вадим');
   const [login, setLogin] = useState('vadim@burger.ru');
-  const [password, setPassword] = useState('1111111');
+  const [password, setPassword] = useState('12345');
 
   return (
     <div className={styles.profile_main__wrapper}>

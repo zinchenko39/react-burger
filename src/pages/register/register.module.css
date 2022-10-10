@@ -50,3 +50,11 @@
     color: #4C4CFF;
     margin-left: 8px;
 }
+
+.register_error {
+    position: absolute;
+    top: 250px;
+    left: 0;
+    text-align: center;
+    right: 0;
+}

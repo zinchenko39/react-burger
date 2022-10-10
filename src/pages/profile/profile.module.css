@@ -4,9 +4,10 @@
     left: 0;
     right: 0;
     margin: 0 auto;
-    width: 860px;
+    width: 1280px;
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
 }
 
 .profile_links {
@@ -28,10 +29,6 @@
     color: #F2F2F3;
     text-decoration: none;
 }
-
-.profile_view {
-    width: 480px;
-}
 .profile_bottom {
     display: inline-block;
     color: #8585AD;
@@ -39,3 +36,8 @@
     width: 290px;
     margin-top: 100px;
 }
+
+.profile_view {
+    width: 480px;
+}
+
