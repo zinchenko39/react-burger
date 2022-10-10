@@ -5,7 +5,7 @@
   "dependencies": {
     "@types/react-router": "5.1.18",
     "@types/react-router-dom": "5.3.3",
-    "@ya.praktikum/react-developer-burger-ui-components": "1.4.2",
+    "@ya.praktikum/react-developer-burger-ui-components": "1.13.1",
     "clsx": "1.1.1",
     "prop-types": "15.7.2",
     "react": "17.0.1",
