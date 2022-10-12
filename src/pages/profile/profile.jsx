@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './profile.module.css';
+import { useDispatch } from 'react-redux';
 import { ProfileMain } from '../../components';
+import { logOut } from '../../services/actions/user-actions.js';
+import { getUserData } from '../../services/actions/user-actions.js';
 
 export default function Profile() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserData());
+  }, []);
+
   return (
     <div className={styles.profile_wrapper}>
       <div className={styles.profile_links}>
@@ -29,7 +37,12 @@ export default function Profile() {
           className={styles.profile_link}
           activeClassName={styles.profile_link__active}
         >
-          <span className="text text_type_main-medium">Выход</span>
+          <span
+            onClick={() => dispatch(logOut())}
+            className="text text_type_main-medium"
+          >
+            Выход
+          </span>
         </NavLink>
         <div className={styles.profile_bottom}>
           <p className="text text_type_main-small">

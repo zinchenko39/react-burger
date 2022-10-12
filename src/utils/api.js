@@ -1,19 +1,17 @@
-import { func } from "prop-types";
-
 const orderUrl = 'https://norma.nomoreparties.space/api/orders';
 const LoadIngredientsUrl = 'https://norma.nomoreparties.space/api/ingredients';
 const passwordForgotUrl = 'https://norma.nomoreparties.space/api/password-reset';
 const passwordResetUrl = 'https://norma.nomoreparties.space/api/password-reset/reset';
-const registerUrl = 'https://norma.nomoreparties.space/api/auth/register';
+
 
 export function loadIngredients() {
    return fetch(LoadIngredientsUrl)
-            .then((responce) => {
-                if(responce.ok) {
-                    return responce.json()
-                }
-                return Promise.reject(`Ошибка ${responce.status}`);
-            })
+      .then((responce) => {
+          if(responce.ok) {
+              return responce.json()
+          }
+          return Promise.reject(`Ошибка ${responce.status}`);
+        })
 }
 
 export function makeOrder(ingredients) {
@@ -24,12 +22,12 @@ export function makeOrder(ingredients) {
       },
       body: JSON.stringify(ingredients),
     })
-      .then((responce) => {
-        if (responce.ok) {
-          return responce.json();
-        }
-        return Promise.reject(`Ошибка ${responce.status}`);
-      })
+    .then((responce) => {
+      if(responce.ok) {
+          return responce.json()
+      }
+      return Promise.reject(`Ошибка ${responce.status}`);
+  })
   }
 
 
@@ -37,16 +35,16 @@ export function userRequest(url, data) {
   return fetch (url, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json;charset=utf-8',
+      'Content-Type': 'application/json;charset=utf-8'
     },
     body: JSON.stringify(data),
   })
-    .then((responce) => {
-      if (responce.ok) {
-        return responce.json();
-      }
-      return Promise.reject(`Ошибка ${responce.status}`);
-    })
+  .then((responce) => {
+    if(responce.ok) {
+        return responce.json()
+    }
+    return Promise.reject(`Ошибка ${responce.status}`);
+  })
 }
 
 export function passwordForgotRequest(email) {
@@ -57,12 +55,12 @@ export function passwordForgotRequest(email) {
     },
     body: JSON.stringify(email),
   })
-    .then((responce) => {
-      if (responce.ok) {
-        return responce.json();
-      }
-      return Promise.reject(`Ошибка ${responce.status}`);
-    })
+  .then((responce) => {
+    if(responce.ok) {
+        return responce.json()
+    }
+    return Promise.reject(`Ошибка ${responce.status}`);
+  })
 }
 
 export function passwordResetRequest(data) {
@@ -73,26 +71,26 @@ export function passwordResetRequest(data) {
     },
     body: JSON.stringify(data),
   })
-    .then((responce) => {
-      if (responce.ok) {
-        return responce.json();
-      }
-      return Promise.reject(`Ошибка ${responce.status}`);
-    })
+  .then((responce) => {
+    if(responce.ok) {
+        return responce.json()
+    }
+    return Promise.reject(`Ошибка ${responce.status}`);
+  })
 }
 
-export function registerRequest(data) {
-  return fetch (registerUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-    },
-    body: JSON.stringify(data),
-  })
-    .then((responce) => {
-      if (responce.ok) {
-        return responce.json();
-      }
-      return Promise.reject(`Ошибка ${responce.status}`);
-    })
-}
+// export function registerRequest(data) {
+//   return fetch (registerUrl, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json;charset=utf-8',
+//     },
+//     body: JSON.stringify(data),
+//   })
+//     .then((responce) => {
+//       if (responce.ok) {
+//         return responce.json();
+//       }
+//       return Promise.reject(`Ошибка ${responce.status}`);
+//     })
+// }

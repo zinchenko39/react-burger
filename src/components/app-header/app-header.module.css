@@ -44,23 +44,15 @@
     flex-grow: 0;
     color: #8585AD;
 }
-
-.app_header__link_active {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 16px 20px;
-    gap: 8px;
-    width: 197px;
-    height: 56px;
-    background: #1C1C21;
-    border-radius: 40px;
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-    color: #8585AD;
+.app_header__nav_link {
+   text-decoration: none;
+   color: #8585AD;
+}
+.app_header__nav_link_active {
+    text-decoration: none;
     color: #F2F2F3;
 }
+
 
 .app_header__links_right {
     flex-direction: row;

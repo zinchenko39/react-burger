@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styles from './profile-main.module.css';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export default function ProfileMain() {
-  const [name, setName] = useState('Вадим');
-  const [login, setLogin] = useState('vadim@burger.ru');
+  const login = useSelector((state) => state.user.email);
+  const name = useSelector((state) => state.user.name);
   const [password, setPassword] = useState('12345');
 
   return (
@@ -13,7 +14,6 @@ export default function ProfileMain() {
         value={name}
         type={'text'}
         placeholder={'Имя'}
-        onChange={(e) => setName(e.target.value)}
         icon="EditIcon"
         disabled={true}
       />
@@ -21,7 +21,6 @@ export default function ProfileMain() {
         value={login}
         type={'text'}
         placeholder={'Логин'}
-        onChange={(e) => setLogin(e.target.value)}
         icon="EditIcon"
         disabled={true}
       />
@@ -29,7 +28,6 @@ export default function ProfileMain() {
         value={password}
         type={'password'}
         placeholder={'Пароль'}
-        onChange={(e) => setPassword(e.target.value)}
         icon="EditIcon"
         disabled={true}
       />

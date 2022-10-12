@@ -1,10 +1,9 @@
-import { LOG_IN, LOG_OUT, REGISTER, USER_ERROR } from '../actions/user-actions.js';
+import { LOG_IN, LOG_OUT, REGISTER, USER_ERROR, USER_REFRESH_TOKEN, SET_USER } from '../actions/user-actions.js';
 
 const userInitialState = {
     email: '', 
     name: '',
-    accessToken: '',
-    refreshToken: '',
+    isLoggedIn: false,
     isError: false,
     errorStatus: null,
 }
@@ -15,26 +14,45 @@ export const userReducer  = (state = userInitialState, action) => {
             return {
               ...state,
               email: action.user.email,
+              name: action.user.name,
+              isLoggedIn: true,
             };
         }
         case LOG_OUT: {
             return { 
-                ...state, 
-                isError: false, orderNumber: action.orderNumber, itemsId: action.orderId};
+                ...state,
+                email: '',
+                name: '',
+                isLoggedIn: false,
+                isError: false};
 
         }
         case REGISTER: {
             return { ...state,
                 email: action.user.email,
                 name: action.user.name,
-                accessToken: action.accessToken,
-                refreshToken: action.refreshToken,
+                isLoggedIn: true,
+            };
+        }
+        case SET_USER: {
+            return { ...state,
+                isError: false,
+                isLoggedIn: true,
+                email: action.email,
+                name: action.name,
+                isLoggedIn: true,
             };
         }
         case USER_ERROR: {
             return { ...state,
                 isError: true,
+                isLoggedIn: false,
                 errorStatus: action.error,
+            };
+        }
+        case USER_REFRESH_TOKEN: {
+            return { ...state,
+                isLoggedIn: true
             };
         }
         default: {
