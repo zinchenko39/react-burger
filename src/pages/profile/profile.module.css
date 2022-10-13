@@ -40,4 +40,18 @@
 .profile_view {
     width: 480px;
 }
+.profile_log_out__btn {
+    width: 480px;
+    color: #8585AD;
+    cursor: pointer;
+}
+
+.profile_waiting {
+    position: absolute;
+    top: 400px;
+    height: 35px;
+    width: 100%;
+    margin: auto auto;
+    text-align: center;
+}
 

@@ -1,34 +1,50 @@
-import React, { useState, useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory, Redirect } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './forgot-password.module.css';
 import {
   Input,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { passwordForgotRequest } from '../../utils/api.js';
+import { userRequest } from '../../utils/api.js';
+import { FORGOT_PASSWORD_VISITED } from '../../services/actions/forgot-password-actions';
+
+const passwordForgotUrl =
+  'https://norma.nomoreparties.space/api/password-reset';
 
 export default function ForgotPassword() {
-  const [value, setValue] = useState('');
-  const [error, setError] = useState(false);
+  const dispatch = useDispatch();
   const history = useHistory();
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState(false);
+  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
 
-  const forgotInputs = useRef(null);
+  if (userLoggedIn) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/',
+        }}
+      />
+    );
+  }
 
-  function passwordForgot(value) {
+  function passwordForgotRequest(value) {
     const email = {
       email: value,
     };
-    passwordForgotRequest(email)
+    userRequest(passwordForgotUrl, email)
       .then((res) => {
         if (res && res.success) {
-          if (res.success) {
-            setTimeout(history.replace({ pathname: '/reset-password' }), 2000);
-          }
+          dispatch({
+            type: FORGOT_PASSWORD_VISITED,
+          });
+          history.replace({ pathname: '/reset-password' });
         }
       })
       .catch((error) => {
+        console.log('forgotPasswordError', error);
         setError(true);
-        console.log(error);
       });
   }
 
@@ -37,12 +53,12 @@ export default function ForgotPassword() {
       <div className={styles.forgot_title}>
         <h2 className="text text_type_main-medium">Восстановление пароля</h2>
       </div>
-      <div ref={forgotInputs} className={styles.forgot_inputs}>
+      <div className={styles.forgot_inputs}>
         <Input
-          value={value}
+          value={email}
           type={'email'}
           placeholder={'Укажите e-mail'}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
         {error && (
           <div className={styles.forgot_error}>
@@ -52,7 +68,7 @@ export default function ForgotPassword() {
       </div>
       <div className={styles.forgot_btn}>
         <Button
-          onClick={() => passwordForgot(value)}
+          onClick={() => passwordForgotRequest(email)}
           type="primary"
           size="medium"
         >

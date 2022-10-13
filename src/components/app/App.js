@@ -5,9 +5,11 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import { AppHeader, BurgerConstructor, BurgerIngredients} from '..';
+import { AppHeader, BurgerConstructor, BurgerIngredients, ProtectedRoute} from '..';
 import { Register, Login, ForgotPassword ,ResetPassword, Error404, Profile } from "../../pages";
 import { getItems } from '../../services/actions/ingredients-actions.js';
+import { getUserData } from "../../services/actions/get-user-actions.js";
+import { refreshToken } from '../../services/actions/refresh-token-actions.js';
 
 
 function App () {
@@ -17,6 +19,7 @@ function App () {
 
     useEffect(() => {
         dispatch(getItems());
+        dispatch(getUserData());
     },[dispatch]);
     
     return (
@@ -57,9 +60,9 @@ function App () {
                 <Route exact path="/reset-password">
                     <ResetPassword/>
                 </Route>
-                <Route exact path="/profile">
+                <ProtectedRoute exact path="/profile">
                     <Profile/>
-                </Route>
+                </ProtectedRoute>
                 <Route >
                     <Error404/>
                 </Route>

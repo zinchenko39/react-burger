@@ -1,36 +1,66 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, Redirect } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './reset-password.module.css';
 import {
   Input,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { passwordResetRequest, registerRequest } from '../../utils/api.js';
+import { userRequest } from '../../utils/api.js';
+import { RESET_PASSWORD } from '../../services/actions/reset-password-actions';
+
+const passwordResetUrl =
+  'https://norma.nomoreparties.space/api/password-reset/reset';
 
 export default function ResetPassword() {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [passwordValue, setPasswordValue] = useState('');
   const [codeValue, setCodeValue] = useState('');
   const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const history = useHistory();
+  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
+  const forgotPasswordVisited = useSelector(
+    (state) => state.user.forgotPasswordVisited
+  );
 
-  function passwordReset(password, code) {
+  if (userLoggedIn) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/',
+        }}
+      />
+    );
+  }
+  if (forgotPasswordVisited === false) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/forgot-password',
+        }}
+      />
+    );
+  }
+
+  function passwordResetRequest(password, code) {
     const data = {
       password: password,
       token: code,
     };
-    passwordResetRequest(data)
+    userRequest(passwordResetUrl, data)
       .then((res) => {
         if (res && res.success) {
           if (res.success) {
-            setSuccess(true);
-            setTimeout(history.replace({ pathname: '/login' }), 5000);
+            dispatch({
+              type: RESET_PASSWORD,
+            });
+            history.replace({ pathname: '/login' });
           }
         }
       })
       .catch((error) => {
+        console.log('passwordResetError', error);
         setError(true);
-        console.log(error);
       });
   }
 
@@ -54,20 +84,13 @@ export default function ResetPassword() {
         />
       </div>
       <div className={styles.reset_btn}>
-        {success && (
-          <div className={styles.reset_error}>
-            <span className="text text_type_main-medium">
-              Пароль успешно обновлён.
-            </span>
-          </div>
-        )}
         {error && (
           <div className={styles.reset_error}>
             <span className="text text_type_main-medium">Ошибка</span>
           </div>
         )}
         <Button
-          onClick={() => passwordReset(passwordValue, codeValue)}
+          onClick={() => passwordResetRequest(passwordValue, codeValue)}
           type="primary"
           size="medium"
         >

@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './profile.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ProfileMain } from '../../components';
-import { logOut } from '../../services/actions/user-actions.js';
-import { getUserData } from '../../services/actions/user-actions.js';
+import { logOut } from '../../services/actions/log-out-actions.js';
+import { getUserData } from '../../services/actions/get-user-actions.js';
 
 export default function Profile() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserData());
-  }, []);
+  }, [dispatch]);
 
-  return (
+  const userLoaded = useSelector((state) => state.user.userLoaded);
+
+  return userLoaded ? (
     <div className={styles.profile_wrapper}>
       <div className={styles.profile_links}>
         <NavLink
@@ -31,19 +33,14 @@ export default function Profile() {
         >
           <span className="text text_type_main-medium">История заказов</span>
         </NavLink>
-        <NavLink
-          to="/"
-          exact
-          className={styles.profile_link}
-          activeClassName={styles.profile_link__active}
-        >
+        <div className={styles.profile_log_out__btn}>
           <span
             onClick={() => dispatch(logOut())}
             className="text text_type_main-medium"
           >
             Выход
           </span>
-        </NavLink>
+        </div>
         <div className={styles.profile_bottom}>
           <p className="text text_type_main-small">
             В этом разделе вы можете изменить свои персональные данные
@@ -53,6 +50,12 @@ export default function Profile() {
       <div className={styles.profile_view}>
         <ProfileMain />
       </div>
+    </div>
+  ) : (
+    <div className={styles.profile_waiting}>
+      <span className="text text_type_main-medium">
+        Пожалуйта подождите, загружаю данные с галактической станции...
+      </span>
     </div>
   );
 }
