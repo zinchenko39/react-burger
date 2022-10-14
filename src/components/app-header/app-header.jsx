@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import styles from './app-header.module.css';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink, useHistory, useLocation } from 'react-router-dom';
-import { node } from 'prop-types';
+import { NavLink, useLocation } from 'react-router-dom';
 
 function AppHeader() {
-  const history = useHistory();
   const location = useLocation();
 
   return (

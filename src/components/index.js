@@ -10,3 +10,4 @@ export {default as BurgerIngredientsHeadline} from './burger-ingredients/burger-
 export {default as BurgerConstructorCard} from './burger-constructor-card/burger-constructor-card.jsx';
 export {default as ProfileMain} from './profile-main/profile-main.jsx';
 export {default as ProtectedRoute} from './protected-route/protected-route.js';
+export {default as Main} from './main/main.js';

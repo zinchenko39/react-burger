@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useHistory } from 'react-router-dom';
 
 function useModalControls () {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const history = useHistory();
 
     function handleModalOpen() {
         setIsModalOpen(true);
@@ -9,6 +11,7 @@ function useModalControls () {
 
     function handleModalClose() {
         setIsModalOpen(false);
+        history.replace('/');
     }
 
     return {

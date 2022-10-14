@@ -2,20 +2,33 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-
-import { AppHeader, BurgerConstructor, BurgerIngredients, ProtectedRoute } from '..';
+import { AppHeader, ProtectedRoute, OrderDetails, Main } from '..';
 import { Register, Login, ForgotPassword ,ResetPassword, Error404, Profile, IngredientCard } from "../../pages";
 import { getItems } from '../../services/actions/ingredients-actions.js';
 import { getUserData } from "../../services/actions/get-user-actions.js";
+import { refreshToken } from "../../services/actions/refresh-token-actions";
+import Modal from "../modal/modal.jsx";
+import useModalControls from '../../hooks/modal-controls';
 
 
 
 function App () {
     const dispatch = useDispatch();
-    const isLoading = useSelector(state => state.ingredients.isLoading);
-    const isError = useSelector(state => state.ingredients.isError);
+    const modalControls = useModalControls();
+
+    const ingredient = useSelector(
+    (state) => state.currentIngredient.currentItem
+  );
+  const user = useSelector(
+    (state) => state.user
+  );
+
+
+    useEffect(() => {
+        if(!user.email && !user.name ) {
+            dispatch(refreshToken());
+        }
+    },[]);
 
     useEffect(() => {
         dispatch(getItems());
@@ -27,26 +40,7 @@ function App () {
             <AppHeader/>
              <Switch>
                 <Route exact path="/">
-                        <main className='wrapper'>
-                        {
-                            isError &&
-                            <div className="loading">Что-то пошло не так...</div>
-                        }
-                        {
-                            isLoading &&
-                            <div className="loading">Загружаю бургеры...</div>
-                        }
-                        {
-                            !isLoading && !isError ?
-                            <>
-                            <DndProvider backend={HTML5Backend}>
-                                <BurgerIngredients />
-                                <BurgerConstructor />
-                            </DndProvider>
-                            </>
-                            : ""
-                        }
-                        </main>
+                    <Main/>
                 </Route>
                 <Route exact path="/register">
                     <Register/>
@@ -64,14 +58,22 @@ function App () {
                     <Profile/>
                 </ProtectedRoute>
                 <Route exact path="/ingredients/:id">
-                    <IngredientCard/>
+                    {
+                        ingredient ?  <Main/>: <IngredientCard/>
+                    }
                 </Route>
                 <Route >
                     <Error404/>
                 </Route>
              </Switch>
+             <Route exact path='/ingredients/:id' >
+                {ingredient &&
+                    <Modal isOpen={modalControls.isModalOpen} close={modalControls.close}>
+                            <OrderDetails item={ingredient}/>
+                    </Modal>
+                }
+            </Route>
         </BrowserRouter>
-
     )
 }
 

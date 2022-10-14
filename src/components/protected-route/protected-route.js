@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { getUserData } from '../../services//actions/get-user-actions.js';
 
 export default function ProtectedRoute({ children, ...rest }) {
-  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
+  const userLoggedIn = useSelector((state) => state.user.user.userLoggedIn);
   const [isUserLoaded, setUserLoaded] = useState(false)
 
   const init = async () => {

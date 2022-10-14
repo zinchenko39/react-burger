@@ -1,5 +1,6 @@
 import { userRequest } from "../../utils/api";
 import { setCookie, getCookie } from "../../utils/cookie";
+import { getUserData } from "./get-user-actions";
 
 const refreshTokenUrl = 'https://norma.nomoreparties.space/api/auth/token';
 

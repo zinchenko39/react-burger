@@ -8,7 +8,7 @@ import { ADD_ITEM } from '../../services/actions/constructor-actions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Modal, OrderDetails, BurgerConstructorCard } from '../index.js';
+import { BurgerConstructorCard } from '../index.js';
 import { sendItems } from '../../services/actions/order-actions.js';
 import useModalControls from '../../hooks/modal-controls';
 
@@ -164,9 +164,9 @@ function BurgerConstructor() {
         >
           Оформить заказ
         </Button>
-        <Modal isOpen={modalControls.isModalOpen} close={modalControls.close}>
+        {/* <Modal isOpen={modalControls.isModalOpen} close={modalControls.close}>
           <OrderDetails />
-        </Modal>
+        </Modal> */}
       </div>
     </section>
   );
