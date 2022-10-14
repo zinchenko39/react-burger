@@ -53,3 +53,9 @@ code {
 .input_size_default {
   width: 480px;
 }
+
+.ingredient_wrapper {
+  position: absolute;
+  left: 200px;
+  top: 100px;
+}

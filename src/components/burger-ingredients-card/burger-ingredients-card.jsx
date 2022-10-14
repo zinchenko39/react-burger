@@ -12,8 +12,10 @@ import { useDrag } from 'react-dnd';
 
 import { Modal, IngridientDetails } from '../index.js';
 import useModalControls from '../../hooks/modal-controls';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 
 function BurgerIngredientCard({ ingridient }) {
+  const history = useHistory();
   const modalControls = useModalControls();
   const dispatch = useDispatch();
 
@@ -59,6 +61,7 @@ function BurgerIngredientCard({ ingridient }) {
               type: OPEN_CURRENT_ITEM_DETAILS,
               item: ingridient,
             });
+            history.push(`/ingredients/${ingridient._id}`);
             modalControls.open();
           }}
           name="burger_card"
