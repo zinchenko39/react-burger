@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './ingridient-details.module.css';
+import PropTypes from 'prop-types';
 
-function IngridientDetails({ item }) {
+export default function IngridientDetails({ item }) {
   return (
     <div className={styles.ingridient_details__wrapper}>
       <div className={styles.ingridient_details_main}>
@@ -35,4 +36,6 @@ function IngridientDetails({ item }) {
   );
 }
 
-export default IngridientDetails;
+IngridientDetails.propTypes = {
+  item: PropTypes.object,
+};
