@@ -12,6 +12,7 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const registerError = useSelector((state) => state.user.registerError);
   const dispatch = useDispatch();
 

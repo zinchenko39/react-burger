@@ -141,13 +141,13 @@ export const userReducer  = (state = userInitialState, action) => {
             };
         }
         case REFRESH_TOKEN_REQUEST: {
-            return { state };
+            return { ...state };
         }
         case REFRESH_TOKEN: {
-            return { state };
+            return { ...state };
         }
         case REFRESH_TOKEN_ERROR: {
-            return { state };
+            return { ...state };
         }
         case FORGOT_PASSWORD_VISITED: {
             return {...state,

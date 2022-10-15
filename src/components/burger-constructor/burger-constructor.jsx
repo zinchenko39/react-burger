@@ -1,6 +1,7 @@
 import { React, useEffect, useReducer, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import { useHistory } from 'react-router-dom';
 
 import styles from './burger-constructor.module.css';
 
@@ -8,7 +9,7 @@ import { ADD_ITEM } from '../../services/actions/constructor-actions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { BurgerConstructorCard } from '../index.js';
+import { BurgerConstructorCard, OrderDetails, Modal } from '../index.js';
 import { sendItems } from '../../services/actions/order-actions.js';
 import useModalControls from '../../hooks/modal-controls';
 
@@ -27,9 +28,10 @@ function reducer(state, action) {
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const cart = useSelector((state) => state.cart.items);
   const bun = useSelector((state) => state.cart.bun);
+  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
 
   const modalControls = useModalControls();
 
@@ -155,8 +157,12 @@ function BurgerConstructor() {
         </div>
         <Button
           onClick={() => {
-            dispatch(sendItems(orderId));
-            modalControls.open();
+            if (userLoggedIn) {
+              dispatch(sendItems(orderId));
+              modalControls.open();
+            } else {
+              history.replace('/login');
+            }
           }}
           name="order_btn"
           type="primary"
@@ -164,9 +170,9 @@ function BurgerConstructor() {
         >
           Оформить заказ
         </Button>
-        {/* <Modal isOpen={modalControls.isModalOpen} close={modalControls.close}>
+        <Modal isOpen={modalControls.isModalOpen} close={modalControls.close}>
           <OrderDetails />
-        </Modal> */}
+        </Modal>
       </div>
     </section>
   );

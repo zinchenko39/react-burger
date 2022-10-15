@@ -18,6 +18,7 @@ export default function Login() {
 
   useEffect(() => {
     if (userLoggedIn) history.replace({ pathname: '/' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userLoggedIn]);
 
   if (userLoggedIn) {

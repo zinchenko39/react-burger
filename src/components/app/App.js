@@ -6,7 +6,6 @@ import { AppHeader, ProtectedRoute, OrderDetails, Main } from '..';
 import { Register, Login, ForgotPassword ,ResetPassword, Error404, Profile, IngredientCard } from "../../pages";
 import { getItems } from '../../services/actions/ingredients-actions.js';
 import { getUserData } from "../../services/actions/get-user-actions.js";
-import { refreshToken } from "../../services/actions/refresh-token-actions";
 import Modal from "../modal/modal.jsx";
 import useModalControls from '../../hooks/modal-controls';
 
@@ -19,17 +18,7 @@ function App () {
     const ingredient = useSelector(
     (state) => state.currentIngredient.currentItem
   );
-  const user = useSelector(
-    (state) => state.user
-  );
-
-
-    useEffect(() => {
-        if(!user.email && !user.name ) {
-            dispatch(refreshToken());
-        }
-    },[]);
-
+  
     useEffect(() => {
         dispatch(getItems());
         dispatch(getUserData());

@@ -54,6 +54,7 @@ export default function ProfileMain() {
   useEffect(() => {
     dispatch(getUserData());
     if (updateUserDataError) cancelChanges();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, updateUserDataError]);
 
   const cancelChanges = () => {

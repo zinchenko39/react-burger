@@ -14,3 +14,7 @@
     border-radius: 10px;
     transition: 1s;
 }
+button {
+    width: 250px;
+    margin: 0 auto;
+}

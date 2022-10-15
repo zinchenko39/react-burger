@@ -26,6 +26,7 @@ export function refreshToken () {
                 dispatch({
                     type: REFRESH_TOKEN,
                 })
+                dispatch(getUserData());
             }
         })
         .catch((error) => {

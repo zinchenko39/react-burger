@@ -1,4 +1,5 @@
 import { getCookie } from "../../utils/cookie";
+import { refreshToken } from "./refresh-token-actions";
 
 const userDataUrl = 'https://norma.nomoreparties.space/api/auth/user';
 
@@ -32,6 +33,9 @@ export function getUserData () {
             }
         })
         .catch((error) => {
+            try{
+                dispatch(refreshToken());
+            } catch {}
             console.log('getUserError', error)
             dispatch({
                 type: GET_USER_ERROR,
