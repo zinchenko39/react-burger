@@ -62,7 +62,12 @@ function BurgerIngredientCard({ ingridient }) {
               item: ingridient,
             });
             modalControls.open();
-            history.push(`/ingredients/${ingridient._id}`);
+            history.push({
+              pathname: `/ingredients/${ingridient._id}`,
+              state: {
+                ingredient: ingridient,
+              },
+            });
           }}
           name="burger_card"
           className={stylesBurgerCard.burger_card}

@@ -1,11 +1,10 @@
 import { userRequest } from "../../utils/api";
 import { setCookie } from "../../utils/cookie";
+import { baseUrl } from "../../utils/api";
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN = 'LOG_IN';
 export const LOG_IN_ERROR = 'LOG_IN_REQUEST';
-
-const logInUrl = 'https://norma.nomoreparties.space/api/auth/login';
 
 export function logIn(email, password) {
     const data = {
@@ -16,7 +15,7 @@ export function logIn(email, password) {
         dispatch({
             type: LOG_IN_REQUEST
         })
-        userRequest(logInUrl, data)
+        userRequest(`${baseUrl}/auth/login`, data)
           .then(res => {
             if (res && res.success) {
                 const accessToken = res.accessToken.split('Bearer ')[1];

@@ -1,7 +1,7 @@
 import { getCookie } from "../../utils/cookie";
 import { refreshToken } from "./refresh-token-actions";
-
-const userDataUrl = 'https://norma.nomoreparties.space/api/auth/user';
+import { baseUrl } from "../../utils/api";
+import { request } from "../../utils/api";
 
 export const GET_USER_REQUEST = 'GET_USER_REQUEST';
 export const GET_USER = 'GET_USER';
@@ -13,17 +13,11 @@ export function getUserData () {
         dispatch({
             type: GET_USER_REQUEST,
         })
-        fetch(userDataUrl, {
+        request(`${baseUrl}/auth/user`, {
             headers: {
                 'Authorization': token || '',
             },
         })
-        .then((responce) => {
-            if(responce.ok) {
-                return responce.json()
-            }
-            return Promise.reject(`Ошибка ${responce.status}`);
-          })
         .then(res => {
             if (res && res.success) {
                 dispatch({

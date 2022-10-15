@@ -3,10 +3,13 @@ import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getUserData } from '../../services//actions/get-user-actions.js';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 
 export default function ProtectedRoute({ children, ...rest }) {
+  const location = useLocation();
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
   const [isUserLoaded, setUserLoaded] = useState(false)
+  
   const init = async () => {
     await getUserData();
     setUserLoaded(true);
@@ -15,6 +18,7 @@ export default function ProtectedRoute({ children, ...rest }) {
   useEffect(() => {
   init();
 }, []);
+
   if (!isUserLoaded) {
     return null;
   }
@@ -25,9 +29,7 @@ export default function ProtectedRoute({ children, ...rest }) {
         userLoggedIn ? (
           children
         ) : (
-                    <Redirect
-                        to='/login'
-          />
+          <Redirect to={{ pathname: "/login", state: { from: location } }} />
                 )
       }
     />

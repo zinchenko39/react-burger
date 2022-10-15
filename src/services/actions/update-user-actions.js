@@ -1,6 +1,6 @@
 import { getCookie } from "../../utils/cookie";
-
-const userDataUrl = 'https://norma.nomoreparties.space/api/auth/user';
+import { baseUrl } from "../../utils/api";
+import { request } from "../../utils/api";
 
 export const UPDATE_USER_DATA_REQUEST = 'UPDATE_USER_DATA_REQUEST';
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
@@ -16,7 +16,7 @@ export function updateUserData (email, name) {
         dispatch({
             type: UPDATE_USER_DATA_REQUEST,
         })
-        fetch(userDataUrl, {
+        request(`${baseUrl}/auth/user`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,12 +24,6 @@ export function updateUserData (email, name) {
             },
             body: JSON.stringify(data),
         })
-        .then((responce) => {
-            if(responce.ok) {
-                return responce.json()
-            }
-            return Promise.reject(`Ошибка ${responce.status}`);
-          })
         .then(res => {
             if (res && res.success) {
                 dispatch({

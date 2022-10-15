@@ -8,14 +8,15 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { userRequest } from '../../utils/api.js';
 import { FORGOT_PASSWORD_VISITED } from '../../services/actions/forgot-password-actions';
-
-const passwordForgotUrl =
-  'https://norma.nomoreparties.space/api/password-reset';
+import { useForm } from '../../hooks/useForm';
+import { baseUrl } from '../../utils/api.js';
 
 export default function ForgotPassword() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [email, setEmail] = useState('');
+  const { values, handleChange } = useForm({
+    email: '',
+  });
   const [error, setError] = useState(false);
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
 
@@ -33,7 +34,7 @@ export default function ForgotPassword() {
     const email = {
       email: value,
     };
-    userRequest(passwordForgotUrl, email)
+    userRequest(`${baseUrl}/password-reset`, email)
       .then((res) => {
         if (res && res.success) {
           dispatch({
@@ -53,28 +54,31 @@ export default function ForgotPassword() {
       <div className={styles.forgot_title}>
         <h2 className="text text_type_main-medium">Восстановление пароля</h2>
       </div>
-      <div className={styles.forgot_inputs}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          passwordForgotRequest(values.email);
+        }}
+        className={styles.forgot_inputs}
+      >
         <Input
-          value={email}
+          value={values.email}
+          name="email"
           type={'email'}
           placeholder={'Укажите e-mail'}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleChange}
         />
         {error && (
           <div className={styles.forgot_error}>
             <span className="text text_type_main-medium">Ошибка</span>
           </div>
         )}
-      </div>
-      <div className={styles.forgot_btn}>
-        <Button
-          onClick={() => passwordForgotRequest(email)}
-          type="primary"
-          size="medium"
-        >
-          Восстановить
-        </Button>
-      </div>
+        <div className={styles.forgot_btn}>
+          <Button type="primary" size="medium">
+            Восстановить
+          </Button>
+        </div>
+      </form>
       <div className={styles.forgot_bottom}>
         <p>
           <span className="text text_type_main-small">Вспомнили пароль?</span>

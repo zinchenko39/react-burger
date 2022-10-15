@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './ingridient-details.module.css';
-import PropTypes from 'prop-types';
+import Types from '../../utils/prop-types';
 
 export default function IngridientDetails({ item }) {
   return (
@@ -37,5 +37,5 @@ export default function IngridientDetails({ item }) {
 }
 
 IngridientDetails.propTypes = {
-  item: PropTypes.object,
+  item: Types.ingredientShapeType,
 };

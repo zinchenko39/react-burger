@@ -1,11 +1,10 @@
 import { userRequest } from "../../utils/api";
 import { setCookie, getCookie } from "../../utils/cookie";
+import { baseUrl } from "../../utils/api";
 
 export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
 export const LOG_OUT = 'LOG_OUT';
 export const LOG_OUT_ERROR = 'LOG_OUT_ERROR';
-
-const logOutUrl = 'https://norma.nomoreparties.space/api/auth/logout';
 
 export function logOut () {
     const token = {
@@ -15,7 +14,7 @@ export function logOut () {
         dispatch({
             type: LOG_OUT_REQUEST,
         })
-        userRequest(logOutUrl, token)
+        userRequest(`${baseUrl}/auth/logout`, token)
         .then(res => {
             if (res && res.success) {
                 setCookie('refreshToken', '');

@@ -8,15 +8,17 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { userRequest } from '../../utils/api.js';
 import { RESET_PASSWORD } from '../../services/actions/reset-password-actions';
-
-const passwordResetUrl =
-  'https://norma.nomoreparties.space/api/password-reset/reset';
+import { useForm } from '../../hooks/useForm';
+import { baseUrl } from '../../utils/api.js';
 
 export default function ResetPassword() {
+  const { values, handleChange } = useForm({
+    password: '',
+    code: '',
+  });
+
   const dispatch = useDispatch();
   const history = useHistory();
-  const [passwordValue, setPasswordValue] = useState('');
-  const [codeValue, setCodeValue] = useState('');
   const [error, setError] = useState(false);
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
   const forgotPasswordVisited = useSelector(
@@ -47,7 +49,7 @@ export default function ResetPassword() {
       password: password,
       token: code,
     };
-    userRequest(passwordResetUrl, data)
+    userRequest(`${baseUrl}}/password-reset/reset`, data)
       .then((res) => {
         if (res && res.success) {
           if (res.success) {
@@ -69,34 +71,39 @@ export default function ResetPassword() {
       <div className={styles.reset_title}>
         <h2 className="text text_type_main-medium">Восстановление пароля</h2>
       </div>
-      <div className={styles.reset_inputs}>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          passwordResetRequest(values.password, values.code);
+        }}
+        className={styles.reset_inputs}
+      >
         <Input
-          value={passwordValue}
-          type={'email'}
+          value={values.password}
+          name="password"
+          type={'password'}
           placeholder={'Введите новый пароль'}
-          onChange={(e) => setPasswordValue(e.target.value)}
+          onChange={handleChange}
         />
         <Input
-          value={codeValue}
+          value={values.code}
+          name="code"
           type={'text'}
           placeholder={'Введите код из письма'}
-          onChange={(e) => setCodeValue(e.target.value)}
+          onChange={handleChange}
         />
-      </div>
-      <div className={styles.reset_btn}>
-        {error && (
-          <div className={styles.reset_error}>
-            <span className="text text_type_main-medium">Ошибка</span>
-          </div>
-        )}
-        <Button
-          onClick={() => passwordResetRequest(passwordValue, codeValue)}
-          type="primary"
-          size="medium"
-        >
-          Сохранить
-        </Button>
-      </div>
+        <div className={styles.reset_btn}>
+          {error && (
+            <div className={styles.reset_error}>
+              <span className="text text_type_main-medium">Ошибка</span>
+            </div>
+          )}
+          <Button type="primary" size="medium">
+            Сохранить
+          </Button>
+        </div>
+      </form>
       <div className={styles.reset_bottom}>
         <p>
           <span className="text text_type_main-small">Вспомнили пароль?</span>

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Switch, Route, useLocation } from 'react-router-dom';
 
 import { AppHeader, ProtectedRoute, OrderDetails, Main } from '..';
 import { Register, Login, ForgotPassword ,ResetPassword, Error404, Profile, IngredientCard } from "../../pages";
@@ -12,57 +12,53 @@ import useModalControls from '../../hooks/modal-controls';
 
 
 function App () {
+    const location = useLocation();
     const dispatch = useDispatch();
     const modalControls = useModalControls();
-
-    const ingredient = useSelector(
-    (state) => state.currentIngredient.currentItem
-  );
-  
+    const state = location.state || {};
+    const { ingredient } = state;
+    
     useEffect(() => {
         dispatch(getItems());
         dispatch(getUserData());
     },[dispatch]);
     
     return (
-        <BrowserRouter>
-            <AppHeader/>
-             <Switch>
+        <>
+            <AppHeader />
+            <Switch>
                 <Route exact path="/">
-                    <Main/>
+                    <Main />
                 </Route>
                 <Route exact path="/register">
                     <Register/>
                 </Route>
                 <Route exact path="/login">
-                    <Login/>
+                    <Login />
                 </Route>
                 <Route exact path="/forgot-password">
-                    <ForgotPassword/>
+                    <ForgotPassword />
                 </Route>
                 <Route exact path="/reset-password">
-                    <ResetPassword/>
+                    <ResetPassword />
                 </Route>
                 <ProtectedRoute exact path="/profile">
-                    <Profile/>
+                    <Profile />
                 </ProtectedRoute>
                 <Route exact path="/ingredients/:id">
-                    {
-                        ingredient ?  <Main/>: <IngredientCard/>
-                    }
+                    {ingredient ? <Main /> : <IngredientCard />}
                 </Route>
-                <Route >
-                    <Error404/>
+                <Route>
+                    <Error404 />
                 </Route>
-             </Switch>
-             <Route exact path='/ingredients/:id' >
+            </Switch>
+            <Route exact path='/ingredients/:id'>
                 {ingredient &&
                     <Modal isOpen={modalControls.isModalOpen} close={modalControls.close}>
-                            <OrderDetails item={ingredient}/>
-                    </Modal>
-                }
-            </Route>
-        </BrowserRouter>
+                        <OrderDetails item={ingredient} />
+                    </Modal>}
+            </Route></>
+        
     )
 }
 
