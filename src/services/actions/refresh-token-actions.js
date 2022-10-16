@@ -2,7 +2,7 @@ import { userRequest } from "../../utils/api";
 import { setCookie, getCookie } from "../../utils/cookie";
 import { getUserData } from "./get-user-actions";
 
-import { baseUrl } from "../../utils/api";
+import { BASE_URL } from "../../utils/api";
 
 export const REFRESH_TOKEN_REQUEST = 'REFRESH_TOKEN_REQUEST';
 export const REFRESH_TOKEN = 'REFRESH_TOKEN';
@@ -16,7 +16,7 @@ export function refreshToken () {
         dispatch({
             type: REFRESH_TOKEN_REQUEST
         })
-        userRequest(`${baseUrl}/auth/token`, token)
+        userRequest(`${BASE_URL}/auth/token`, token)
         .then(res => {
             if (res && res.success) {
                 const accessToken = res.accessToken.split('Bearer ')[1];

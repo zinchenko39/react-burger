@@ -1,5 +1,5 @@
 import { getCookie } from "../../utils/cookie";
-import { baseUrl } from "../../utils/api";
+import { BASE_URL } from "../../utils/api";
 import { request } from "../../utils/api";
 
 export const UPDATE_USER_DATA_REQUEST = 'UPDATE_USER_DATA_REQUEST';
@@ -16,7 +16,7 @@ export function updateUserData (email, name) {
         dispatch({
             type: UPDATE_USER_DATA_REQUEST,
         })
-        request(`${baseUrl}/auth/user`, {
+        request(`${BASE_URL}/auth/user`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

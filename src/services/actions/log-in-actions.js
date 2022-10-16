@@ -1,6 +1,6 @@
 import { userRequest } from "../../utils/api";
 import { setCookie } from "../../utils/cookie";
-import { baseUrl } from "../../utils/api";
+import { BASE_URL } from "../../utils/api";
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN = 'LOG_IN';
@@ -15,7 +15,7 @@ export function logIn(email, password) {
         dispatch({
             type: LOG_IN_REQUEST
         })
-        userRequest(`${baseUrl}/auth/login`, data)
+        userRequest(`${BASE_URL}/auth/login`, data)
           .then(res => {
             if (res && res.success) {
                 const accessToken = res.accessToken.split('Bearer ')[1];

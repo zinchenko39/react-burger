@@ -1,6 +1,6 @@
 import { userRequest } from "../../utils/api";
 import { setCookie } from "../../utils/cookie";
-import { baseUrl } from "../../utils/api";
+import { BASE_URL } from "../../utils/api";
 
 export const REGISTER = 'REGISTER';
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
@@ -16,7 +16,7 @@ export function register(email, password, name) {
         dispatch({
             type: REGISTER_REQUEST
         })
-        userRequest(`${baseUrl}/auth/register`, data)
+        userRequest(`${BASE_URL}/auth/register`, data)
           .then(res => {
             if (res && res.success) {
                 const accessToken = res.accessToken.split('Bearer ')[1];

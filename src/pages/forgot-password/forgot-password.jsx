@@ -9,7 +9,7 @@ import {
 import { userRequest } from '../../utils/api.js';
 import { FORGOT_PASSWORD_VISITED } from '../../services/actions/forgot-password-actions';
 import { useForm } from '../../hooks/useForm';
-import { baseUrl } from '../../utils/api.js';
+import { BASE_URL } from '../../utils/api.js';
 
 export default function ForgotPassword() {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ export default function ForgotPassword() {
     const email = {
       email: value,
     };
-    userRequest(`${baseUrl}/password-reset`, email)
+    userRequest(`${BASE_URL}/password-reset`, email)
       .then((res) => {
         if (res && res.success) {
           dispatch({

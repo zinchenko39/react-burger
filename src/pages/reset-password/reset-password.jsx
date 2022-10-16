@@ -9,7 +9,7 @@ import {
 import { userRequest } from '../../utils/api.js';
 import { RESET_PASSWORD } from '../../services/actions/reset-password-actions';
 import { useForm } from '../../hooks/useForm';
-import { baseUrl } from '../../utils/api.js';
+import { BASE_URL } from '../../utils/api.js';
 
 export default function ResetPassword() {
   const { values, handleChange } = useForm({
@@ -49,7 +49,7 @@ export default function ResetPassword() {
       password: password,
       token: code,
     };
-    userRequest(`${baseUrl}}/password-reset/reset`, data)
+    userRequest(`${BASE_URL}}/password-reset/reset`, data)
       .then((res) => {
         if (res && res.success) {
           if (res.success) {

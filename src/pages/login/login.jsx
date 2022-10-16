@@ -15,20 +15,13 @@ export default function Login() {
     email: '',
     password: '',
   });
-  const history = useHistory();
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
   const userLoaded = useSelector((state) => state.user.userLoaded);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (userLoggedIn) history.replace({ pathname: '/' });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userLoggedIn]);
-
   if (userLoggedIn) {
-    const state = location.state || {};
-    return <Redirect to={{ pathname: state.from, state: state }} />;
+    return <Redirect to={location?.state?.from || '/'} />;
   }
   return (
     userLoaded && (

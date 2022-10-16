@@ -1,6 +1,4 @@
-const orderUrl = 'https://norma.nomoreparties.space/api/orders';
-const LoadIngredientsUrl = 'https://norma.nomoreparties.space/api/ingredients';
-export const baseUrl = 'https://norma.nomoreparties.space/api';
+export const BASE_URL = 'https://norma.nomoreparties.space/api';
 
 export function request(url, options) {
   return fetch(url, options).then(checkResponse)
@@ -14,12 +12,12 @@ return Promise.reject(`Ошибка ${res.status}`);
 }
 
 export function loadIngredients() {
-   return fetch(LoadIngredientsUrl)
+   return fetch(`${BASE_URL}/ingredients`)
       .then(checkResponse)
 }
 
 export function makeOrder(ingredients) {
-  return request(orderUrl, {
+  return request(`${BASE_URL}/orders`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',

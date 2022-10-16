@@ -1,6 +1,6 @@
 import { getCookie } from "../../utils/cookie";
 import { refreshToken } from "./refresh-token-actions";
-import { baseUrl } from "../../utils/api";
+import { BASE_URL } from "../../utils/api";
 import { request } from "../../utils/api";
 
 export const GET_USER_REQUEST = 'GET_USER_REQUEST';
@@ -13,7 +13,7 @@ export function getUserData () {
         dispatch({
             type: GET_USER_REQUEST,
         })
-        request(`${baseUrl}/auth/user`, {
+        request(`${BASE_URL}/auth/user`, {
             headers: {
                 'Authorization': token || '',
             },
