@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Link, useHistory, Redirect, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './login.module.css';
 import {
@@ -23,6 +23,7 @@ export default function Login() {
   if (userLoggedIn) {
     return <Redirect to={location?.state?.from || '/'} />;
   }
+
   return (
     userLoaded && (
       <>
