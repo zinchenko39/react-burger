@@ -8,8 +8,9 @@ function IngredientCard() {
     const {id} = useParams();
     const ingredients = useSelector((state) => state.ingredients.menu);
     const ingredient = ingredients.find(elem => elem._id === id);
+    const isModalOpen = useSelector((state) => state.modal.isOpen);
 
-    return (<div className='ingredient_wrapper'>
+    return (<div className={isModalOpen ? 'ingredient_wrapper__modal' : 'ingredient_wrapper'}>
         {
             ingredient && <IngridientDetails item={ingredient}/>
         }

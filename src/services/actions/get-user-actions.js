@@ -27,9 +27,12 @@ export function getUserData () {
             }
         })
         .catch((error) => {
-            try{
-                dispatch(refreshToken());
-            } catch {}
+            if(getCookie('accessToken')) {
+                console.log(token)
+                try{
+                    dispatch(refreshToken());
+                } catch {}
+            }
             console.log('getUserError', error)
             dispatch({
                 type: GET_USER_ERROR,

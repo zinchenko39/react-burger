@@ -5,19 +5,19 @@ import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 
 function AppHeader() {
-  const location = useLocation();
+  const isConstructor = useRouteMatch({ path: '/', exact: true });
+  const isProfile = useRouteMatch({ path: '/profile', exact: true });
+  const isHistory = useRouteMatch({ path: '/history', exact: true });
 
   return (
     <header className={styles.app_header_navigation__panel}>
       <nav className={styles.app_header_navigation__panel_container}>
         <div className={styles.app_header__links_left}>
           <div className={styles.app_header__link}>
-            <BurgerIcon
-              type={location.pathname === '/' ? 'primary' : 'secondary'}
-            />
+            <BurgerIcon type={isConstructor ? 'primary' : 'secondary'} />
             <NavLink
               to="/"
               exact
@@ -28,9 +28,7 @@ function AppHeader() {
             </NavLink>
           </div>
           <div className={styles.app_header__link}>
-            <ListIcon
-              type={location.pathname === '/history' ? 'primary' : 'secondary'}
-            />
+            <ListIcon type={isHistory ? 'primary' : 'secondary'} />
             <NavLink
               to="/history"
               exact
@@ -45,9 +43,7 @@ function AppHeader() {
           <Logo />
         </div>
         <div className={styles.app_header__links_right}>
-          <ProfileIcon
-            type={location.pathname === '/profile' ? 'primary' : 'secondary'}
-          />
+          <ProfileIcon type={isProfile ? 'primary' : 'secondary'} />
           <NavLink
             to="/profile"
             exact

@@ -55,10 +55,18 @@ code {
 }
 
 .ingredient_wrapper {
-  position: absolute;
+  position: relative;
   left: 0;
   right: 0;
   margin: 0 auto;
   top: 100px;
+  width: 600px;
+}
+
+.ingredient_wrapper__modal {
+  position: relative;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   width: 600px;
 }

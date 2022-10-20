@@ -20,6 +20,10 @@ export default function Login() {
 
   const dispatch = useDispatch();
 
+  if (!userLoaded) {
+    return null;
+  }
+
   if (userLoggedIn) {
     return <Redirect to={location?.state?.from || '/'} />;
   }

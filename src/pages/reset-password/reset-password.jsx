@@ -20,28 +20,23 @@ export default function ResetPassword() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [error, setError] = useState(false);
-  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
+
   const forgotPasswordVisited = useSelector(
     (state) => state.user.forgotPasswordVisited
   );
+  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
+  const userLoaded = useSelector((state) => state.user.userLoaded);
+
+  if (!userLoaded) {
+    return null;
+  }
 
   if (userLoggedIn) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/',
-        }}
-      />
-    );
+    return <Redirect to={'/'} />;
   }
+
   if (forgotPasswordVisited === false) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/forgot-password',
-        }}
-      />
-    );
+    return <Redirect to={'/forgot-password'} />;
   }
 
   function passwordResetRequest(password, code) {

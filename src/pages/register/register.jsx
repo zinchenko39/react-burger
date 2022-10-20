@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import styles from './register.module.css';
 import {
   Input,
@@ -18,6 +18,17 @@ export default function Register() {
   // eslint-disable-next-line no-unused-vars
   const registerError = useSelector((state) => state.user.registerError);
   const dispatch = useDispatch();
+
+  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
+  const userLoaded = useSelector((state) => state.user.userLoaded);
+
+  if (!userLoaded) {
+    return null;
+  }
+
+  if (userLoggedIn) {
+    return <Redirect to={'/'} />;
+  }
 
   return (
     <>

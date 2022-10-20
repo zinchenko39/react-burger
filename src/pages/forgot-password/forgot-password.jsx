@@ -18,16 +18,16 @@ export default function ForgotPassword() {
     email: '',
   });
   const [error, setError] = useState(false);
+
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
+  const userLoaded = useSelector((state) => state.user.userLoaded);
+
+  if (!userLoaded) {
+    return null;
+  }
 
   if (userLoggedIn) {
-    return (
-      <Redirect
-        to={{
-          pathname: '/',
-        }}
-      />
-    );
+    return <Redirect to={'/'} />;
   }
 
   function passwordForgotRequest(value) {
