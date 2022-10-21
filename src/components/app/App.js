@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 
 import { AppHeader, ProtectedRoute, Main } from '..';
@@ -7,20 +7,20 @@ import { Register, Login, ForgotPassword ,ResetPassword, Error404, Profile, Ingr
 import { getItems } from '../../services/actions/ingredients-actions.js';
 import { getUserData } from "../../services/actions/get-user-actions.js";
 import Modal from "../modal/modal.jsx";
-// import useModalControls from '../../hooks/modal-controls';
-
 
 
 function App () {
     const location = useLocation();
     const history = useHistory();
     const dispatch = useDispatch();
-    const isModalOpen = useSelector((state) => state.modal.isOpen);
-    console.log(location)
+   
 
-    const background = location.state && location.state.background;
+    let background = location.state && location.state.background;
     
-    const closeModal = () => history.goBack();
+    const closeModal = () => {
+        history.goBack();
+        background = null;
+    };
 
     useEffect(() => {
         dispatch(getItems());
@@ -59,8 +59,8 @@ function App () {
             {
                 background &&
                 <Route exact path='/ingredients/:id'>
-                    <Modal isOpen={isModalOpen} close={closeModal}>
-                            <IngredientCard />
+                    <Modal close={closeModal}>
+                            <IngredientCard background/>
                     </Modal>
                 </Route>
             }

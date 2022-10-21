@@ -28,7 +28,6 @@ export function getUserData () {
         })
         .catch((error) => {
             if(getCookie('accessToken')) {
-                console.log(token)
                 try{
                     dispatch(refreshToken());
                 } catch {}

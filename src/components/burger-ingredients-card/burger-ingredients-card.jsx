@@ -10,22 +10,15 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
 
-import { Modal, IngridientDetails } from '../index.js';
-import useModalControls from '../../hooks/modal-controls';
-import { useLocation, Link, useHistory } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 function BurgerIngredientCard({ ingridient }) {
   const location = useLocation();
-  const history = useHistory();
-  const modalControls = useModalControls();
   const dispatch = useDispatch();
 
   const [ingredientsQuantity, setIngredientsQuantity] = useState(0);
   const [bunQuantity, setBunQuantity] = useState(0);
 
-  const activeItem = useSelector(
-    (state) => state.currentIngredient.currentItem
-  );
   const cart = useSelector((state) => state.cart.items);
   const bun = useSelector((state) => state.cart.bun);
 
@@ -102,9 +95,6 @@ function BurgerIngredientCard({ ingridient }) {
           </div>
         </Link>
       )}
-      {/* <Modal isOpen={modalControls.isModalOpen} close={modalControls.close}>
-        <IngridientDetails item={activeItem} />
-      </Modal> */}
     </div>
   );
 }
