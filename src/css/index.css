@@ -48,3 +48,24 @@ code {
   margin: auto auto;
   text-align: center;
 }
+
+/* input for @ya.praktikum/react-developer-burger-ui-components */
+.input_size_default {
+  width: 480px;
+}
+
+.ingredient_wrapper {
+  position: relative;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 100px;
+  width: 600px;
+}
+
+.ingredient_wrapper__modal {
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 600px;
+}

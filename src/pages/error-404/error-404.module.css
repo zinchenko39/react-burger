@@ -1,0 +1,13 @@
+.error_text {
+    position: absolute;
+    text-align: center;
+    margin: auto;
+    width: 480px;
+    left: 0;
+    right: 0;
+    height: 30px;
+    top: 280px;
+}
+.error_text p {
+    margin-bottom: 20px;
+}

@@ -1,0 +1,57 @@
+.profile_wrapper {
+    position: relative;
+    top: 230px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 1280px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.profile_links {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    gap: 20px;
+}
+.profile_links a {
+    height: 100%;
+}
+
+.profile_link {
+    color: #8585AD;
+    text-decoration: none;
+}
+
+.profile_link__active {
+    color: #F2F2F3;
+    text-decoration: none;
+}
+.profile_bottom {
+    display: inline-block;
+    color: #8585AD;
+    height: 50px;
+    width: 290px;
+    margin-top: 100px;
+}
+
+.profile_view {
+    width: 480px;
+}
+.profile_log_out__btn {
+    width: 480px;
+    color: #8585AD;
+    cursor: pointer;
+}
+
+.profile_waiting {
+    position: absolute;
+    top: 400px;
+    height: 35px;
+    width: 100%;
+    margin: auto auto;
+    text-align: center;
+}
+

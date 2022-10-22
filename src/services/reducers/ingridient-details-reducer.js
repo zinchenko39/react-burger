@@ -2,7 +2,7 @@ import { OPEN_CURRENT_ITEM_DETAILS } from '../actions/ingridient-details-action.
 import { CLOSE_CURRENT_ITEM_DETAILS } from '../actions/ingridient-details-action.js';
 
 const ingridientInitialState = {
-    currentItem: {},
+    currentItem: null,
     isOpen: false,
 }
 

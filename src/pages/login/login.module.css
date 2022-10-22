@@ -1,0 +1,52 @@
+.login_title {
+    position: absolute;
+    text-align: center;
+    margin: auto;
+    width: 480px;
+    left: 0;
+    right: 0;
+    height: 30px;
+    top: 180px;
+}
+.login_inputs {
+    position: absolute;
+    width: 480px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 235px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.login_btn {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 200px;
+    text-align: center;
+}
+
+.login_btn button{
+    width: 253px;
+    height: 56px;
+}
+
+.login_bottom {
+    position: absolute;
+    width: 480px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 545px;
+    text-align: center;
+}
+.login_bottom span {
+    color: #8585AD;
+}
+.login_bottom a {
+    color: #4C4CFF;
+    margin-left: 8px;
+}

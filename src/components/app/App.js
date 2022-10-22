@@ -1,46 +1,71 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-
-import { AppHeader, BurgerConstructor, BurgerIngredients} from '..';
+import { AppHeader, ProtectedRoute, Main } from '..';
+import { Register, Login, ForgotPassword ,ResetPassword, Error404, Profile, IngredientCard } from "../../pages";
 import { getItems } from '../../services/actions/ingredients-actions.js';
+import { getUserData } from "../../services/actions/get-user-actions.js";
+import Modal from "../modal/modal.jsx";
 
 
 function App () {
+    const location = useLocation();
+    const history = useHistory();
     const dispatch = useDispatch();
-    const isLoading = useSelector(state => state.ingredients.isLoading);
-    const isError = useSelector(state => state.ingredients.isError);
+   
+
+    let background = location.state && location.state.background;
+    
+    const closeModal = () => {
+        history.goBack();
+        background = null;
+    };
 
     useEffect(() => {
         dispatch(getItems());
+        dispatch(getUserData());
     },[dispatch]);
     
     return (
         <>
-            <AppHeader/>
-            <main className='wrapper'>
+            <AppHeader />
+            <Switch location={background || location}>
+                <Route exact path="/">
+                    <Main />
+                </Route>
+                <Route exact path="/register">
+                    <Register/>
+                </Route>
+                <Route exact path="/login">
+                    <Login />
+                </Route>
+                <Route exact path="/forgot-password">
+                    <ForgotPassword />
+                </Route>
+                <Route exact path="/reset-password">
+                    <ResetPassword />
+                </Route>
+                <ProtectedRoute exact path="/profile">
+                    <Profile />
+                </ProtectedRoute>
+                <Route exact path="/ingredients/:id">
+                    <IngredientCard />
+                </Route>
+                <Route>
+                    <Error404 />
+                </Route>
+            </Switch>
             {
-                isError &&
-                <div className="loading">Что-то пошло не так...</div>
+                background &&
+                <Route exact path='/ingredients/:id'>
+                    <Modal close={closeModal}>
+                            <IngredientCard background/>
+                    </Modal>
+                </Route>
             }
-            {
-                isLoading &&
-                <div className="loading">Загружаю бургеры...</div>
-            }
-            {
-                !isLoading && !isError ?
-                <>
-                <DndProvider backend={HTML5Backend}>
-                    <BurgerIngredients />
-                    <BurgerConstructor />
-                </DndProvider>
-                </>
-                : ""
-            }
-            </main>
-        </>
+            </>
+        
     )
 }
 

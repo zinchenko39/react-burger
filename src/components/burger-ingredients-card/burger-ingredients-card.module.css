@@ -1,3 +1,8 @@
+a {
+    text-decoration: none;
+    color: #F2F2F3;
+}
+
 .burger_card_wrapper {
     position: relative;
     z-index: 10;
@@ -44,7 +49,6 @@
     align-items: center;
     padding: 0px;
     gap: 8px;
-    width: 62px;
     height: 24px;
     background: #131316;
     flex: none;

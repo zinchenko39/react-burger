@@ -4,25 +4,21 @@ import PropTypes from 'prop-types';
 
 import stylesBurgerCard from './burger-ingredients-card.module.css';
 
-import { OPEN_CURRENT_ITEM_DETAILS } from '../../services/actions/ingridient-details-action.js';
+import { OPEN_MODAL } from '../../services/actions/modal-actions';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
 
-import { Modal, IngridientDetails } from '../index.js';
-import useModalControls from '../../hooks/modal-controls';
+import { useLocation, Link } from 'react-router-dom';
 
 function BurgerIngredientCard({ ingridient }) {
-  const modalControls = useModalControls();
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const [ingredientsQuantity, setIngredientsQuantity] = useState(0);
   const [bunQuantity, setBunQuantity] = useState(0);
 
-  const activeItem = useSelector(
-    (state) => state.currentIngredient.currentItem
-  );
   const cart = useSelector((state) => state.cart.items);
   const bun = useSelector((state) => state.cart.bun);
 
@@ -53,49 +49,52 @@ function BurgerIngredientCard({ ingridient }) {
   return (
     <div className={stylesBurgerCard.burger_card_wrapper}>
       {!isDrag && (
-        <div
-          onClick={() => {
-            dispatch({
-              type: OPEN_CURRENT_ITEM_DETAILS,
-              item: ingridient,
-            });
-            modalControls.open();
+        <Link
+          to={{
+            pathname: `/ingredients/${ingridient._id}`,
+            state: { background: location },
           }}
-          name="burger_card"
-          className={stylesBurgerCard.burger_card}
-          ref={dragRef}
+          className="undecorated-link"
         >
-          {ingridient.type === 'bun' && bunQuantity ? (
-            <Counter count={bunQuantity} size="default" />
-          ) : (
-            ''
-          )}
-          {ingredientsQuantity ? (
-            <Counter count={ingredientsQuantity} size="default" />
-          ) : (
-            ''
-          )}
-          <img
-            src={ingridient.image}
-            className={stylesBurgerCard.burger_card__img}
-            alt="Картинка"
-          ></img>
-          <div className={stylesBurgerCard.burger_card__price}>
-            <div className={stylesBurgerCard.burger_card__price_text}>
-              <div className="text text_type_digits-default">
-                {ingridient.price}
+          <div
+            onClick={() => {
+              dispatch({
+                type: OPEN_MODAL,
+              });
+            }}
+            name="burger_card"
+            className={stylesBurgerCard.burger_card}
+            ref={dragRef}
+          >
+            {ingridient.type === 'bun' && bunQuantity ? (
+              <Counter count={bunQuantity} size="default" />
+            ) : (
+              ''
+            )}
+            {ingredientsQuantity ? (
+              <Counter count={ingredientsQuantity} size="default" />
+            ) : (
+              ''
+            )}
+            <img
+              src={ingridient.image}
+              className={stylesBurgerCard.burger_card__img}
+              alt="Картинка"
+            ></img>
+            <div className={stylesBurgerCard.burger_card__price}>
+              <div className={stylesBurgerCard.burger_card__price_text}>
+                <div className="text text_type_digits-default">
+                  {ingridient.price}
+                </div>
               </div>
+              <CurrencyIcon type="primary" />
             </div>
-            <CurrencyIcon type="primary" />
+            <div className={stylesBurgerCard.burger_card__name}>
+              <div className="text_type_main-default">{ingridient.name}</div>
+            </div>
           </div>
-          <div className={stylesBurgerCard.burger_card__name}>
-            <div className="text_type_main-default">{ingridient.name}</div>
-          </div>
-        </div>
+        </Link>
       )}
-      <Modal isOpen={modalControls.isModalOpen} close={modalControls.close}>
-        <IngridientDetails item={activeItem} />
-      </Modal>
     </div>
   );
 }

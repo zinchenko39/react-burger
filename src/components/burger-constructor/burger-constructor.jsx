@@ -1,6 +1,7 @@
 import { React, useEffect, useReducer, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import { useHistory } from 'react-router-dom';
 
 import styles from './burger-constructor.module.css';
 
@@ -8,7 +9,7 @@ import { ADD_ITEM } from '../../services/actions/constructor-actions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Modal, OrderDetails, BurgerConstructorCard } from '../index.js';
+import { BurgerConstructorCard, OrderDetails, Modal } from '../index.js';
 import { sendItems } from '../../services/actions/order-actions.js';
 import useModalControls from '../../hooks/modal-controls';
 
@@ -27,9 +28,10 @@ function reducer(state, action) {
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const cart = useSelector((state) => state.cart.items);
   const bun = useSelector((state) => state.cart.bun);
+  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
 
   const modalControls = useModalControls();
 
@@ -115,7 +117,7 @@ function BurgerConstructor() {
             key={`${bun._id}_top`}
             type="top"
             isLocked={true}
-            text={bun.name}
+            text={`${bun.name} (верх)`}
             price={bun.price}
             thumbnail={bun.image}
           />
@@ -140,7 +142,7 @@ function BurgerConstructor() {
             key={`${bun._id}_bottom`}
             type="bottom"
             isLocked={true}
-            text={bun.name}
+            text={`${bun.name} (низ)`}
             price={bun.price}
             thumbnail={bun.image}
           />
@@ -155,8 +157,12 @@ function BurgerConstructor() {
         </div>
         <Button
           onClick={() => {
-            dispatch(sendItems(orderId));
-            modalControls.open();
+            if (userLoggedIn) {
+              dispatch(sendItems(orderId));
+              modalControls.open();
+            } else {
+              history.replace('/login');
+            }
           }}
           name="order_btn"
           type="primary"

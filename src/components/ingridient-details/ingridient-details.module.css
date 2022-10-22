@@ -3,31 +3,28 @@
 }
 
 .ingridient_details_main {
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    width: 580px;
+    position: relative;
+    top: 50px;
     height: 64px;
     font-family: 'JetBrains Mono';
     font-style: normal;
     font-weight: 700;
     font-size: 36px;
     line-height: 40px;
-    display: flex;
     align-items: center;
     color: #F2F2F3;
-    flex: none;
-    order: 0;
-    flex-grow: 1;
+    text-align: center;
+    margin: 0;
 }
 
 .ingridient_details_img img {
     position: absolute;
     width: 520px;
     height: 240px;
-    left: 100px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
     top: 104px;
-    background: #1C1C21;
 }
 
 .ingridient_details_name {
@@ -44,6 +41,14 @@
     text-align: center;
     color: #F2F2F3;
 }
+.ingridient_details_callories_wrapper {
+    position: relative;
+    top: 370px;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
 
 .ingridient_details_callories {
     display: flex;
@@ -57,9 +62,6 @@
     flex: none;
     order: 0;
     flex-grow: 0;
-    position: absolute;
-    top: 422px;
-    left: 100px;
     color: #8585AD;
     width: 125px;
 }
@@ -76,9 +78,6 @@
     flex: none;
     order: 0;
     flex-grow: 0;
-    position: absolute;
-    top: 422px;
-    left: 240px;
     color: #8585AD;
     width: 125px;
 }
@@ -95,9 +94,6 @@
     flex: none;
     order: 0;
     flex-grow: 0;
-    position: absolute;
-    top: 422px;
-    left: 372px;
     color: #8585AD;
     width: 125px;
 }
@@ -114,9 +110,6 @@
     flex: none;
     order: 0;
     flex-grow: 0;
-    position: absolute;
-    top: 422px;
-    left: 504px;
     color: #8585AD;
     width: 125px;
 }

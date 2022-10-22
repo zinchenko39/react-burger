@@ -3,13 +3,13 @@ import { createPortal } from 'react-dom';
 import styles from './modal.module.css';
 
 import { useDispatch } from 'react-redux';
-import { CLOSE_CURRENT_ITEM_DETAILS } from '../../services/actions/ingridient-details-action.js';
-import PropTypes from 'prop-types';
+import { CLOSE_MODAL } from '../../services/actions/modal-actions.js';
+import PropTypes, { bool, object } from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ModalOverlay } from '../index.js';
 
 const modalsElement = document.getElementById('modal');
-function Modal({ isOpen, close, children }) {
+function Modal({ isOpen = true, close, children }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function Modal({ isOpen, close, children }) {
           <div
             onClick={() => {
               dispatch({
-                type: CLOSE_CURRENT_ITEM_DETAILS,
+                type: CLOSE_MODAL,
               });
               close();
             }}
@@ -53,7 +53,7 @@ function Modal({ isOpen, close, children }) {
 }
 
 Modal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
+  isOpen: PropTypes.oneOfType([object, bool]),
   close: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };

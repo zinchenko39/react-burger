@@ -5,8 +5,6 @@ import { BurgerIngredientCard } from '../../index.js';
 
 const BurgerIngredientsHeadline = forwardRef(
   ({ items, categoryName, type }, ref) => {
-    // const items = useSelector((state) => state.ingredients.menu);
-
     return (
       <div
         ref={ref}

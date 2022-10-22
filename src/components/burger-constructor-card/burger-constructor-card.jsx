@@ -14,6 +14,7 @@ function BurgerConstructorCard({ item, index }) {
 
   //D&D
   const ref = useRef(null);
+  // eslint-disable-next-line no-unused-vars
   const [{ handlerId }, drop] = useDrop({
     accept: 'card',
     collect(monitor) {
@@ -49,6 +50,7 @@ function BurgerConstructorCard({ item, index }) {
       item.index = hoverIndex;
     },
   });
+  // eslint-disable-next-line no-unused-vars
   const id = item.id;
   const [{ isDragging }, drag] = useDrag({
     type: 'card',

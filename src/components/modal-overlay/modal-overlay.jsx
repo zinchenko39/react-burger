@@ -1,9 +1,23 @@
 import React from 'react';
 import styles from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { CLOSE_MODAL } from '../../services/actions/modal-actions.js';
 
 function ModalOverlay({ setClose }) {
-  return <div onClick={setClose} className={styles.modal__overlay}></div>;
+  const dispatch = useDispatch();
+
+  return (
+    <div
+      onClick={() => {
+        dispatch({
+          type: CLOSE_MODAL,
+        });
+        setClose();
+      }}
+      className={styles.modal__overlay}
+    ></div>
+  );
 }
 
 ModalOverlay.propTypes = {
