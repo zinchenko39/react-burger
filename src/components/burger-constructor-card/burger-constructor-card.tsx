@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 import styles from './burger-constructor-card.module.css';
@@ -8,26 +8,27 @@ import {
 } from '../../services/actions/constructor-actions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
+import { IBurgerConstructorCard } from '../../interfaces/IBurgerConstructorCard';
 
-function BurgerConstructorCard({ item, index }) {
-  const dispatch = useDispatch();
+function BurgerConstructorCard({ item, index }: IBurgerConstructorCard) {
+  const dispatch = useDispatch<any>();
 
   //D&D
-  const ref = useRef(null);
-  // eslint-disable-next-line no-unused-vars
-  const [{ handlerId }, drop] = useDrop({
+  const ref = useRef<HTMLInputElement>(null);
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+  const [{ handlerId }, drop] = useDrop<any, any, any>({
     accept: 'card',
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover(item: any, monitor: any) {
       if (!ref.current) {
         return;
       }
-      const dragIndex = item.index;
-      const hoverIndex = index;
+      const dragIndex: number = item.index;
+      const hoverIndex: number = index;
       if (dragIndex === hoverIndex) {
         return;
       }
@@ -50,9 +51,8 @@ function BurgerConstructorCard({ item, index }) {
       item.index = hoverIndex;
     },
   });
-  // eslint-disable-next-line no-unused-vars
-  const id = item.id;
-  const [{ isDragging }, drag] = useDrag({
+
+  const [{ isDragging }, drag] = useDrag<any, any, any>({
     type: 'card',
     item: () => {
       return { item, index };

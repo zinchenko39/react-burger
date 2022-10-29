@@ -1,4 +1,4 @@
-import { React, useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { useHistory } from 'react-router-dom';
@@ -13,12 +13,21 @@ import { BurgerConstructorCard, OrderDetails, Modal } from '../index.js';
 import { sendItems } from '../../services/actions/order-actions.js';
 import useModalControls from '../../hooks/modal-controls';
 
-const initialSum = { count: 0 };
+import { IIngredient } from '../../interfaces/IIngredient';
 
-function reducer(state, action) {
+const initialSum: { count: number } = { count: 0 };
+
+function reducer(
+  state: { count: number },
+  action: { type: 'increment' | 'reset'; price?: number }
+) {
   switch (action.type) {
     case 'increment':
-      return { count: state.count + action.price };
+      if (action.price === undefined) {
+        return { count: state.count + 0 };
+      } else {
+        return { count: state.count + action.price };
+      }
     case 'reset':
       return { count: 0 };
     default:
@@ -27,26 +36,35 @@ function reducer(state, action) {
 }
 
 function BurgerConstructor() {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const cart = useSelector((state) => state.cart.items);
-  const bun = useSelector((state) => state.cart.bun);
-  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
+  const dispatch = useDispatch<any>();
+  const history = useHistory<object>();
+  const cart = useSelector((state: any) => state.cart.items);
+  const bun = useSelector((state: any) => state.cart.bun);
+  const userLoggedIn = useSelector((state: any) => state.user.userLoggedIn);
 
-  const modalControls = useModalControls();
+  const modalControls: any = useModalControls();
 
   const [sum, dispatchSum] = useReducer(reducer, initialSum);
-  const [orderId, setOrderId] = useState({ ingredients: [] });
+  const [orderId, setOrderId] = useState<object>({ ingredients: [] });
 
-  function filterOrderId(items, bun) {
-    const arrOrderId = [];
+  function filterOrderId(items: IIngredient[], bun: IIngredient) {
+    const arrOrderId: string[] = [];
 
     arrOrderId.push(bun._id);
-    items.forEach((elem) => {
+    items.forEach((elem: any) => {
       arrOrderId.push(elem._id);
     });
 
     setOrderId({ ingredients: arrOrderId });
+  }
+
+  function handleOrder() {
+    if (userLoggedIn) {
+      dispatch(sendItems(orderId));
+      modalControls.open();
+    } else {
+      history.replace('/login');
+    }
   }
 
   //D&D Drop
@@ -57,12 +75,12 @@ function BurgerConstructor() {
     },
   });
 
-  function calculatePrice(items, bun) {
+  function calculatePrice(items: IIngredient[], bun: IIngredient) {
     dispatchSum({
       type: 'reset',
     });
     //Claculate main, sauces
-    items.forEach((elem) => {
+    items.forEach((elem: any) => {
       dispatchSum({
         type: 'increment',
         price: elem.price,
@@ -78,13 +96,13 @@ function BurgerConstructor() {
     }
   }
   //D&D
-  const elements = useSelector((state) => state.ingredients.menu);
+  const elements = useSelector((state: any) => state.ingredients.menu);
 
-  const handleDrop = (itemId) => {
+  const handleDrop = (itemId: any) => {
     let ingredient;
 
     function compareIngredient() {
-      elements.forEach((element) => {
+      elements.forEach((element: IIngredient) => {
         if (element._id === itemId.id) {
           ingredient = element;
         } else {
@@ -126,7 +144,7 @@ function BurgerConstructor() {
         ''
       )}
       <main className={styles.burger_constructor__main}>
-        {cart.map((elem, index) => {
+        {cart.map((elem: IIngredient, index: number) => {
           return (
             <BurgerConstructorCard
               key={elem.uniqId}
@@ -156,23 +174,16 @@ function BurgerConstructor() {
           <CurrencyIcon type="primary" />
         </div>
         <Button
-          onClick={() => {
-            if (userLoggedIn) {
-              dispatch(sendItems(orderId));
-              modalControls.open();
-            } else {
-              history.replace('/login');
-            }
-          }}
+          onClick={handleOrder}
           name="order_btn"
           type="primary"
           size="large"
         >
           Оформить заказ
         </Button>
-        <Modal isOpen={modalControls.isModalOpen} close={modalControls.close}>
+        {/* <Modal isOpen={modalControls.isModalOpen} close={modalControls.close}>
           <OrderDetails />
-        </Modal>
+        </Modal> */}
       </div>
     </section>
   );

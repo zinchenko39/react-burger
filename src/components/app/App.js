@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 
-import { AppHeader, ProtectedRoute, Main } from '..';
+import { AppHeader, ProtectedRoute, Main, OrderDetails } from '..';
 import { Register, Login, ForgotPassword ,ResetPassword, Error404, Profile, IngredientCard } from "../../pages";
 import { getItems } from '../../services/actions/ingredients-actions.js';
 import { getUserData } from "../../services/actions/get-user-actions.js";
@@ -14,7 +14,6 @@ function App () {
     const history = useHistory();
     const dispatch = useDispatch();
    
-
     let background = location.state && location.state.background;
     
     const closeModal = () => {
@@ -65,7 +64,6 @@ function App () {
                 </Route>
             }
             </>
-        
     )
 }
 
