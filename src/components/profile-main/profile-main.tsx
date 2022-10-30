@@ -9,28 +9,28 @@ import { getUserData } from '../../services/actions/get-user-actions.js';
 import { updateUserData } from '../../services/actions/update-user-actions';
 
 export default function ProfileMain() {
-  const dispatch = useDispatch();
-  const userName = useSelector((state) => state.user.name);
-  const userLogin = useSelector((state) => state.user.email);
+  const dispatch = useDispatch<any>();
+  const userName = useSelector((state: any) => state.user.name);
+  const userLogin = useSelector((state: any) => state.user.email);
   const updateUserDataError = useSelector(
-    (state) => state.user.updateUserDataError
+    (state: any) => state.user.updateUserDataError
   );
 
-  const [fieldName, setFieldName] = useState(userName);
-  const [fieldLogin, setFieldLogin] = useState(userLogin);
-  const [fieldPassword, setFieldPassword] = useState('111111');
+  const [fieldName, setFieldName] = useState<string>(userName);
+  const [fieldLogin, setFieldLogin] = useState<string>(userLogin);
+  const [fieldPassword, setFieldPassword] = useState<string>('111111');
 
-  const nameRef = useRef(null);
-  const loginRef = useRef(null);
-  const passwordRef = useRef(null);
+  const nameRef = useRef<any>(null);
+  const loginRef = useRef<any>(null);
+  const passwordRef = useRef<any>(null);
 
-  const [disabledName, setDisabledName] = useState(true);
-  const [disabledLogin, setDisabledLogin] = useState(true);
-  const [disabledPassword, setDisabledPassword] = useState(true);
+  const [disabledName, setDisabledName] = useState<boolean>(true);
+  const [disabledLogin, setDisabledLogin] = useState<boolean>(true);
+  const [disabledPassword, setDisabledPassword] = useState<boolean>(true);
 
-  const [iconName, setIconName] = useState('EditIcon');
-  const [iconLogin, setIconLogin] = useState('EditIcon');
-  const [iconPassword, setIconPassword] = useState('EditIcon');
+  const [iconName, setIconName] = useState<string>('EditIcon');
+  const [iconLogin, setIconLogin] = useState<string>('EditIcon');
+  const [iconPassword, setIconPassword] = useState<string>('EditIcon');
 
   const changeName = () => {
     setTimeout(() => nameRef.current.focus(), 0);

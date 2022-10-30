@@ -4,7 +4,7 @@ import { BASE_URL } from "../../utils/api";
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN = 'LOG_IN';
-export const LOG_IN_ERROR = 'LOG_IN_REQUEST';
+export const LOG_IN_ERROR = 'LOG_IN_ERROR';
 
 export function logIn(email, password) {
     const data = {
@@ -27,12 +27,28 @@ export function logIn(email, password) {
                 user: res.user,
                 })
             }
+            if(!res.success) {
+              console.log("Зашло в res.success === false")
+              dispatch({
+                type: LOG_IN_ERROR,
+                error: res.message
+              })
+            }
         })
       .catch((error) => {
-        console.log('logInError', error)
-        dispatch({
-            type: LOG_IN_ERROR
+        if(error === 401) {
+          dispatch({
+            type: LOG_IN_ERROR,
+            error: 'Неверный логин или пароль'
           })
+        }
+        else {
+          dispatch({
+            type: LOG_IN_ERROR,
+            error: 'Что-то пошло не так...'
+          })
+        }
+        console.log('logInError', error)
       })
     }
 }

@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import stylesBurgerCard from './burger-ingredients-card.module.css';
-
-import { OPEN_MODAL } from '../../services/actions/modal-actions';
 
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
 
+import { IBurgerIngredientCard } from '../../interfaces/IBurgerIngredientCard';
+import { ILocation } from '../../interfaces/ILocations';
+import { IIngredient } from '../../interfaces/IIngredient';
+
 import { useLocation, Link } from 'react-router-dom';
 
-function BurgerIngredientCard({ ingridient }) {
-  const location = useLocation();
-  const dispatch = useDispatch();
+function BurgerIngredientCard({ ingredient }: IBurgerIngredientCard) {
+  const location = useLocation<ILocation>();
 
-  const [ingredientsQuantity, setIngredientsQuantity] = useState(0);
-  const [bunQuantity, setBunQuantity] = useState(0);
+  const [ingredientsQuantity, setIngredientsQuantity] = useState<number>(0);
+  const [bunQuantity, setBunQuantity] = useState<number>(0);
 
-  const cart = useSelector((state) => state.cart.items);
-  const bun = useSelector((state) => state.cart.bun);
+  const cart = useSelector((state: any) => state.cart.items);
+  const bun = useSelector((state: any) => state.cart.bun);
 
   //D&D
-  const id = ingridient._id;
-  const [{ isDrag }, dragRef] = useDrag({
+  const id: any = ingredient._id;
+  const [{ isDrag }, dragRef] = useDrag<any, any, any>({
     type: 'ingredient',
     item: { id },
     collect: (monitor) => ({
@@ -32,8 +32,10 @@ function BurgerIngredientCard({ ingridient }) {
     }),
   });
 
-  const calculateQuantity = (item) => {
-    const ingredientsArray = cart.filter((elem) => elem._id === item._id);
+  const calculateQuantity = (item: IIngredient) => {
+    const ingredientsArray = cart.filter(
+      (elem: IIngredient) => elem._id === item._id
+    );
     if (bun._id === item._id) {
       setBunQuantity(1);
     } else {
@@ -43,7 +45,7 @@ function BurgerIngredientCard({ ingridient }) {
   };
 
   useEffect(() => {
-    calculateQuantity(ingridient);
+    calculateQuantity(ingredient);
   });
 
   return (
@@ -51,22 +53,13 @@ function BurgerIngredientCard({ ingridient }) {
       {!isDrag && (
         <Link
           to={{
-            pathname: `/ingredients/${ingridient._id}`,
+            pathname: `/ingredients/${ingredient._id}`,
             state: { background: location },
           }}
           className="undecorated-link"
         >
-          <div
-            onClick={() => {
-              dispatch({
-                type: OPEN_MODAL,
-              });
-            }}
-            name="burger_card"
-            className={stylesBurgerCard.burger_card}
-            ref={dragRef}
-          >
-            {ingridient.type === 'bun' && bunQuantity ? (
+          <div className={stylesBurgerCard.burger_card} ref={dragRef}>
+            {ingredient.type === 'bun' && bunQuantity ? (
               <Counter count={bunQuantity} size="default" />
             ) : (
               ''
@@ -77,20 +70,20 @@ function BurgerIngredientCard({ ingridient }) {
               ''
             )}
             <img
-              src={ingridient.image}
+              src={ingredient.image}
               className={stylesBurgerCard.burger_card__img}
               alt="Картинка"
             ></img>
             <div className={stylesBurgerCard.burger_card__price}>
               <div className={stylesBurgerCard.burger_card__price_text}>
                 <div className="text text_type_digits-default">
-                  {ingridient.price}
+                  {ingredient.price}
                 </div>
               </div>
               <CurrencyIcon type="primary" />
             </div>
             <div className={stylesBurgerCard.burger_card__name}>
-              <div className="text_type_main-default">{ingridient.name}</div>
+              <div className="text_type_main-default">{ingredient.name}</div>
             </div>
           </div>
         </Link>
@@ -98,9 +91,5 @@ function BurgerIngredientCard({ ingridient }) {
     </div>
   );
 }
-
-BurgerIngredientCard.propTypes = {
-  ingridient: PropTypes.object.isRequired,
-};
 
 export default BurgerIngredientCard;

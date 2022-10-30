@@ -50,3 +50,9 @@
     color: #4C4CFF;
     margin-left: 8px;
 }
+
+.login_error {
+    position: relative;
+    bottom: 20px;
+    text-align: center;
+}

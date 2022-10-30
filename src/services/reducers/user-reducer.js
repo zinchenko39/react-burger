@@ -72,7 +72,7 @@ export const userReducer  = (state = userInitialState, action) => {
               ...state,
               userLoggedIn: false,
               userLoaded: true,
-              logInError: true,
+              logInError: action.error,
             };
         }
         case LOG_OUT_REQUEST: {

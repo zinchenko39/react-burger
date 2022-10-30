@@ -17,6 +17,7 @@ export default function Login() {
   });
   const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
   const userLoaded = useSelector((state) => state.user.userLoaded);
+  const logInError = useSelector((state) => state.user.logInError);
 
   const dispatch = useDispatch();
 
@@ -54,6 +55,11 @@ export default function Login() {
             icon={'ShowIcon'}
           />
           <div className={styles.login_btn}>
+            {logInError && (
+              <div className={styles.login_error}>
+                <span className="text text_type_main-medium">{logInError}</span>
+              </div>
+            )}
             <Button type="primary" size="medium">
               Войти
             </Button>

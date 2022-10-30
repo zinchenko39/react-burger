@@ -1,10 +1,11 @@
 import React, { forwardRef } from 'react';
-import PropTypes from 'prop-types';
 import styles from '../burger-ingredients.module.css';
-import { BurgerIngredientCard } from '../../index.js';
+import { BurgerIngredientCard } from '../../index';
+
+import { IBurgerIngredientsHeadline } from '../../../interfaces/IBurgerIngredientsHeadline';
 
 const BurgerIngredientsHeadline = forwardRef(
-  ({ items, categoryName, type }, ref) => {
+  ({ items, categoryName, type }: IBurgerIngredientsHeadline, ref: any) => {
     return (
       <div
         ref={ref}
@@ -14,17 +15,12 @@ const BurgerIngredientsHeadline = forwardRef(
         <p className="text text_type_main-medium">{categoryName}</p>
         <div className={styles.burger_ingredients__main_column}>
           {items.map((obj) => (
-            <BurgerIngredientCard ingridient={obj} key={`${obj._id}`} />
+            <BurgerIngredientCard ingredient={obj} key={`${obj._id}`} />
           ))}
         </div>
       </div>
     );
   }
 );
-
-BurgerIngredientsHeadline.propTypes = {
-  categoryName: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
 
 export default BurgerIngredientsHeadline;

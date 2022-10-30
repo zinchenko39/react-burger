@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 
-import { AppHeader, ProtectedRoute, Main, OrderDetails } from '..';
+import { AppHeader, ProtectedRoute, Main, Modal } from '..';
 import { Register, Login, ForgotPassword ,ResetPassword, Error404, Profile, IngredientCard } from "../../pages";
 import { getItems } from '../../services/actions/ingredients-actions.js';
 import { getUserData } from "../../services/actions/get-user-actions.js";
-import Modal from "../modal/modal.jsx";
 
 
 function App () {

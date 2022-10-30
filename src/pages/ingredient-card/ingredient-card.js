@@ -2,7 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
-import IngridientDetails from '../../components/ingridient-details/ingridient-details.jsx';
+import IngridientDetails from '../../components/ingridient-details/ingridient-details';
 
 function IngredientCard({background}) {
     const {id} = useParams();

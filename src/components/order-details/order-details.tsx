@@ -1,10 +1,9 @@
-import React from 'react';
 import styles from './order-details.module.css';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+
 function OrderDetails() {
-  const orderError = useSelector((state) => state.order.isError);
-  const orderNumber = useSelector((state) => state.order.orderNumber);
+  const orderError = useSelector((state: any) => state.order.isError);
+  const orderNumber = useSelector((state: any) => state.order.orderNumber);
   return (
     <div className={styles.order_details__wrapper}>
       <div className={styles.order_details__number}>
@@ -38,9 +37,5 @@ function OrderDetails() {
     </div>
   );
 }
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number,
-};
 
 export default OrderDetails;

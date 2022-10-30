@@ -1,28 +1,29 @@
-import { React, useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { IIngredient } from '../../interfaces/IIngredient';
 
 import { BurgerIngredientsHeadline } from '..';
 
 function BurgerIngredients() {
-  const items = useSelector((state) => state.ingredients.menu);
+  const items = useSelector((state: any) => state.ingredients.menu);
 
-  const [currentTab, setCurrentTab] = useState('buns'); //@ya.praktikum/react-developer-burger-ui-components
+  const [currentTab, setCurrentTab] = useState<string>('buns'); //@ya.praktikum/react-developer-burger-ui-components
 
-  const categories = ['Булки', 'Соусы', 'Начинки'];
+  const categories: string[] = ['Булки', 'Соусы', 'Начинки'];
 
-  const bunRef = useRef(null);
-  const mainRef = useRef(null);
-  const sauceRef = useRef(null);
+  const bunRef = useRef<HTMLInputElement>(null);
+  const mainRef = useRef<HTMLInputElement>(null);
+  const sauceRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const options = {
+    const options: { rootMargin: string } = {
       rootMargin: '-50% 0px -50%',
     };
-    let observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
+    let observer: any = new IntersectionObserver((entries) => {
+      entries.forEach((entry: any) => {
         if (entry.isIntersecting) {
           setCurrentTab(entry.target.id);
         }
@@ -35,18 +36,18 @@ function BurgerIngredients() {
     observer.observe(mainRef.current);
   }, [mainRef, sauceRef, bunRef]);
 
-  const buns = useMemo(
-    () => items.filter((elem) => elem.type === 'bun'),
+  const buns: IIngredient[] = useMemo(
+    () => items.filter((elem: IIngredient) => elem.type === 'bun'),
     [items]
   );
 
-  const main = useMemo(
-    () => items.filter((elem) => elem.type === 'main'),
+  const main: IIngredient[] = useMemo(
+    () => items.filter((elem: IIngredient) => elem.type === 'main'),
     [items]
   );
 
-  const sauce = useMemo(
-    () => items.filter((elem) => elem.type === 'sauce'),
+  const sauce: IIngredient[] = useMemo(
+    () => items.filter((elem: IIngredient) => elem.type === 'sauce'),
     [items]
   );
 
@@ -71,7 +72,7 @@ function BurgerIngredients() {
         </Tab>
       </div>
       <div className={styles.burger_ingredients__main}>
-        {categories.map((elem, index) => {
+        {categories.map((elem: string, index: number) => {
           if (elem === 'Булки') {
             return (
               <BurgerIngredientsHeadline
