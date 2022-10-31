@@ -14,7 +14,7 @@ import { IIngredient } from '../../interfaces/IIngredient';
 import { useLocation, Link } from 'react-router-dom';
 
 function BurgerIngredientCard({ ingredient }: IBurgerIngredientCard) {
-  const location = useLocation<ILocation>();
+  const location = useLocation() as ILocation;
 
   const [ingredientsQuantity, setIngredientsQuantity] = useState<number>(0);
   const [bunQuantity, setBunQuantity] = useState<number>(0);

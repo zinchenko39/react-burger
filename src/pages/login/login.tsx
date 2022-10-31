@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './login.module.css';
@@ -8,18 +7,19 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { logIn } from '../../services/actions/log-in-actions';
 import { useForm } from '../../hooks/useForm';
+import { ILocation } from '../../interfaces/ILocations';
 
 export default function Login() {
-  const location = useLocation();
+  const location = useLocation() as ILocation;
   const { values, handleChange } = useForm({
     email: '',
     password: '',
   });
-  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
-  const userLoaded = useSelector((state) => state.user.userLoaded);
-  const logInError = useSelector((state) => state.user.logInError);
+  const userLoggedIn = useSelector((state: any) => state.user.userLoggedIn);
+  const userLoaded = useSelector((state: any) => state.user.userLoaded);
+  const logInError = useSelector((state: any) => state.user.logInError);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   if (!userLoaded) {
     return null;

@@ -1,18 +1,20 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import styles from './profile.module.css';
 import { useDispatch, useSelector } from 'react-redux';
+
+import styles from './profile.module.css';
+
 import { ProfileMain } from '../../components';
-import { logOut } from '../../services/actions/log-out-actions.js';
-import { getUserData } from '../../services/actions/get-user-actions.js';
+import { logOut } from '../../services/actions/log-out-actions';
+import { getUserData } from '../../services/actions/get-user-actions';
 
 export default function Profile() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   useEffect(() => {
     dispatch(getUserData());
   }, [dispatch]);
 
-  const userLoaded = useSelector((state) => state.user.userLoaded);
+  const userLoaded = useSelector((state: any) => state.user.userLoaded);
 
   return userLoaded ? (
     <div className={styles.profile_wrapper}>

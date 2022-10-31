@@ -5,7 +5,7 @@ import {
   Input,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { getUserData } from '../../services/actions/get-user-actions.js';
+import { getUserData } from '../../services/actions/get-user-actions';
 import { updateUserData } from '../../services/actions/update-user-actions';
 
 export default function ProfileMain() {

@@ -10,7 +10,7 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerConstructorCard, OrderDetails, Modal } from '../index';
-import { sendItems } from '../../services/actions/order-actions.js';
+import { sendItems } from '../../services/actions/order-actions';
 import useModalControls from '../../hooks/modal-controls';
 
 import { IIngredient } from '../../interfaces/IIngredient';
@@ -45,7 +45,7 @@ function BurgerConstructor() {
   const modalControls: any = useModalControls();
 
   const [sum, dispatchSum] = useReducer(reducer, initialSum);
-  const [orderId, setOrderId] = useState<object>({ ingredients: [] });
+  const [orderId, setOrderId] = useState<any>({ ingredients: [] });
 
   function filterOrderId(items: IIngredient[], bun: IIngredient) {
     const arrOrderId: string[] = [];

@@ -1,7 +1,7 @@
 export interface ILocation {
   state: {
     from?: Location;
-    background?: Location;
+    background?: Location | null;
   };
   pathname: string;
 }

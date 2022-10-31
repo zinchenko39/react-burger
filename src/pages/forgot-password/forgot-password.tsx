@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './forgot-password.module.css';
@@ -6,21 +6,20 @@ import {
   Input,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { userRequest } from '../../utils/api.js';
+import { BASE_URL, userRequest } from '../../utils/api';
 import { FORGOT_PASSWORD_VISITED } from '../../services/actions/forgot-password-actions';
 import { useForm } from '../../hooks/useForm';
-import { BASE_URL } from '../../utils/api.js';
 
 export default function ForgotPassword() {
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const dispatch = useDispatch<any>();
+  const history = useHistory<any>();
   const { values, handleChange } = useForm({
     email: '',
   });
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<boolean>(false);
 
-  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
-  const userLoaded = useSelector((state) => state.user.userLoaded);
+  const userLoggedIn = useSelector((state: any) => state.user.userLoggedIn);
+  const userLoaded = useSelector((state: any) => state.user.userLoaded);
 
   if (!userLoaded) {
     return null;
@@ -30,8 +29,8 @@ export default function ForgotPassword() {
     return <Redirect to={'/'} />;
   }
 
-  function passwordForgotRequest(value) {
-    const email = {
+  function passwordForgotRequest(value: string): void {
+    const email: { email: string } = {
       email: value,
     };
     userRequest(`${BASE_URL}/password-reset`, email)

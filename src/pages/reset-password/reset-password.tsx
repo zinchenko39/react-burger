@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './reset-password.module.css';
@@ -6,10 +6,10 @@ import {
   Input,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { userRequest } from '../../utils/api.js';
+import { IData } from '../../interfaces/IData';
+import { BASE_URL, userRequest } from '../../utils/api';
 import { RESET_PASSWORD } from '../../services/actions/reset-password-actions';
 import { useForm } from '../../hooks/useForm';
-import { BASE_URL } from '../../utils/api.js';
 
 export default function ResetPassword() {
   const { values, handleChange } = useForm({
@@ -17,15 +17,15 @@ export default function ResetPassword() {
     code: '',
   });
 
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const [error, setError] = useState(false);
+  const dispatch = useDispatch<any>();
+  const history = useHistory<any>();
+  const [error, setError] = useState<boolean>(false);
 
   const forgotPasswordVisited = useSelector(
-    (state) => state.user.forgotPasswordVisited
+    (state: any) => state.user.forgotPasswordVisited
   );
-  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
-  const userLoaded = useSelector((state) => state.user.userLoaded);
+  const userLoggedIn = useSelector((state: any) => state.user.userLoggedIn);
+  const userLoaded = useSelector((state: any) => state.user.userLoaded);
 
   if (!userLoaded) {
     return null;
@@ -39,8 +39,8 @@ export default function ResetPassword() {
     return <Redirect to={'/forgot-password'} />;
   }
 
-  function passwordResetRequest(password, code) {
-    const data = {
+  function passwordResetRequest(password: string, code: string): void {
+    const data: IData = {
       password: password,
       token: code,
     };

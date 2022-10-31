@@ -1,5 +1,4 @@
 import styles from './ingridient-details.module.css';
-import Types from '../../utils/prop-types';
 import { IIngredientDetails } from '../../interfaces/IIngredientDetails';
 
 export default function IngridientDetails({ item }: IIngredientDetails) {
@@ -41,7 +40,3 @@ export default function IngridientDetails({ item }: IIngredientDetails) {
     return null;
   }
 }
-
-IngridientDetails.propTypes = {
-  item: Types.ingredientShapeType,
-};
