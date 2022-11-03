@@ -12,15 +12,15 @@ function BurgerIngredients() {
 
   const categories: string[] = ['Булки', 'Соусы', 'Начинки'];
 
-  const bunRef = useRef<HTMLInputElement>(null);
-  const mainRef = useRef<HTMLInputElement>(null);
-  const sauceRef = useRef<HTMLInputElement>(null);
+  const bunRef = useRef<HTMLElement>(null);
+  const mainRef = useRef<HTMLElement>(null);
+  const sauceRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const options: { rootMargin: string } = {
       rootMargin: '-50% 0px -50%',
     };
-    let observer: any = new IntersectionObserver((entries) => {
+    let observer = new IntersectionObserver((entries) => {
       entries.forEach((entry: any) => {
         if (entry.isIntersecting) {
           setCurrentTab(entry.target.id);
@@ -29,9 +29,9 @@ function BurgerIngredients() {
     }, options);
 
     //Целевой элемент, который наблюдается
-    observer.observe(bunRef.current);
-    observer.observe(sauceRef.current);
-    observer.observe(mainRef.current);
+    observer.observe(bunRef.current!);
+    observer.observe(sauceRef.current!);
+    observer.observe(mainRef.current!);
   }, [mainRef, sauceRef, bunRef]);
 
   const buns: IIngredient[] = useMemo(
@@ -59,7 +59,7 @@ function BurgerIngredients() {
           Булки
         </Tab>
         <Tab
-          onClick={(): void => {}}
+          onClick={setCurrentTab}
           value="two"
           active={currentTab === 'sauce'}
         >
@@ -74,7 +74,7 @@ function BurgerIngredients() {
         </Tab>
       </div>
       <div className={styles.burger_ingredients__main}>
-        {categories.map((elem: string, index: number) => {
+        {categories.map((elem, index) => {
           if (elem === 'Булки') {
             return (
               <BurgerIngredientsHeadline

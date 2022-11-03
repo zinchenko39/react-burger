@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Route, Redirect, useLocation } from 'react-router-dom';
+import { Route, Redirect, useLocation, RouteProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { getUserData } from '../../services/actions/get-user-actions';
 
 import { ILocation } from '../../interfaces/ILocations';
-import { IProtected } from '../../interfaces/IProtected';
 
-export default function ProtectedRoute({ children, ...rest }: IProtected) {
-  const location = useLocation() as ILocation;
+export default function ProtectedRoute({
+  children,
+  ...rest
+}: RouteProps & { children?: React.ReactNode }) {
+  const location = useLocation<ILocation>();
   const userLoggedIn = useSelector((state: any) => state.user.userLoggedIn);
   const [isUserLoaded, setUserLoaded] = useState<boolean>(false);
 

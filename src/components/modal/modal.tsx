@@ -7,11 +7,11 @@ import { ModalOverlay } from '../index';
 
 import { IModal } from '../../interfaces/IModal';
 
-const modalsElement: any = document.getElementById('modal');
+const modalsElement: HTMLElement = document.getElementById('modal')!;
 
 function Modal({ isOpen = true, close, children }: PropsWithChildren<IModal>) {
   useEffect(() => {
-    function closeByEscape(evt: any) {
+    function closeByEscape(evt: KeyboardEvent) {
       if (evt.key === 'Escape') {
         close();
       }

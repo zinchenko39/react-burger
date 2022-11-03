@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
+import { ILocation } from '../../interfaces/ILocations';
 
 import { AppHeader, ProtectedRoute, Main, Modal } from '..';
 import {
@@ -14,15 +15,13 @@ import {
 } from '../../pages';
 import { getItems } from '../../services/actions/ingredients-actions';
 import { getUserData } from '../../services/actions/get-user-actions';
-import { IBackground } from '../../interfaces/IBackground';
 
 function App() {
-  const location = useLocation<any>();
+  const location = useLocation<ILocation>();
   const history = useHistory<any>();
   const dispatch = useDispatch<any>();
 
-  let background: IBackground | null =
-    location.state && location.state.background;
+  let background: any = location.state && location.state.background;
 
   const closeModal = () => {
     history.goBack();

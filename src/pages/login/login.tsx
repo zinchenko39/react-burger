@@ -8,7 +8,7 @@ import { useForm } from '../../hooks/useForm';
 import { ILocation } from '../../interfaces/ILocations';
 
 export default function Login() {
-  const location = useLocation() as ILocation;
+  const location = useLocation<ILocation>();
   const { values, handleChange } = useForm({
     email: '',
     password: '',
