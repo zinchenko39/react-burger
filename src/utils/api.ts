@@ -10,7 +10,7 @@ export function request(url: string, options: TOptions) {
   return fetch(url, options).then(checkResponse);
 }
 
-export function checkResponse(res: any) {
+export function checkResponse(res: Response) {
   if (res.ok) {
     return res.json();
   }

@@ -32,7 +32,7 @@ function Modal({ isOpen = true, close, children }: PropsWithChildren<IModal>) {
           <div className={styles.modal__content}>
             {children}
             <div
-              onClick={() => {
+              onClick={(): void => {
                 close();
               }}
               className={styles.modal__close}

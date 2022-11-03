@@ -1,10 +1,8 @@
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './login.module.css';
-import {
-  Input,
-  Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '../../components';
 import { logIn } from '../../services/actions/log-in-actions';
 import { useForm } from '../../hooks/useForm';
 import { ILocation } from '../../interfaces/ILocations';

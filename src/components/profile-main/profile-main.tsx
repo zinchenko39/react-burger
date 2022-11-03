@@ -1,10 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, ChangeEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './profile-main.module.css';
-import {
-  Input,
-  Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '..';
 import { getUserData } from '../../services/actions/get-user-actions';
 import { updateUserData } from '../../services/actions/update-user-actions';
 
@@ -18,7 +16,7 @@ export default function ProfileMain() {
 
   const [fieldName, setFieldName] = useState<string>(userName);
   const [fieldLogin, setFieldLogin] = useState<string>(userLogin);
-  const [fieldPassword, setFieldPassword] = useState<string>('111111');
+  const [fieldPassword, setFieldPassword] = useState<string>('123456789');
 
   const nameRef = useRef<any>(null);
   const loginRef = useRef<any>(null);
@@ -28,27 +26,18 @@ export default function ProfileMain() {
   const [disabledLogin, setDisabledLogin] = useState<boolean>(true);
   const [disabledPassword, setDisabledPassword] = useState<boolean>(true);
 
-  const [iconName, setIconName] = useState<string>('EditIcon');
-  const [iconLogin, setIconLogin] = useState<string>('EditIcon');
-  const [iconPassword, setIconPassword] = useState<string>('EditIcon');
-
-  const changeName = () => {
+  const changeName = (): void => {
     setTimeout(() => nameRef.current.focus(), 0);
     setDisabledName(!disabledName);
-    setIconName(iconName === 'EditIcon' ? 'CheckMarkIcon' : 'EditIcon');
-    if (disabledName === false) dispatch(updateUserData(fieldLogin, fieldName));
   };
-  const changeLogin = () => {
+
+  const changeLogin = (): void => {
     setTimeout(() => loginRef.current.focus(), 0);
     setDisabledLogin(!disabledLogin);
-    setIconLogin(iconLogin === 'EditIcon' ? 'CheckMarkIcon' : 'EditIcon');
-    if (disabledLogin === false)
-      dispatch(updateUserData(fieldLogin, fieldName));
   };
-  const changePassword = () => {
+  const changePassword = (): void => {
     setTimeout(() => passwordRef.current.focus(), 0);
     setDisabledPassword(!disabledPassword);
-    setIconPassword(iconPassword === 'EditIcon' ? 'CheckMarkIcon' : 'EditIcon');
   };
 
   useEffect(() => {
@@ -57,54 +46,76 @@ export default function ProfileMain() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, updateUserDataError]);
 
-  const cancelChanges = () => {
-    setIconName('EditIcon');
-    setIconLogin('EditIcon');
-    setIconPassword('EditIcon');
+  const cancelChanges = (): void => {
     setDisabledName(true);
     setDisabledLogin(true);
     setDisabledPassword(true);
     setFieldName(userName);
     setFieldLogin(userLogin);
-    setFieldPassword('111111');
+    setFieldPassword(fieldPassword);
   };
 
+  const sendUserData = (): void => {
+    dispatch(updateUserData(fieldLogin, fieldName, fieldPassword));
+    setDisabledName(true);
+    setDisabledLogin(true);
+    setDisabledPassword(true);
+  };
   return (
     <div className={styles.profile_main__wrapper}>
       <Input
         value={fieldName}
         type={'text'}
         placeholder={'Имя'}
-        icon={iconName}
+        icon={'EditIcon'}
         disabled={disabledName}
         onIconClick={changeName}
         ref={nameRef}
-        onChange={(e) => setFieldName(e.target.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          setFieldName(e.target.value)
+        }
       />
       <Input
         value={fieldLogin}
         type={'text'}
         placeholder={'Логин'}
-        icon={iconLogin}
+        icon={'EditIcon'}
         disabled={disabledLogin}
         onIconClick={changeLogin}
         ref={loginRef}
-        onChange={(e) => setFieldLogin(e.target.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          setFieldLogin(e.target.value)
+        }
       />
       <Input
         value={fieldPassword}
         type={'password'}
         placeholder={'Пароль'}
-        icon={iconPassword}
+        icon={'EditIcon'}
         disabled={disabledPassword}
         onIconClick={changePassword}
         ref={passwordRef}
-        onChange={(e) => setFieldPassword(e.target.value)}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          setFieldPassword(e.target.value)
+        }
       />
       {!disabledName || !disabledLogin || !disabledPassword ? (
-        <Button onClick={() => cancelChanges()} type="primary" size="small">
-          Отмена
-        </Button>
+        <div className={styles.profile_main__button_wrapper}>
+          <Button
+            onClick={(): void => sendUserData()}
+            type="primary"
+            size="small"
+          >
+            Сохранить
+          </Button>
+          <Button
+            onClick={(): void => cancelChanges()}
+            type="primary"
+            size="small"
+          >
+            Отмена
+          </Button>
+        </div>
       ) : (
         ''
       )}

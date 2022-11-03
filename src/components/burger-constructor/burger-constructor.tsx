@@ -8,8 +8,7 @@ import styles from './burger-constructor.module.css';
 import { ADD_ITEM } from '../../services/actions/constructor-actions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { BurgerConstructorCard, OrderDetails, Modal } from '../index';
+import { BurgerConstructorCard, OrderDetails, Modal, Button } from '..';
 import { sendItems } from '../../services/actions/order-actions';
 import useModalControls from '../../hooks/modal-controls';
 

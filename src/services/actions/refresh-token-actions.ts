@@ -1,4 +1,4 @@
-import { Dispatch, Action } from 'redux';
+import { Dispatch } from 'redux';
 
 import { userRequest } from '../../utils/api';
 import { setCookie, getCookie } from '../../utils/cookie';

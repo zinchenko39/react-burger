@@ -2,10 +2,8 @@ import { useState, useMemo, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import styles from './burger-ingredients.module.css';
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IIngredient } from '../../interfaces/IIngredient';
-
-import { BurgerIngredientsHeadline } from '..';
+import { BurgerIngredientsHeadline, Tab } from '..';
 
 function BurgerIngredients() {
   const items = useSelector((state: any) => state.ingredients.menu);
@@ -60,7 +58,11 @@ function BurgerIngredients() {
         <Tab value="one" active={currentTab === 'buns'} onClick={setCurrentTab}>
           Булки
         </Tab>
-        <Tab value="two" active={currentTab === 'sauce'}>
+        <Tab
+          onClick={(): void => {}}
+          value="two"
+          active={currentTab === 'sauce'}
+        >
           Соусы
         </Tab>
         <Tab

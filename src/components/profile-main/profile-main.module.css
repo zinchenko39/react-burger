@@ -15,6 +15,11 @@
     transition: 1s;
 }
 button {
-    width: 250px;
+    width: 200px;
     margin: 0 auto;
+}
+.profile_main__button_wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

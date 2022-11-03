@@ -6,7 +6,7 @@ import { IModal } from '../../interfaces/IModal';
 function ModalOverlay({ close }: IModal) {
   return (
     <div
-      onClick={() => {
+      onClick={(): void => {
         close();
       }}
       className={styles.modal__overlay}

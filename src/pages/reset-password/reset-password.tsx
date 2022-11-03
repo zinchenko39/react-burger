@@ -1,11 +1,9 @@
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './reset-password.module.css';
-import {
-  Input,
-  Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '../../components';
 import { IData } from '../../interfaces/IData';
 import { BASE_URL, userRequest } from '../../utils/api';
 import { RESET_PASSWORD } from '../../services/actions/reset-password-actions';
@@ -68,7 +66,7 @@ export default function ResetPassword() {
       </div>
 
       <form
-        onSubmit={(e) => {
+        onSubmit={(e: FormEvent<HTMLFormElement>) => {
           e.preventDefault();
           passwordResetRequest(values.password, values.code);
         }}

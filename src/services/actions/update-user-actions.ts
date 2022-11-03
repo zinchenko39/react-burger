@@ -10,11 +10,12 @@ export const UPDATE_USER_DATA_REQUEST = 'UPDATE_USER_DATA_REQUEST';
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
 export const UPDATE_USER_DATA_ERROR = 'UPDATE_USER_DATA_ERROR';
 
-export function updateUserData(email: string, name: string) {
+export function updateUserData(email: string, name: string, password: string) {
   const token = 'Bearer ' + getCookie('accessToken');
   const data: IData = {
     email,
     name,
+    password,
   };
   return function (dispatch: Dispatch<Action>): void {
     dispatch({

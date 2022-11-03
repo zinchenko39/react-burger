@@ -37,7 +37,7 @@ export default function Profile() {
         </NavLink>
         <div className={styles.profile_log_out__btn}>
           <span
-            onClick={() => dispatch(logOut())}
+            onClick={(): void => dispatch(logOut())}
             className="text text_type_main-medium"
           >
             Выход

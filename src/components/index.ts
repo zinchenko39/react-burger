@@ -11,3 +11,5 @@ export { default as BurgerConstructorCard } from './burger-constructor-card/burg
 export { default as ProfileMain } from './profile-main/profile-main';
 export { default as ProtectedRoute } from './protected-route/protected-route';
 export { default as Main } from './main/main';
+export { default as Button } from './button/button-ya';
+export { default as Tab } from './tab/tab-ya';
