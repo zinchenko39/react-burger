@@ -20,8 +20,8 @@ function BurgerIngredients() {
     const options: { rootMargin: string } = {
       rootMargin: '-50% 0px -50%',
     };
-    let observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry: any) => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           setCurrentTab(entry.target.id);
         }
