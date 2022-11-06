@@ -1,0 +1,15 @@
+export { default as AppHeader } from './app-header/app-header';
+export { default as BurgerConstructor } from './burger-constructor/burger-constructor';
+export { default as BurgerIngredients } from './burger-ingredients/burger-ingredients';
+export { default as Modal } from './modal/modal';
+export { default as ModalOverlay } from './modal-overlay/modal-overlay';
+export { default as IngridientDetails } from './ingridient-details/ingridient-details';
+export { default as OrderDetails } from './order-details/order-details';
+export { default as BurgerIngredientCard } from './burger-ingredients-card/burger-ingredients-card';
+export { default as BurgerIngredientsHeadline } from './burger-ingredients/burger-ingredients-headline/burger-ingredients-headline';
+export { default as BurgerConstructorCard } from './burger-constructor-card/burger-constructor-card';
+export { default as ProfileMain } from './profile-main/profile-main';
+export { default as ProtectedRoute } from './protected-route/protected-route';
+export { default as Main } from './main/main';
+export { default as Button } from './button/button-ya';
+export { default as Tab } from './tab/tab-ya';
