@@ -1,0 +1,21 @@
+.feed_container {
+    position: relative;
+    left: calc(50% - 1280px/2);
+    margin-left: 20px;
+    max-width: 1280px;
+    top: 120px;
+    background: #131316;
+}
+
+.feed_wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.feed_left {
+    width: 640px;
+}
+
+.feed_right {
+    width: 640px;
+}

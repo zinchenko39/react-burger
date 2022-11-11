@@ -1,12 +1,11 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-
 import styles from './burger-ingredients.module.css';
 import { IIngredient } from '../../interfaces/IIngredient';
 import { BurgerIngredientsHeadline, Tab } from '..';
+import { useSelector } from '../../services/hooks';
 
 function BurgerIngredients() {
-  const items = useSelector((state: any) => state.ingredients.menu);
+  const items = useSelector((state) => state.ingredients.menu);
 
   const [currentTab, setCurrentTab] = useState<string>('buns'); //@ya.praktikum/react-developer-burger-ui-components
 

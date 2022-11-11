@@ -12,6 +12,7 @@ import {
   Error404,
   Profile,
   IngredientCard,
+  Feed,
 } from '../../pages';
 import { getItems } from '../../services/actions/thunks/get-ingredients';
 import { getUserData } from '../../services/actions/thunks/get-user';
@@ -57,6 +58,9 @@ function App() {
         </ProtectedRoute>
         <Route exact path="/ingredients/:id">
           <IngredientCard />
+        </Route>
+        <Route exact path="/feed">
+          <Feed />
         </Route>
         <Route>
           <Error404 />

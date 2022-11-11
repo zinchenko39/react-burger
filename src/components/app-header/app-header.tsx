@@ -30,7 +30,7 @@ function AppHeader() {
           <div className={styles.app_header__link}>
             <ListIcon type={isHistory ? 'primary' : 'secondary'} />
             <NavLink
-              to="/history"
+              to="/feed"
               exact
               className={styles.app_header__nav_link}
               activeClassName={styles.app_header__nav_link_active}
