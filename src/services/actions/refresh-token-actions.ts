@@ -1,20 +1,21 @@
-import { Dispatch } from 'redux';
-
 import { userRequest } from '../../utils/api';
 import { setCookie, getCookie } from '../../utils/cookie';
 import { getUserData } from './get-user-actions';
 
 import { BASE_URL } from '../../utils/api';
 
-export const REFRESH_TOKEN_REQUEST = 'REFRESH_TOKEN_REQUEST';
-export const REFRESH_TOKEN = 'REFRESH_TOKEN';
-export const REFRESH_TOKEN_ERROR = 'REFRESH_TOKEN_ERROR';
+import {
+  REFRESH_TOKEN_REQUEST,
+  REFRESH_TOKEN,
+  REFRESH_TOKEN_ERROR,
+} from './user-actions';
+import { AppDispatch } from '../types';
 
 export function refreshToken() {
-  const token: { token: any } = {
+  const token: { token: string | undefined } = {
     token: getCookie('refreshToken'),
   };
-  return function (dispatch: Dispatch<any>) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: REFRESH_TOKEN_REQUEST,
     });

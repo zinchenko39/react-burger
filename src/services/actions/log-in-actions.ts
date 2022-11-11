@@ -1,21 +1,19 @@
 import { userRequest } from '../../utils/api';
 import { setCookie } from '../../utils/cookie';
 import { BASE_URL } from '../../utils/api';
-import { Dispatch, Action } from 'redux';
-
 import { IData } from '../../interfaces/IData';
+import { TApplicationActions } from '../types';
+import { AppDispatch } from '../types';
 
-export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
-export const LOG_IN = 'LOG_IN';
-export const LOG_IN_ERROR = 'LOG_IN_ERROR';
+import { LOG_IN_REQUEST, LOG_IN, LOG_IN_ERROR } from './user-actions';
 
-export function logIn(email: string, password: string) {
+export function logIn(email: string, password: string): any {
   const data: IData = {
     email,
     password,
   };
 
-  return function (dispatch: Dispatch<Action>): void {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: LOG_IN_REQUEST,
     });

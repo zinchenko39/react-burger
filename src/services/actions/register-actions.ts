@@ -1,13 +1,9 @@
-import { Dispatch, Action } from 'redux';
 import { userRequest } from '../../utils/api';
 import { setCookie } from '../../utils/cookie';
 import { BASE_URL } from '../../utils/api';
-
 import { IData } from '../../interfaces/IData';
-
-export const REGISTER = 'REGISTER';
-export const REGISTER_REQUEST = 'REGISTER_REQUEST';
-export const REGISTER_ERROR = 'USER_ERROR';
+import { REGISTER_REQUEST, REGISTER, REGISTER_ERROR } from './user-actions';
+import { AppDispatch } from '../types';
 
 export function register(email: string, password: string, name: string) {
   const data: IData = {
@@ -15,7 +11,7 @@ export function register(email: string, password: string, name: string) {
     password,
     name,
   };
-  return function (dispatch: Dispatch<Action>) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: REGISTER_REQUEST,
     });

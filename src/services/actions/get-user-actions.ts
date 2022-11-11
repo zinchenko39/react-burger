@@ -2,15 +2,14 @@ import { getCookie } from '../../utils/cookie';
 import { refreshToken } from './refresh-token-actions';
 import { BASE_URL } from '../../utils/api';
 import { request } from '../../utils/api';
-import { Dispatch } from 'redux';
 
-export const GET_USER_REQUEST = 'GET_USER_REQUEST';
-export const GET_USER = 'GET_USER';
-export const GET_USER_ERROR = 'GET_USER_ERROR';
+import { GET_USER_REQUEST, GET_USER, GET_USER_ERROR } from './user-actions';
+import { AppThunk } from '../types';
+import { AppDispatch } from '../types';
 
-export function getUserData() {
+export function getUserData(): any {
   const token = 'Bearer ' + getCookie('accessToken');
-  return function (dispatch: Dispatch<any>) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST,
     });

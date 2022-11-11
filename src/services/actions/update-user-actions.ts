@@ -1,23 +1,24 @@
-import { Dispatch, Action } from 'redux';
-
 import { getCookie } from '../../utils/cookie';
 import { BASE_URL } from '../../utils/api';
 import { request } from '../../utils/api';
 
 import { IData } from '../../interfaces/IData';
 
-export const UPDATE_USER_DATA_REQUEST = 'UPDATE_USER_DATA_REQUEST';
-export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
-export const UPDATE_USER_DATA_ERROR = 'UPDATE_USER_DATA_ERROR';
+import {
+  UPDATE_USER_DATA_REQUEST,
+  UPDATE_USER_DATA,
+  UPDATE_USER_DATA_ERROR,
+} from './user-actions';
+import { AppDispatch } from '../types';
 
 export function updateUserData(email: string, name: string, password: string) {
-  const token = 'Bearer ' + getCookie('accessToken');
+  const token: string = 'Bearer ' + getCookie('accessToken');
   const data: IData = {
     email,
     name,
     password,
   };
-  return function (dispatch: Dispatch<Action>): void {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: UPDATE_USER_DATA_REQUEST,
     });
