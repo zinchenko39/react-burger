@@ -2,7 +2,7 @@ import { Link, Redirect } from 'react-router-dom';
 import styles from './register.module.css';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '../../components';
-import { register } from '../../services/actions/register-actions';
+import { register } from '../../services/actions/thunks/register';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 

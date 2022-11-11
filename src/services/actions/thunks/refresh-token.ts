@@ -1,17 +1,18 @@
-import { userRequest } from '../../utils/api';
-import { setCookie, getCookie } from '../../utils/cookie';
-import { getUserData } from './get-user-actions';
+import { userRequest } from '../../../utils/api';
+import { setCookie, getCookie } from '../../../utils/cookie';
+import { getUserData } from './get-user';
 
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL } from '../../../utils/api';
 
 import {
   REFRESH_TOKEN_REQUEST,
   REFRESH_TOKEN,
   REFRESH_TOKEN_ERROR,
-} from './user-actions';
-import { AppDispatch } from '../types';
+} from '../user-actions';
+import { AppThunk } from '../../types';
+import { AppDispatch } from '../../types';
 
-export function refreshToken() {
+export function refreshToken(): AppThunk {
   const token: { token: string | undefined } = {
     token: getCookie('refreshToken'),
   };

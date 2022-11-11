@@ -9,7 +9,7 @@ import { ADD_ITEM } from '../../services/actions/constructor-actions';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerConstructorCard, OrderDetails, Modal, Button } from '..';
-import { sendItems } from '../../services/actions/order-actions';
+import { sendItems } from '../../services/actions/thunks/make-order';
 import useModalControls from '../../hooks/modal-controls';
 
 import { IIngredient } from '../../interfaces/IIngredient';

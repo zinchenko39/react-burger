@@ -1,13 +1,13 @@
-import { getCookie } from '../../utils/cookie';
-import { refreshToken } from './refresh-token-actions';
-import { BASE_URL } from '../../utils/api';
-import { request } from '../../utils/api';
+import { getCookie } from '../../../utils/cookie';
+import { refreshToken } from './refresh-token';
+import { BASE_URL } from '../../../utils/api';
+import { request } from '../../../utils/api';
 
-import { GET_USER_REQUEST, GET_USER, GET_USER_ERROR } from './user-actions';
-import { AppThunk } from '../types';
-import { AppDispatch } from '../types';
+import { GET_USER_REQUEST, GET_USER, GET_USER_ERROR } from '../user-actions';
+import { AppThunk } from '../../types';
+import { AppDispatch } from '../../types';
 
-export function getUserData(): any {
+export function getUserData(): AppThunk {
   const token = 'Bearer ' + getCookie('accessToken');
   return function (dispatch: AppDispatch) {
     dispatch({

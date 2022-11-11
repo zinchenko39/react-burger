@@ -1,17 +1,22 @@
-import { getCookie } from '../../utils/cookie';
-import { BASE_URL } from '../../utils/api';
-import { request } from '../../utils/api';
+import { getCookie } from '../../../utils/cookie';
+import { BASE_URL } from '../../../utils/api';
+import { request } from '../../../utils/api';
 
-import { IData } from '../../interfaces/IData';
+import { IData } from '../../../interfaces/IData';
 
 import {
   UPDATE_USER_DATA_REQUEST,
   UPDATE_USER_DATA,
   UPDATE_USER_DATA_ERROR,
-} from './user-actions';
-import { AppDispatch } from '../types';
+} from '../user-actions';
+import { AppDispatch } from '../../types';
+import { AppThunk } from '../../types';
 
-export function updateUserData(email: string, name: string, password: string) {
+export function updateUserData(
+  email: string,
+  name: string,
+  password: string
+): AppThunk {
   const token: string = 'Bearer ' + getCookie('accessToken');
   const data: IData = {
     email,

@@ -1,11 +1,16 @@
-import { userRequest } from '../../utils/api';
-import { setCookie } from '../../utils/cookie';
-import { BASE_URL } from '../../utils/api';
-import { IData } from '../../interfaces/IData';
-import { REGISTER_REQUEST, REGISTER, REGISTER_ERROR } from './user-actions';
-import { AppDispatch } from '../types';
+import { userRequest } from '../../../utils/api';
+import { setCookie } from '../../../utils/cookie';
+import { BASE_URL } from '../../../utils/api';
+import { IData } from '../../../interfaces/IData';
+import { REGISTER_REQUEST, REGISTER, REGISTER_ERROR } from '../user-actions';
+import { AppDispatch } from '../../types';
+import { AppThunk } from '../../types';
 
-export function register(email: string, password: string, name: string) {
+export function register(
+  email: string,
+  password: string,
+  name: string
+): AppThunk {
   const data: IData = {
     email,
     password,

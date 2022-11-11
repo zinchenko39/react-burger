@@ -1,10 +1,11 @@
-import { userRequest } from '../../utils/api';
-import { setCookie, getCookie } from '../../utils/cookie';
-import { BASE_URL } from '../../utils/api';
-import { LOG_OUT_REQUEST, LOG_OUT, LOG_OUT_ERROR } from './user-actions';
-import { AppDispatch } from '../types';
+import { userRequest } from '../../../utils/api';
+import { setCookie, getCookie } from '../../../utils/cookie';
+import { BASE_URL } from '../../../utils/api';
+import { LOG_OUT_REQUEST, LOG_OUT, LOG_OUT_ERROR } from '../user-actions';
+import { AppDispatch } from '../../types';
+import { AppThunk } from '../../types';
 
-export function logOut() {
+export function logOut(): AppThunk {
   const token: { token: string | undefined } = {
     token: getCookie('refreshToken'),
   };

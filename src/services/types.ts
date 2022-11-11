@@ -1,21 +1,23 @@
-import { ThunkAction } from 'redux-thunk';
-import { Action, ActionCreator } from 'redux';
-
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { store } from './store';
 import { TUserActions } from './actions/user-actions';
+import { TConstructorActions } from './actions/constructor-actions';
+import { TIngredientsActions } from './actions/ingredients-actions';
+import { TOrderActions } from './actions/order-actions';
 
 export type RootState = ReturnType<typeof store.getState>;
 
-// Типизация всех экшенов приложения
+export type TApplicationActions =
+  | TUserActions
+  | TConstructorActions
+  | TIngredientsActions
+  | TOrderActions;
 
-export type TApplicationActions = TUserActions;
-
-// Типизация thunk'ов в нашем приложении
-export type AppThunk<TReturn = void> = ActionCreator<
-  ThunkAction<TReturn, Action, RootState, TApplicationActions>
+export type AppThunk<TReturn = void> = ThunkAction<
+  TReturn,
+  RootState,
+  never,
+  TApplicationActions
 >;
 
-// Типизация метода dispatch для проверки на валидность отправляемого экшена
-export type AppDispatch = typeof store.dispatch;
-
-// export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
+export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;

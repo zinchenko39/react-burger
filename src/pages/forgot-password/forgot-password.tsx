@@ -5,7 +5,7 @@ import styles from './forgot-password.module.css';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '../../components';
 import { BASE_URL, userRequest } from '../../utils/api';
-import { FORGOT_PASSWORD_VISITED } from '../../services/actions/forgot-password-actions';
+import { FORGOT_PASSWORD_VISITED } from '../../services/actions/user-actions';
 import { useForm } from '../../hooks/useForm';
 
 export default function ForgotPassword() {

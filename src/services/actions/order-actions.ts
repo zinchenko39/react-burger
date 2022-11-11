@@ -1,31 +1,23 @@
-import { Dispatch, Action } from 'redux';
+export const SEND_ORDER_REQUEST: 'SEND_ORDER_REQUEST' = 'SEND_ORDER_REQUEST';
+export const ORDER_REQUEST_SUCCESS: 'ORDER_REQUEST_SUCCESS' =
+  'ORDER_REQUEST_SUCCESS';
+export const ORDER_REQUEST_FAILED: 'ORDER_REQUEST_FAILED' =
+  'ORDER_REQUEST_FAILED';
 
-import { makeOrder } from '../../utils/api';
-
-export const SEND_ORDER_REQUEST = 'SEND_ORDER_REQUEST';
-export const ORDER_REQUEST_SUCCESS = 'ORDER_REQUEST_SUCCESS';
-export const ORDER_REQUEST_FAILED = 'ORDER_REQUEST_FAILED';
-
-export function sendItems(orderId: any) {
-  return function (dispatch: Dispatch<Action>) {
-    dispatch({
-      type: SEND_ORDER_REQUEST,
-    });
-    makeOrder(orderId)
-      .then((res) => {
-        if (res && res.success) {
-          dispatch({
-            type: ORDER_REQUEST_SUCCESS,
-            orderNumber: res.order.number,
-            orderId,
-          });
-        }
-      })
-      .catch((error) => {
-        dispatch({
-          type: ORDER_REQUEST_FAILED,
-          error,
-        });
-      });
-  };
+export interface ISendOrderRequest {
+  readonly type: typeof SEND_ORDER_REQUEST;
 }
+export interface IOrderRequestSuccess {
+  readonly type: typeof ORDER_REQUEST_SUCCESS;
+  readonly orderNumber: number;
+  readonly orderId: ReadonlyArray<string>;
+}
+export interface IOrderRequestFailed {
+  readonly type: typeof ORDER_REQUEST_FAILED;
+  readonly error: string;
+}
+
+export type TOrderActions =
+  | ISendOrderRequest
+  | IOrderRequestSuccess
+  | IOrderRequestFailed;

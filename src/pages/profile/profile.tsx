@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './profile.module.css';
 
 import { ProfileMain } from '../../components';
-import { logOut } from '../../services/actions/log-out-actions';
-import { getUserData } from '../../services/actions/get-user-actions';
+import { logOut } from '../../services/actions/thunks/log-out';
+import { getUserData } from '../../services/actions/thunks/get-user';
 
 export default function Profile() {
   const dispatch = useDispatch<any>();

@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from './profile-main.module.css';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '..';
-import { getUserData } from '../../services/actions/get-user-actions';
-import { updateUserData } from '../../services/actions/update-user-actions';
+import { getUserData } from '../../services/actions/thunks/get-user';
+import { updateUserData } from '../../services/actions/thunks/update-user';
 
 export default function ProfileMain() {
   const dispatch = useDispatch<any>();

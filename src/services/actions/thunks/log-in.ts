@@ -1,13 +1,13 @@
-import { userRequest } from '../../utils/api';
-import { setCookie } from '../../utils/cookie';
-import { BASE_URL } from '../../utils/api';
-import { IData } from '../../interfaces/IData';
-import { TApplicationActions } from '../types';
-import { AppDispatch } from '../types';
+import { userRequest } from '../../../utils/api';
+import { setCookie } from '../../../utils/cookie';
+import { BASE_URL } from '../../../utils/api';
+import { IData } from '../../../interfaces/IData';
+import { AppThunk } from '../../types';
+import { AppDispatch } from '../../types';
 
-import { LOG_IN_REQUEST, LOG_IN, LOG_IN_ERROR } from './user-actions';
+import { LOG_IN_REQUEST, LOG_IN, LOG_IN_ERROR } from '../user-actions';
 
-export function logIn(email: string, password: string): any {
+export function logIn(email: string, password: string): AppThunk {
   const data: IData = {
     email,
     password,

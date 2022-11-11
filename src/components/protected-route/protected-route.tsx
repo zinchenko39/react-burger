@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Route, Redirect, useLocation, RouteProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { getUserData } from '../../services/actions/get-user-actions';
+import { getUserData } from '../../services/actions/thunks/get-user';
 
 import { ILocation } from '../../interfaces/ILocations';
 

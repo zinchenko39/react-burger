@@ -104,6 +104,7 @@ export interface IUpdateUserDataRequest {
 }
 export interface IUpdateUserData {
   readonly type: typeof UPDATE_USER_DATA;
+  readonly user: TUser;
 }
 export interface IUpdateUserDataError {
   readonly type: typeof UPDATE_USER_DATA_ERROR;

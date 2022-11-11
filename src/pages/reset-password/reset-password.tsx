@@ -6,7 +6,7 @@ import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '../../components';
 import { IData } from '../../interfaces/IData';
 import { BASE_URL, userRequest } from '../../utils/api';
-import { RESET_PASSWORD } from '../../services/actions/reset-password-actions';
+import { RESET_PASSWORD } from '../../services/actions/user-actions';
 import { useForm } from '../../hooks/useForm';
 
 export default function ResetPassword() {

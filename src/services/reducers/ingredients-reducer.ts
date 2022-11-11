@@ -3,8 +3,18 @@ import {
   GET_ITEMS_SUCCESS,
   GET_ITEMS_FAILED,
 } from '../actions/ingredients-actions';
+import { IIngredient } from '../../interfaces/IIngredient';
+import { TIngredientsActions } from '../actions/ingredients-actions';
 
-const initialState = {
+type TIngredientsInitialState = {
+  menu: ReadonlyArray<IIngredient>;
+  isLoading: boolean;
+  isError: boolean;
+  errorStatus: string | null;
+  MenuQuantity: number;
+};
+
+const ingredientsInitialState: TIngredientsInitialState = {
   menu: [],
   isLoading: false,
   isError: false,
@@ -12,7 +22,10 @@ const initialState = {
   MenuQuantity: 0,
 };
 
-export const ingredientsReducer = (state: any = initialState, action: any) => {
+export const ingredientsReducer = (
+  state: TIngredientsInitialState = ingredientsInitialState,
+  action: TIngredientsActions
+): TIngredientsInitialState => {
   switch (action.type) {
     case GET_ITEMS_REQUEST: {
       return {

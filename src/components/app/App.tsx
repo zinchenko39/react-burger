@@ -13,8 +13,8 @@ import {
   Profile,
   IngredientCard,
 } from '../../pages';
-import { getItems } from '../../services/actions/ingredients-actions';
-import { getUserData } from '../../services/actions/get-user-actions';
+import { getItems } from '../../services/actions/thunks/get-ingredients';
+import { getUserData } from '../../services/actions/thunks/get-user';
 
 function App() {
   const location = useLocation<ILocation>();
