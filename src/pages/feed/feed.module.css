@@ -1,7 +1,9 @@
 .feed_container {
     position: relative;
     left: calc(50% - 1280px/2);
-    margin-left: 20px;
+    height: calc(100vh - 120px);
+    box-sizing: border-box;
+    overflow: hidden;
     max-width: 1280px;
     top: 120px;
     background: #131316;
@@ -14,6 +16,9 @@
 
 .feed_left {
     width: 640px;
+    height: calc(100vh - 150px);
+    box-sizing: border-box;
+    overflow-y: scroll;
 }
 
 .feed_right {

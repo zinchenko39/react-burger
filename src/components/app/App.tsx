@@ -56,6 +56,9 @@ function App() {
         <ProtectedRoute exact path="/profile">
           <Profile />
         </ProtectedRoute>
+        <ProtectedRoute exact path="/profile/orders">
+          <Profile />
+        </ProtectedRoute>
         <Route exact path="/ingredients/:id">
           <IngredientCard />
         </Route>

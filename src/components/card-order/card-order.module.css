@@ -14,21 +14,36 @@
     display: flex;
     justify-content: space-between;
 }
-
 .card_order_id {
     display: block;
     width: 100px;
 }
-
 .card_order_time {
     display: block;
     color: #8585AD;
 }
-
 .card_order__bottom {
-
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
-
 .card_order__ingredients {
-
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+    box-sizing: border-box;
+    overflow: hidden
+}
+.card_order__ingredients_img {
+    box-sizing: border-box;
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    border: 2px solid rgba(128, 26, 178, 1);
+    background: #000000;
+}
+.card_order__price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }

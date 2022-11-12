@@ -10,7 +10,7 @@ import { NavLink, useRouteMatch } from 'react-router-dom';
 function AppHeader() {
   const isConstructor = useRouteMatch<object>({ path: '/', exact: true });
   const isProfile = useRouteMatch<object>({ path: '/profile', exact: true });
-  const isHistory = useRouteMatch<object>({ path: '/history', exact: true });
+  const isHistory = useRouteMatch<object>({ path: '/feed', exact: true });
 
   return (
     <header className={styles.app_header_navigation__panel}>

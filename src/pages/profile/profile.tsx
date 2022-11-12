@@ -1,20 +1,25 @@
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { ILocation } from '../../interfaces/ILocations';
 
 import styles from './profile.module.css';
 
-import { ProfileMain } from '../../components';
+import { ProfileMain, Orders } from '../../components';
 import { logOut } from '../../services/actions/thunks/log-out';
 import { getUserData } from '../../services/actions/thunks/get-user';
 
 export default function Profile() {
+  const location = useLocation<ILocation>();
+
   const dispatch = useDispatch<any>();
   useEffect(() => {
     dispatch(getUserData());
   }, [dispatch]);
 
   const userLoaded = useSelector((state: any) => state.user.userLoaded);
+  const pathname = location.pathname;
 
   return userLoaded ? (
     <div className={styles.profile_wrapper}>
@@ -49,9 +54,15 @@ export default function Profile() {
           </p>
         </div>
       </div>
-      <div className={styles.profile_view}>
-        <ProfileMain />
-      </div>
+      {pathname === '/profile/orders' ? (
+        <div className={styles.profile_view_orders}>
+          <Orders />
+        </div>
+      ) : (
+        <div className={styles.profile_view_main}>
+          <ProfileMain />
+        </div>
+      )}
     </div>
   ) : (
     <div className={styles.profile_waiting}>
