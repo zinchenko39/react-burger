@@ -6,3 +6,4 @@ export { default as Error404 } from './error-404/error-404';
 export { default as Profile } from './profile/profile';
 export { default as IngredientCard } from './ingredient-card/ingredient-card';
 export { default as Feed } from './feed/feed';
+export { default as OrderCard } from './order-card/order-card';

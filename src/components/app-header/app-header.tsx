@@ -11,6 +11,7 @@ function AppHeader() {
   const isConstructor = useRouteMatch<object>({ path: '/', exact: true });
   const isProfile = useRouteMatch<object>({ path: '/profile', exact: true });
   const isHistory = useRouteMatch<object>({ path: '/feed', exact: true });
+  // const connect = () => dispatch(type: ORDER_CONNECT, payload: ORDERS_SERVER_URL);
 
   return (
     <header className={styles.app_header_navigation__panel}>

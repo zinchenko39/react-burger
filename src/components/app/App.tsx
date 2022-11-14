@@ -13,6 +13,7 @@ import {
   Profile,
   IngredientCard,
   Feed,
+  OrderCard,
 } from '../../pages';
 import { getItems } from '../../services/actions/thunks/get-ingredients';
 import { getUserData } from '../../services/actions/thunks/get-user';
@@ -59,22 +60,35 @@ function App() {
         <ProtectedRoute exact path="/profile/orders">
           <Profile />
         </ProtectedRoute>
+        <ProtectedRoute exact path="/profile/orders/:id">
+          <OrderCard />
+        </ProtectedRoute>
         <Route exact path="/ingredients/:id">
           <IngredientCard />
         </Route>
         <Route exact path="/feed">
           <Feed />
         </Route>
+        <Route exact path="/feed/:id">
+          <OrderCard />
+        </Route>
         <Route>
           <Error404 />
         </Route>
       </Switch>
       {background && (
-        <Route exact path="/ingredients/:id">
-          <Modal close={closeModal}>
-            <IngredientCard background />
-          </Modal>
-        </Route>
+        <>
+          <Route exact path="/ingredients/:id">
+            <Modal close={closeModal}>
+              <IngredientCard background />
+            </Modal>
+          </Route>
+          <Route exact path="/feed/:id">
+            <Modal close={closeModal}>
+              <OrderCard />
+            </Modal>
+          </Route>
+        </>
       )}
     </>
   );

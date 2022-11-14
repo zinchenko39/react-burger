@@ -30,18 +30,43 @@
 .card_order__ingredients {
     display: flex;
     flex-direction: row;
-    width: 400px;
+    width: 409px;
     box-sizing: border-box;
     overflow: hidden
 }
-.card_order__ingredients_img {
-    box-sizing: border-box;
+.card_order__ingredients_img_wrapper {
+    position: relative;
     width: 64px;
     height: 64px;
     border-radius: 100px;
     border: 2px solid rgba(128, 26, 178, 1);
     background: #000000;
 }
+.card_order__ingredients_img_wrapper span {
+    position: absolute;
+    left: 20px;
+    top: 18px;
+}
+
+.card_order__ingredients_img {
+    position: relative;
+    left: -23px;
+    top: 4px;
+    box-sizing: border-box;
+    width: 112px;
+    height: 56px;
+}
+
+.card_order__ingredients_img__last {
+    position: relative;
+    left: -23px;
+    top: 4px;
+    box-sizing: border-box;
+    width: 112px;
+    height: 56px;
+    opacity: 0.3;
+}
+
 .card_order__price {
     display: flex;
     align-items: center;
