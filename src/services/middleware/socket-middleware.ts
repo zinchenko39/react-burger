@@ -42,7 +42,6 @@ export const socketMiddleware = (
         socket.onopen = () => {
           dispatch({ type: onOpen });
         };
-
         socket.onmessage = (event) => {
           const { data } = event;
           const parsedData = JSON.parse(data);
@@ -58,7 +57,6 @@ export const socketMiddleware = (
           dispatch({ type: onError, error: event.code.toString() });
         };
       }
-
       next(action);
     };
   };

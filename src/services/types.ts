@@ -4,6 +4,7 @@ import { TUserActions } from './actions/user-actions';
 import { TConstructorActions } from './actions/constructor-actions';
 import { TIngredientsActions } from './actions/ingredients-actions';
 import { TOrderActions } from './actions/order-actions';
+import { TFeedActions } from './actions/feed-ws-actions';
 
 export type RootState = ReturnType<typeof store.getState>;
 
@@ -11,7 +12,8 @@ export type TApplicationActions =
   | TUserActions
   | TConstructorActions
   | TIngredientsActions
-  | TOrderActions;
+  | TOrderActions
+  | TFeedActions;
 
 export type AppThunk<TReturn = void> = ThunkAction<
   TReturn,
