@@ -1,19 +1,21 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { store } from './store';
 import { TUserActions } from './actions/user-actions';
 import { TConstructorActions } from './actions/constructor-actions';
 import { TIngredientsActions } from './actions/ingredients-actions';
 import { TOrderActions } from './actions/order-actions';
 import { TFeedActions } from './actions/feed-ws-actions';
+import { TProfileFeedActions } from './actions/profile-feed-ws-actions';
+import { rootReducer } from './reducers';
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
 
 export type TApplicationActions =
   | TUserActions
   | TConstructorActions
   | TIngredientsActions
   | TOrderActions
-  | TFeedActions;
+  | TFeedActions
+  | TProfileFeedActions;
 
 export type AppThunk<TReturn = void> = ThunkAction<
   TReturn,

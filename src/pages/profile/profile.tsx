@@ -1,21 +1,33 @@
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { ILocation } from '../../interfaces/ILocations';
-
+import { useSelector } from '../../services/hooks';
 import styles from './profile.module.css';
+import { PROFILE_ORDER_CONNECT } from '../../services/actions/profile-feed-ws-actions';
 
 import { ProfileMain, Orders } from '../../components';
 import { logOut } from '../../services/actions/thunks/log-out';
 import { getUserData } from '../../services/actions/thunks/get-user';
+import { WSS_SERVER_URL } from '../../utils/api';
 
 export default function Profile() {
   const location = useLocation<ILocation>();
-
   const dispatch = useDispatch<any>();
+  const wsConnected = useSelector((state) => state.personalFeed.connected);
+  const feedLoading: boolean = useSelector(
+    (state) => state.personalFeed.isLoading
+  );
+  const profileData = useSelector((state) => state.personalFeed.data);
+  const { orders } = profileData;
+
+  const connect = () =>
+    dispatch({ type: PROFILE_ORDER_CONNECT, payload: WSS_SERVER_URL });
+
   useEffect(() => {
     dispatch(getUserData());
+    if (wsConnected === false) connect();
   }, [dispatch]);
 
   const userLoaded = useSelector((state: any) => state.user.userLoaded);
@@ -55,8 +67,20 @@ export default function Profile() {
         </div>
       </div>
       {pathname === '/profile/orders' ? (
-        <div className={styles.profile_view_orders}>
-          <Orders />
+        <div
+          className={
+            feedLoading
+              ? styles.profile_view_orders_loading
+              : styles.profile_view_orders
+          }
+        >
+          {feedLoading ? (
+            <div className={styles.profile_loading}>
+              <p className="text text_type_main-medium">Загрузка...</p>
+            </div>
+          ) : (
+            <Orders orders={orders} />
+          )}
         </div>
       ) : (
         <div className={styles.profile_view_main}>

@@ -12,7 +12,7 @@ import {
   Profile,
   IngredientCard,
   Feed,
-  OrderCard,
+  OrderPage,
 } from '../../pages';
 import { getItems } from '../../services/actions/thunks/get-ingredients';
 import { getUserData } from '../../services/actions/thunks/get-user';
@@ -33,7 +33,7 @@ function App() {
     background = null;
   };
   const connect = () =>
-    dispatch({ type: ORDER_CONNECT, payload: WSS_SERVER_URL });
+    dispatch({ type: ORDER_CONNECT, payload: `${WSS_SERVER_URL}/all` });
 
   useEffect(() => {
     dispatch(getItems());
@@ -68,7 +68,7 @@ function App() {
           <Profile />
         </ProtectedRoute>
         <ProtectedRoute exact path="/profile/orders/:id">
-          <OrderCard />
+          <OrderPage />
         </ProtectedRoute>
         <Route exact path="/ingredients/:id">
           <IngredientCard />
@@ -77,7 +77,7 @@ function App() {
           <Feed />
         </Route>
         <Route exact path="/feed/:id">
-          <OrderCard />
+          <OrderPage />
         </Route>
         <Route>
           <Error404 />
@@ -92,7 +92,7 @@ function App() {
           </Route>
           <Route exact path="/feed/:id">
             <Modal close={closeModal}>
-              <OrderCard />
+              <OrderPage background />
             </Modal>
           </Route>
         </>

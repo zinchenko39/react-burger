@@ -36,12 +36,20 @@ function OrderStatus() {
       <div className={styles.order_status_info_wrapper}>
         <div className={styles.order_status__ready}>
           {ordersReady.map((elem: number) => {
-            return <p className="text text_type_digits-default">{elem}</p>;
+            return (
+              <p key={elem} className="text text_type_digits-default">
+                {elem}
+              </p>
+            );
           })}
         </div>
         <div className={styles.order_status__progress}>
           {ordersInProgress.map((elem: number) => {
-            return <p className="text text_type_digits-default">{elem}</p>;
+            return (
+              <p key={elem} className="text text_type_digits-default">
+                {elem}
+              </p>
+            );
           })}
         </div>
       </div>
@@ -51,7 +59,6 @@ function OrderStatus() {
           <p className="text text_type_digits-large">{data.total}</p>
         </div>
       </div>
-      {/* <div className={styles.order_status_total_number}></div> */}
       <div className={styles.order_status_total_today}>
         <p className="text text_type_main-medium">Выполнено за сегодня:</p>
         <div className={styles.order_status_total_done_number}>

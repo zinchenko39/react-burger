@@ -24,3 +24,9 @@
 .feed_right {
     width: 640px;
 }
+
+.feed_message {
+    position: relative;
+    top: 250px;
+    text-align: center;
+}

@@ -1,4 +1,3 @@
-import { IIngredient } from '../../interfaces/IIngredient';
 import { TFeedActions } from '../actions/feed-ws-actions';
 import {
   ORDER_WS_CONNECTING,
@@ -8,14 +7,7 @@ import {
   ORDER_WS_MESSAGE,
 } from '../actions/feed-ws-actions';
 
-// type TData = {
-//   orders: Array<IIngredient>;
-//   success: boolean;
-//   total: number;
-//   totalToday: number;
-// };
-
-type TFeedInitialState = {
+export type TFeedInitialState = {
   data: any;
   isLoading: boolean;
   error: string;

@@ -1,5 +1,6 @@
 import { Middleware } from 'redux';
 import { RootState } from '../types';
+import { getCookie } from '../../utils/cookie';
 
 export type TWsActions = {
   wsConnect: string;
@@ -12,7 +13,8 @@ export type TWsActions = {
 };
 
 export const socketMiddleware = (
-  wsActions: TWsActions
+  wsActions: TWsActions,
+  token: boolean = false
 ): Middleware<{}, RootState> => {
   return (store) => {
     let socket: WebSocket | null = null;
@@ -30,7 +32,11 @@ export const socketMiddleware = (
       } = wsActions;
       const { dispatch } = store;
       if (type === wsConnect) {
-        url = payload;
+        if (token) {
+          url = payload + `?token=${getCookie('accessToken')}`;
+        } else {
+          url = payload;
+        }
         socket = new WebSocket(url);
         dispatch({ type: wsConnecting });
       }

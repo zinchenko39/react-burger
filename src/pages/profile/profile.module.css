@@ -44,6 +44,12 @@
     justify-content: center;
     overflow-y: scroll;
 }
+.profile_view_orders_loading {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow-y: hidden;
+}
 .profile_view_main {
     width: 100%;
     display: flex;
@@ -67,3 +73,7 @@
     text-align: center;
 }
 
+.profile_loading {
+    position: relative;
+    top: 150px;
+}

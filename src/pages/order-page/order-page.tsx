@@ -1,16 +1,69 @@
-import styles from './order-card.module.css';
+import styles from './order-page.module.css';
 import { useSelector } from '../../services/hooks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
 import { IIngredient } from '../../interfaces/IIngredient';
 import { formatDate } from '../../utils/formatData';
 
-type TIngredientData = {
+export type TIngredientData = {
   item: IIngredient;
   count: number;
 };
 
-function OrderCard({ background }: any) {
+export const calculateTotalPrice = (ingredients: Array<TIngredientData>) => {
+  let price: number = 0;
+  ingredients.forEach((obj: TIngredientData) => {
+    price += obj.item.price * obj.count;
+  });
+  return price;
+};
+
+export const getOrderStatus = (orderStatus: string) => {
+  let status: string = '';
+  switch (orderStatus) {
+    case 'done': {
+      status = 'Выполнен';
+    }
+  }
+  switch (orderStatus) {
+    case 'created': {
+      status = 'Создан';
+    }
+  }
+  switch (orderStatus) {
+    case 'pending': {
+      status = 'Готовится';
+    }
+  }
+  return status;
+};
+
+export const findIngredientsById = (
+  ingredientsId: any,
+  menuIngredients: any
+) => {
+  const ingredients: Array<IIngredient> = [];
+  ingredientsId?.forEach((id: string) => {
+    menuIngredients.forEach((elem: IIngredient) => {
+      if (elem._id === id) ingredients.push(elem);
+    });
+  });
+  return ingredients;
+};
+
+export const getFilteredIngredients = (ingredients: Array<IIngredient>) =>
+  ingredients?.reduce((prev: Array<TIngredientData>, current: IIngredient) => {
+    if (current) {
+      const n: number = prev.findIndex(
+        (i: TIngredientData) => i.item === current
+      );
+      if (n >= 0) prev[n].count++;
+      else return [...prev, { item: current, count: 1 }];
+    }
+    return prev;
+  }, []);
+
+function OrderPage({ background }: any) {
   const { id } = useParams<any>();
   const error = useSelector((state) => state.feed.error);
   const data = useSelector((state) => state.feed.data);
@@ -18,55 +71,11 @@ function OrderCard({ background }: any) {
   const orderIngredientsId = order?.ingredients;
   const menuIngredients = useSelector((state: any) => state.ingredients.menu);
 
-  const getOrderStatus = (orderStatus: string) => {
-    let status: string = '';
-    switch (orderStatus) {
-      case 'done': {
-        status = 'Выполнен';
-      }
-    }
-    switch (orderStatus) {
-      case 'created': {
-        status = 'Создан';
-      }
-    }
-    switch (orderStatus) {
-      case 'pending': {
-        status = 'Готовится';
-      }
-    }
-    return status;
-  };
-  const findIngredients = () => {
-    const ingredients: Array<IIngredient> = [];
-    orderIngredientsId?.forEach((id: string) => {
-      menuIngredients.forEach((elem: IIngredient) => {
-        if (elem._id === id) ingredients.push(elem);
-      });
-    });
-    return ingredients;
-  };
-
-  const filteredIngredients = findIngredients()?.reduce(
-    (prev: Array<TIngredientData>, current: IIngredient) => {
-      if (current) {
-        const n: number = prev.findIndex(
-          (i: TIngredientData) => i.item === current
-        );
-        if (n >= 0) prev[n].count++;
-        else return [...prev, { item: current, count: 1 }];
-      }
-      return prev;
-    },
-    []
+  const ingredientsId = findIngredientsById(
+    orderIngredientsId,
+    menuIngredients
   );
-  const calculateTotalPrice = () => {
-    let price: number = 0;
-    filteredIngredients.forEach((obj: TIngredientData) => {
-      price += obj.item.price * obj.count;
-    });
-    return price;
-  };
+  const filteredIngredients = getFilteredIngredients(ingredientsId);
 
   if (error) {
     return (
@@ -75,21 +84,20 @@ function OrderCard({ background }: any) {
       </div>
     );
   }
-  console.log(error);
 
   return order ? (
     <div
       className={
         background
-          ? styles.order_card__wrapper
-          : styles.order_card__wrapper_modal
+          ? styles.order_card__wrapper_modal
+          : styles.order_card__wrapper
       }
     >
       <div
         className={
           background
-            ? styles.order_card__number
-            : styles.order_card__number_modal
+            ? styles.order_card__number_modal
+            : styles.order_card__number
         }
       >
         <p className="text text_type_digits-default">#{id}</p>
@@ -134,8 +142,8 @@ function OrderCard({ background }: any) {
         <div
           className={
             background
-              ? styles.order_card__ingredient_bottom
-              : styles.order_card__ingredient_bottom_modal
+              ? styles.order_card__ingredient_bottom_modal
+              : styles.order_card__ingredient_bottom
           }
         >
           <div className={styles.order_card__ingredient_date}>
@@ -145,7 +153,7 @@ function OrderCard({ background }: any) {
           </div>
           <div className={styles.order_card__ingredient_total_price}>
             <p className="text text_type_digits-default">
-              {calculateTotalPrice()}
+              {calculateTotalPrice(filteredIngredients)}
             </p>
             <CurrencyIcon type="primary" />
           </div>
@@ -159,4 +167,4 @@ function OrderCard({ background }: any) {
   );
 }
 
-export default OrderCard;
+export default OrderPage;
