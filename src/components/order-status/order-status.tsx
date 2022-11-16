@@ -1,39 +1,30 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './order-status.module.css';
 import { useSelector } from '../../services/hooks';
 
 function OrderStatus() {
   const data = useSelector((state) => state.feed.data);
-  // orders
-  // :
-  // (50) [{…}, {…}, ]
-  // success
-  // :
-  // true
-  // total
-  // :
-  // 30135
-  // totalToday
-  // :
-  // 30
-  const ordersReady: Array<number> = [13123123];
-  const ordersInProgress: Array<number> = [];
+  const [ordersReady, setOrdersReady] = useState<Array<number>>([]);
+  const [ordersInProgress, setOrdersInProgress] = useState<Array<number>>([]);
 
   function calculateOrders(): void {
+    const readyArray: Array<number> = [];
+    const inProgressArray: Array<number> = [];
     if (data.orders) {
-      // console.log(data.orders);
       data.orders.forEach((elem: any) => {
         if (elem.status === 'done') {
-          ordersReady.push(elem.number);
+          readyArray.push(elem.number);
         } else {
-          ordersInProgress.push(elem.number);
+          inProgressArray.push(elem);
         }
       });
+      setOrdersReady(readyArray);
+      setOrdersInProgress(inProgressArray);
     } else return;
   }
   useEffect(() => {
     calculateOrders();
-    console.log(ordersReady);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (
@@ -44,38 +35,14 @@ function OrderStatus() {
       </div>
       <div className={styles.order_status_info_wrapper}>
         <div className={styles.order_status__ready}>
-          {data.orders
-            ? data.orders.map((elem: any) => {
-                if (elem.status === 'done') {
-                  return (
-                    <p className="text text_type_digits-default">
-                      {elem.number}
-                    </p>
-                  );
-                }
-              })
-            : ''}
+          {ordersReady.map((elem: number) => {
+            return <p className="text text_type_digits-default">{elem}</p>;
+          })}
         </div>
-        {/* <div className={styles.order_status__ready}>
-          <p className="text text_type_digits-default">034533</p>
-          <p className="text text_type_digits-default">034533</p>
-          <p className="text text_type_digits-default">034533</p>
-          <p className="text text_type_digits-default">034533</p>
-          <p className="text text_type_digits-default">034533</p>
-          <p className="text text_type_digits-default">034533</p>
-          <p className="text text_type_digits-default">034533</p>
-          <p className="text text_type_digits-default">034533</p>
-        </div> */}
         <div className={styles.order_status__progress}>
-          <p className="text text_type_digits-default">034533</p>
-          <p className="text text_type_digits-default">034533</p>
-          <p className="text text_type_digits-default">034533</p>
-          <p className="text text_type_digits-default">034533</p>
-          <p className="text text_type_digits-default">034533</p>
-          <p className="text text_type_digits-default">034533</p>
-          <p className="text text_type_digits-default">034533</p>
-          <p className="text text_type_digits-default">034533</p>
-          <p className="text text_type_digits-default">034533</p>
+          {ordersInProgress.map((elem: number) => {
+            return <p className="text text_type_digits-default">{elem}</p>;
+          })}
         </div>
       </div>
       <div className={styles.order_status_total_done}>

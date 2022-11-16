@@ -3,6 +3,9 @@ import CardOrder from '../card-order/card-order';
 import { useSelector } from '../../services/hooks';
 
 function Orders() {
+  const data = useSelector((state) => state.feed.data);
+  const { orders } = data;
+  // console.log(data);
   const items = useSelector((state) => state.ingredients.menu);
   const order = {
     success: true,
@@ -25,14 +28,19 @@ function Orders() {
   };
   return (
     <div className={styles.orders_wrapper}>
+      {orders
+        ? orders.map((elem: any) => {
+            return <CardOrder key={`${elem._id}`} order={elem} />;
+          })
+        : ''}
+      {/* <CardOrder order={order.orders} />
       <CardOrder order={order.orders} />
       <CardOrder order={order.orders} />
       <CardOrder order={order.orders} />
       <CardOrder order={order.orders} />
       <CardOrder order={order.orders} />
       <CardOrder order={order.orders} />
-      <CardOrder order={order.orders} />
-      <CardOrder order={order.orders} />
+      <CardOrder order={order.orders} /> */}
     </div>
   );
 }

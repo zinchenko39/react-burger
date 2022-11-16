@@ -6,13 +6,17 @@
 }
 .order_card__wrapper_modal {
     position: relative;
-    left: 30px;
+    margin: 0 auto;
+    top: 120px;
     width: 640px;
+    height: 700px;
+    overflow-y: hidden;
 }
 .order_card__number {
     text-align: center;
 }
 .order_card__number_modal {
+    text-align: center;
     margin-top: 20px;
 }
 .order_card__title {
@@ -78,4 +82,10 @@
 .order_card__ingredient_total_price {
     display: flex;
     gap: 10px;
+}
+.order_card__loading {
+    position: relative;
+    height: 300px;
+    text-align: center;
+    top: 130px;
 }

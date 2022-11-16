@@ -19,12 +19,14 @@ type TFeedInitialState = {
   data: any;
   isLoading: boolean;
   error: string;
+  connected: boolean;
 };
 
 const feedInitialState: TFeedInitialState = {
   data: [],
   isLoading: false,
   error: '',
+  connected: false,
 };
 
 export const feedWsReducer = (
@@ -42,6 +44,7 @@ export const feedWsReducer = (
       return {
         ...state,
         isLoading: false,
+        connected: true,
       };
     }
     case ORDER_WS_MESSAGE: {
@@ -53,15 +56,16 @@ export const feedWsReducer = (
     case ORDER_WS_CLOSE: {
       return {
         ...state,
+        connected: false,
       };
     }
     case ORDER_WS_ERROR: {
       return {
         ...state,
         error: action.error,
+        connected: false,
       };
     }
-
     default: {
       return state;
     }

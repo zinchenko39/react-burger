@@ -8,26 +8,26 @@ import { useSelector } from '../../services/hooks';
 function CardOrder({ order }: any) {
   const location = useLocation() as ILocation;
   const items = useSelector((state) => state.ingredients.menu);
-  // const ingredientsToShow = items.slice(0, 5);
+
   const maxIngredients = items.length;
   return (
     <Link
       to={{
-        pathname: `/feed/${order._id}`,
+        pathname: `/feed/${order.number}`,
         state: { background: location },
       }}
     >
       <div className={styles.card_order_wrapper}>
         <div className={styles.card_order__top}>
           <div className={styles.card_order_id}>
-            <p className="text text_type_main-small">{order._id}</p>
+            <p className="text text_type_main-small">#{order.number}</p>
           </div>
           <div className={styles.card_order_time}>
             <p className="text text_type_main-small">{order.createdAt}</p>
           </div>
         </div>
         <div className={styles.card_order_title}>
-          <p className="text text_type_main-small">Interstellar бургер</p>
+          <p className="text text_type_main-small">{order.name}</p>
         </div>
         <div className={styles.card_order__bottom}>
           <div className={styles.card_order__ingredients}>

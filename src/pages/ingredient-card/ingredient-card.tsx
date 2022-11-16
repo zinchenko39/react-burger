@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
 import IngridientDetails from '../../components/ingridient-details/ingridient-details';
 import { IIngredient } from '../../interfaces/IIngredient';
 

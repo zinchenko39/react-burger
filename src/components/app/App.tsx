@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { ILocation } from '../../interfaces/ILocations';
-
 import { AppHeader, ProtectedRoute, Main, Modal } from '..';
 import {
   Register,
@@ -17,11 +16,15 @@ import {
 } from '../../pages';
 import { getItems } from '../../services/actions/thunks/get-ingredients';
 import { getUserData } from '../../services/actions/thunks/get-user';
+import { WSS_SERVER_URL } from '../../utils/api';
+import { ORDER_CONNECT } from '../../services/actions/feed-ws-actions';
+import { useSelector } from '../../services/hooks';
 
 function App() {
   const location = useLocation<ILocation>();
   const history = useHistory<any>();
   const dispatch = useDispatch<any>();
+  const connected = useSelector((state) => state.feed.connected);
 
   let background: any = location.state && location.state.background;
 
@@ -29,10 +32,14 @@ function App() {
     history.goBack();
     background = null;
   };
+  const connect = () =>
+    dispatch({ type: ORDER_CONNECT, payload: WSS_SERVER_URL });
 
   useEffect(() => {
     dispatch(getItems());
     dispatch(getUserData());
+    if (connected === false) connect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   return (
