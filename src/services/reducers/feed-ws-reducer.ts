@@ -6,7 +6,6 @@ import {
   ORDER_WS_ERROR,
   ORDER_WS_MESSAGE,
 } from '../actions/feed-ws-actions';
-import { IFeedOrder } from '../../interfaces/IFeedOrder';
 
 export type TFeedInitialState = {
   data: any; //Array<IFeedOrder>
