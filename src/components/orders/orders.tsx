@@ -12,7 +12,6 @@ import { formatDate } from '../../utils/formatData';
 
 function Orders({ orders }: any) {
   const menuIngredients = useSelector((state) => state.ingredients.menu);
-
   return (
     <div className={styles.orders_wrapper}>
       {orders

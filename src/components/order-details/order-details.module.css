@@ -65,3 +65,8 @@
     text-align: center;
     color: #8585AD;
 }
+.order_details_message {
+    position: relative;
+    text-align: center;
+    top: 250px;
+}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './order-status.module.css';
 import { useSelector } from '../../services/hooks';
+import { IFeedOrder } from '../../interfaces/IFeedOrder';
 
 function OrderStatus() {
   const data = useSelector((state) => state.feed.data);
@@ -11,11 +12,11 @@ function OrderStatus() {
     const readyArray: Array<number> = [];
     const inProgressArray: Array<number> = [];
     if (data.orders) {
-      data.orders.forEach((elem: any) => {
+      data.orders.forEach((elem: IFeedOrder) => {
         if (elem.status === 'done') {
           readyArray.push(elem.number);
         } else {
-          inProgressArray.push(elem);
+          inProgressArray.push(elem.number);
         }
       });
       setOrdersReady(readyArray);
@@ -59,6 +60,7 @@ function OrderStatus() {
           <p className="text text_type_digits-large">{data.total}</p>
         </div>
       </div>
+
       <div className={styles.order_status_total_today}>
         <p className="text text_type_main-medium">Выполнено за сегодня:</p>
         <div className={styles.order_status_total_done_number}>

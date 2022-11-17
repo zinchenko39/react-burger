@@ -3,8 +3,8 @@ import styles from './register.module.css';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '../../components';
 import { register } from '../../services/actions/thunks/register';
-import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
+import { useDispatch, useSelector } from '../../services/hooks';
 
 export default function Register() {
   const { values, handleChange } = useForm({
@@ -13,11 +13,11 @@ export default function Register() {
     password: '',
   });
   // eslint-disable-next-line no-unused-vars
-  const registerError = useSelector((state: any) => state.user.registerError);
+  const registerError = useSelector((state) => state.user.registerError);
   const dispatch = useDispatch();
 
-  const userLoggedIn = useSelector((state: any) => state.user.userLoggedIn);
-  const userLoaded = useSelector((state: any) => state.user.userLoaded);
+  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
+  const userLoaded = useSelector((state) => state.user.userLoaded);
 
   if (!userLoaded) {
     return null;

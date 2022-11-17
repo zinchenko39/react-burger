@@ -1,6 +1,4 @@
 import { useRef } from 'react';
-import { useDispatch } from 'react-redux';
-
 import styles from './burger-constructor-card.module.css';
 import {
   DELETE_ITEM,
@@ -9,21 +7,22 @@ import {
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
 import { IBurgerConstructorCard } from '../../interfaces/IBurgerConstructorCard';
+import { useDispatch } from '../../services/hooks';
 
 function BurgerConstructorCard({ item, index }: IBurgerConstructorCard) {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
 
   //D&D
   const ref = useRef<HTMLInputElement>(null);
   // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const [{ handlerId }, drop] = useDrop<any, any, any>({
+  const [{ handlerId }, drop] = useDrop({
     accept: 'card',
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item: any, monitor: any) {
+    hover(item: { index: number }, monitor) {
       if (!ref.current) {
         return;
       }
@@ -36,7 +35,7 @@ function BurgerConstructorCard({ item, index }: IBurgerConstructorCard) {
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }
@@ -52,7 +51,7 @@ function BurgerConstructorCard({ item, index }: IBurgerConstructorCard) {
     },
   });
 
-  const [{ isDragging }, drag] = useDrag<any, any, any>({
+  const [{ isDragging }, drag] = useDrag({
     type: 'card',
     item: () => {
       return { item, index };
@@ -79,7 +78,7 @@ function BurgerConstructorCard({ item, index }: IBurgerConstructorCard) {
         handleClose={() =>
           dispatch({
             type: DELETE_ITEM,
-            uniqId: item.uniqId,
+            uniqId: item.uniqId!,
           })
         }
       />

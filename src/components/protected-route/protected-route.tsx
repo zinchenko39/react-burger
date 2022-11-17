@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Route, Redirect, useLocation, RouteProps } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 
 import { getUserData } from '../../services/actions/thunks/get-user';
 
@@ -11,7 +11,7 @@ export default function ProtectedRoute({
   ...rest
 }: RouteProps & { children?: React.ReactNode }) {
   const location = useLocation<ILocation>();
-  const userLoggedIn = useSelector((state: any) => state.user.userLoggedIn);
+  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
   const [isUserLoaded, setUserLoaded] = useState<boolean>(false);
 
   const init = async () => {

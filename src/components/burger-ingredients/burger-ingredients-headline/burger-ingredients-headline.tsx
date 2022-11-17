@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import styles from '../burger-ingredients.module.css';
 import { BurgerIngredientCard } from '../../index';
 

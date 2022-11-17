@@ -2,6 +2,7 @@ import {
   SEND_ORDER_REQUEST,
   ORDER_REQUEST_SUCCESS,
   ORDER_REQUEST_FAILED,
+  ORDER_RESET,
 } from '../actions/order-actions';
 import { TOrderActions } from '../actions/order-actions';
 
@@ -49,6 +50,9 @@ export const orderReducer = (
         errorStatus: action.error,
         orderNumber: 'Ошибка',
       };
+    }
+    case ORDER_RESET: {
+      return orderInitialState;
     }
     default: {
       return state;

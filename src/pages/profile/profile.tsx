@@ -1,20 +1,18 @@
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { ILocation } from '../../interfaces/ILocations';
-import { useSelector } from '../../services/hooks';
 import styles from './profile.module.css';
 import { PROFILE_ORDER_CONNECT } from '../../services/actions/profile-feed-ws-actions';
-
 import { ProfileMain, Orders } from '../../components';
 import { logOut } from '../../services/actions/thunks/log-out';
 import { getUserData } from '../../services/actions/thunks/get-user';
 import { WSS_SERVER_URL } from '../../utils/api';
+import { useDispatch, useSelector } from '../../services/hooks';
 
 export default function Profile() {
   const location = useLocation<ILocation>();
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
   const wsConnected = useSelector((state) => state.personalFeed.connected);
   const feedLoading: boolean = useSelector(
     (state) => state.personalFeed.isLoading
@@ -28,9 +26,10 @@ export default function Profile() {
   useEffect(() => {
     dispatch(getUserData());
     if (wsConnected === false) connect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
-  const userLoaded = useSelector((state: any) => state.user.userLoaded);
+  const userLoaded = useSelector((state) => state.user.userLoaded);
   const pathname = location.pathname;
 
   return userLoaded ? (

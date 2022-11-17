@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 function useModalControls() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const history = useHistory<any>();
+  const history = useHistory();
 
   function handleModalOpen() {
     setIsModalOpen(true);

@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import IngridientDetails from '../../components/ingridient-details/ingridient-details';
 import { IIngredient } from '../../interfaces/IIngredient';
+import { useSelector } from '../../services/hooks';
 
 function IngredientCard({ background }: any) {
-  const { id } = useParams<any>();
-  const ingredients = useSelector((state: any) => state.ingredients.menu);
+  const { id } = useParams<{ id: string }>();
+  const ingredients = useSelector((state) => state.ingredients.menu);
   const ingredient = ingredients.find((elem: IIngredient) => elem._id === id);
 
   return (

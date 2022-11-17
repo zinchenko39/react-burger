@@ -1,8 +1,6 @@
 import { useEffect, useReducer, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { useHistory } from 'react-router-dom';
-
 import styles from './burger-constructor.module.css';
 
 import { ADD_ITEM } from '../../services/actions/constructor-actions';
@@ -11,8 +9,8 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { BurgerConstructorCard, OrderDetails, Modal, Button } from '..';
 import { sendItems } from '../../services/actions/thunks/make-order';
 import useModalControls from '../../hooks/modal-controls';
-
 import { IIngredient } from '../../interfaces/IIngredient';
+import { useSelector, useDispatch } from '../../services/hooks';
 
 const initialSum: { count: number } = { count: 0 };
 
@@ -35,11 +33,11 @@ function reducer(
 }
 
 function BurgerConstructor() {
-  const dispatch = useDispatch<any>();
-  const history = useHistory<object>();
-  const cart = useSelector((state: any) => state.cart.items);
-  const bun = useSelector((state: any) => state.cart.bun);
-  const userLoggedIn = useSelector((state: any) => state.user.userLoggedIn);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const cart = useSelector((state) => state.cart.items);
+  const bun = useSelector((state) => state.cart.bun);
+  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
 
   const modalControls: any = useModalControls();
 
@@ -48,12 +46,10 @@ function BurgerConstructor() {
 
   function filterOrderId(items: IIngredient[], bun: IIngredient) {
     const arrOrderId: string[] = [];
-
-    arrOrderId.push(bun._id);
-    items.forEach((elem: any) => {
+    for (let i = 0; i < 2; i++) arrOrderId.push(bun._id);
+    items.forEach((elem: IIngredient) => {
       arrOrderId.push(elem._id);
     });
-
     setOrderId({ ingredients: arrOrderId });
   }
 
@@ -69,7 +65,7 @@ function BurgerConstructor() {
   //D&D Drop
   const [, dropContainer] = useDrop({
     accept: 'ingredient',
-    drop(itemId) {
+    drop(itemId: { id: string }) {
       handleDrop(itemId);
     },
   });
@@ -78,8 +74,8 @@ function BurgerConstructor() {
     dispatchSum({
       type: 'reset',
     });
-    //Claculate main, sauces
-    items.forEach((elem: any) => {
+    //Calculate main, sauces
+    items.forEach((elem: IIngredient) => {
       dispatchSum({
         type: 'increment',
         price: elem.price,
@@ -95,11 +91,10 @@ function BurgerConstructor() {
     }
   }
   //D&D
-  const elements = useSelector((state: any) => state.ingredients.menu);
+  const elements = useSelector((state) => state.ingredients.menu);
 
-  const handleDrop = (itemId: any) => {
-    let ingredient;
-
+  const handleDrop = (itemId: { id: string }) => {
+    let ingredient: IIngredient;
     function compareIngredient() {
       elements.forEach((element: IIngredient) => {
         if (element._id === itemId.id) {
@@ -112,7 +107,7 @@ function BurgerConstructor() {
     compareIngredient();
     dispatch({
       type: ADD_ITEM,
-      item: ingredient,
+      item: ingredient!,
       uniqId: Math.random(),
     });
   };

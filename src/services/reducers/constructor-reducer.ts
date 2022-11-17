@@ -8,7 +8,7 @@ import { IIngredient } from '../../interfaces/IIngredient';
 import { TConstructorActions } from '../actions/constructor-actions';
 
 type TConstructorInitialState = {
-  items: ReadonlyArray<IIngredient>;
+  items: Array<IIngredient>;
   bun: any;
 };
 

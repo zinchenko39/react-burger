@@ -1,12 +1,11 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BurgerConstructor, BurgerIngredients } from '..';
+import { useSelector } from '../../services/hooks';
 
 function Main() {
-  const isLoading = useSelector((state: any) => state.ingredients.isLoading);
-  const isError = useSelector((state: any) => state.ingredients.isError);
+  const isLoading = useSelector((state) => state.ingredients.isLoading);
+  const isError = useSelector((state) => state.ingredients.isError);
   return (
     <main className="wrapper">
       {isError && <div className="loading">Что-то пошло не так...</div>}

@@ -1,6 +1,6 @@
 export interface IFeedOrder {
   _id: string;
-  ingredients: string;
+  ingredients: ReadonlyArray<string>;
   status: 'done' | 'created' | 'pending';
   name: string;
   createdAt: string;

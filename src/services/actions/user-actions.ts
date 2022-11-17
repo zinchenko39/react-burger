@@ -31,9 +31,9 @@ export const UPDATE_USER_DATA_ERROR: 'UPDATE_USER_DATA_ERROR' =
   'UPDATE_USER_DATA_ERROR';
 
 type TUser = {
-  email: string;
-  name: string;
-  password?: string;
+  email: string | null;
+  name: string | null;
+  password?: string | null;
 };
 
 export interface IForgotPassword {

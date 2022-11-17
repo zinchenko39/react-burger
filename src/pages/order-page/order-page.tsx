@@ -4,6 +4,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useParams } from 'react-router-dom';
 import { IIngredient } from '../../interfaces/IIngredient';
 import { formatDate } from '../../utils/formatData';
+import { IFeedOrder } from '../../interfaces/IFeedOrder';
 
 export type TIngredientData = {
   item: IIngredient;
@@ -39,8 +40,8 @@ export const getOrderStatus = (orderStatus: string) => {
 };
 
 export const findIngredientsById = (
-  ingredientsId: any,
-  menuIngredients: any
+  ingredientsId: ReadonlyArray<string>,
+  menuIngredients: ReadonlyArray<IIngredient>
 ) => {
   const ingredients: Array<IIngredient> = [];
   ingredientsId?.forEach((id: string) => {
@@ -64,12 +65,14 @@ export const getFilteredIngredients = (ingredients: Array<IIngredient>) =>
   }, []);
 
 function OrderPage({ background }: any) {
-  const { id } = useParams<any>();
+  const { id } = useParams<{ id: string }>();
   const error = useSelector((state) => state.feed.error);
   const data = useSelector((state) => state.feed.data);
-  const order = data.orders?.find((elem: any) => elem.number === parseInt(id));
+  const order = data.orders?.find(
+    (elem: IFeedOrder) => elem.number === parseInt(id)
+  );
   const orderIngredientsId = order?.ingredients;
-  const menuIngredients = useSelector((state: any) => state.ingredients.menu);
+  const menuIngredients = useSelector((state) => state.ingredients.menu);
 
   const ingredientsId = findIngredientsById(
     orderIngredientsId,
@@ -115,7 +118,7 @@ function OrderPage({ background }: any) {
       </div>
       <div className={styles.order_card__ingredients}>
         <div className={styles.order_card__ingredient_details}>
-          {filteredIngredients?.map((data: any) => (
+          {filteredIngredients?.map((data: TIngredientData) => (
             <div key={data.item._id} className={styles.order_card__ingredient}>
               <div className={styles.order_card__ingredient_img__wrapper}>
                 <img

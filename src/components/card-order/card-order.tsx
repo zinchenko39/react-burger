@@ -2,13 +2,19 @@ import styles from './card-order.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation } from 'react-router-dom';
 import { ILocation } from '../../interfaces/ILocations';
+import { ICardOrder } from '../../interfaces/ICardOrder';
+import { TIngredientData } from '../../pages/order-page/order-page';
 
-function CardOrder({ order, totalPrice, filteredIngredients, data }: any) {
+function CardOrder({
+  order,
+  totalPrice,
+  filteredIngredients,
+  data,
+}: ICardOrder) {
   const location = useLocation() as ILocation;
   const maxIngredients = filteredIngredients.length;
-
   const calculateHidenLength = (length: number) => {
-    let result = 0;
+    let result: number = 0;
     if (length > 6) result = length - 6;
     return result;
   };
@@ -36,9 +42,9 @@ function CardOrder({ order, totalPrice, filteredIngredients, data }: any) {
           <div className={styles.card_order__ingredients}>
             {filteredIngredients
               .slice(0, 6)
-              .map((ingredient: any, index: any) => {
-                let zIndex = maxIngredients - index;
-                let right = 20 * index;
+              .map((ingredient: TIngredientData, index: number) => {
+                let zIndex: number = maxIngredients - index;
+                let right: number = 20 * index;
                 return (
                   <div
                     key={ingredient.item._id}

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import styles from './app-header.module.css';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,9 +6,9 @@ import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink, useRouteMatch } from 'react-router-dom';
 
 function AppHeader() {
-  const isConstructor = useRouteMatch<object>({ path: '/', exact: true });
-  const isProfile = useRouteMatch<object>({ path: '/profile', exact: true });
-  const isHistory = useRouteMatch<object>({ path: '/feed', exact: true });
+  const isConstructor = useRouteMatch({ path: '/', exact: true });
+  const isProfile = useRouteMatch({ path: '/profile', exact: true });
+  const isHistory = useRouteMatch({ path: '/feed', exact: true });
 
   return (
     <header className={styles.app_header_navigation__panel}>
