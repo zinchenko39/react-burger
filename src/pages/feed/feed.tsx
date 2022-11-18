@@ -1,11 +1,34 @@
+import { useEffect } from 'react';
 import styles from './feed.module.css';
 import { OrderStatus, Orders } from '../../components';
-import { useSelector } from '../../services/hooks';
+import { useSelector, useDispatch } from '../../services/hooks';
+import { WSS_SERVER_URL } from '../../utils/api';
+import {
+  ORDER_CONNECT,
+  ORDER_DISCONNECT,
+} from '../../services/actions/feed-ws-actions';
 
 function Feed() {
+  const dispatch = useDispatch();
   const data = useSelector((state) => state.feed.data);
   const isLoading = useSelector((state) => state.feed.isLoading);
+  const connected = useSelector((state) => state.feed.connected);
   const { orders, success, error } = data;
+
+  const connect = () =>
+    dispatch({ type: ORDER_CONNECT, payload: `${WSS_SERVER_URL}/all` });
+
+  const disconnect = () => dispatch({ type: ORDER_DISCONNECT });
+
+  useEffect(() => {
+    if (connected === false) connect();
+
+    if (connected)
+      return () => {
+        disconnect();
+      };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connected]);
 
   if (success === false || error) {
     return (

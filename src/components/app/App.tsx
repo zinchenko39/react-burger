@@ -15,15 +15,12 @@ import {
 } from '../../pages';
 import { getItems } from '../../services/actions/thunks/get-ingredients';
 import { getUserData } from '../../services/actions/thunks/get-user';
-import { WSS_SERVER_URL } from '../../utils/api';
-import { ORDER_CONNECT } from '../../services/actions/feed-ws-actions';
-import { useSelector, useDispatch } from '../../services/hooks';
+import { useDispatch } from '../../services/hooks';
 
 function App() {
   const location = useLocation<ILocation>();
   const history = useHistory<any>();
   const dispatch = useDispatch();
-  const connected = useSelector((state) => state.feed.connected);
 
   let background: any = location.state && location.state.background;
 
@@ -31,13 +28,10 @@ function App() {
     history.goBack();
     background = null;
   };
-  const connect = () =>
-    dispatch({ type: ORDER_CONNECT, payload: `${WSS_SERVER_URL}/all` });
 
   useEffect(() => {
     dispatch(getItems());
     dispatch(getUserData());
-    if (connected === false) connect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 

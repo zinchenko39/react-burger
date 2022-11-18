@@ -3,7 +3,10 @@ import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { ILocation } from '../../interfaces/ILocations';
 import styles from './profile.module.css';
-import { PROFILE_ORDER_CONNECT } from '../../services/actions/profile-feed-ws-actions';
+import {
+  PROFILE_ORDER_CONNECT,
+  PROFILE_ORDER_DISCONNECT,
+} from '../../services/actions/profile-feed-ws-actions';
 import { ProfileMain, Orders } from '../../components';
 import { logOut } from '../../services/actions/thunks/log-out';
 import { getUserData } from '../../services/actions/thunks/get-user';
@@ -13,21 +16,28 @@ import { useDispatch, useSelector } from '../../services/hooks';
 export default function Profile() {
   const location = useLocation<ILocation>();
   const dispatch = useDispatch();
-  const wsConnected = useSelector((state) => state.personalFeed.connected);
+  const connected = useSelector((state) => state.personalFeed.connected);
   const feedLoading: boolean = useSelector(
     (state) => state.personalFeed.isLoading
   );
   const profileData = useSelector((state) => state.personalFeed.data);
   const { orders } = profileData;
+  const reverseOrders = orders && [...orders].reverse();
 
   const connect = () =>
     dispatch({ type: PROFILE_ORDER_CONNECT, payload: WSS_SERVER_URL });
+  const disconnect = () => dispatch({ type: PROFILE_ORDER_DISCONNECT });
 
   useEffect(() => {
     dispatch(getUserData());
-    if (wsConnected === false) connect();
+    if (connected === false) connect();
+
+    if (connected)
+      return () => {
+        disconnect();
+      };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, [connected]);
 
   const userLoaded = useSelector((state) => state.user.userLoaded);
   const pathname = location.pathname;
@@ -78,7 +88,7 @@ export default function Profile() {
               <p className="text text_type_main-medium">Загрузка...</p>
             </div>
           ) : (
-            <Orders orders={orders} />
+            <Orders orders={reverseOrders} />
           )}
         </div>
       ) : (

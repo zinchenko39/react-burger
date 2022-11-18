@@ -11,7 +11,7 @@ export default function ProfileMain() {
   const userName = useSelector((state) => state.user.name);
   const userLogin = useSelector((state) => state.user.email);
   const updateUserDataError = useSelector(
-    (state: any) => state.user.updateUserDataError
+    (state) => state.user.updateUserDataError
   );
 
   const [fieldName, setFieldName] = useState<string>(userName!);

@@ -8,7 +8,7 @@ import {
 } from '../actions/feed-ws-actions';
 
 export type TFeedInitialState = {
-  data: any; //Array<IFeedOrder>
+  data: any;
   isLoading: boolean;
   error: string;
   connected: boolean;
