@@ -4,6 +4,8 @@ import { constructorReducer } from './constructor-reducer';
 import { ingridientDetailsReducer } from './ingridient-details-reducer';
 import { orderReducer } from './order-reducer';
 import { userReducer } from './user-reducer';
+import { feedWsReducer } from './feed-ws-reducer';
+import { PersonalFeedWsReducer } from './profile-feed-ws-reducer';
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
@@ -11,4 +13,6 @@ export const rootReducer = combineReducers({
   currentIngredient: ingridientDetailsReducer,
   order: orderReducer,
   user: userReducer,
+  feed: feedWsReducer,
+  personalFeed: PersonalFeedWsReducer,
 });

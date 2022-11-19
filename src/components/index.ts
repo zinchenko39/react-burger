@@ -13,3 +13,6 @@ export { default as ProtectedRoute } from './protected-route/protected-route';
 export { default as Main } from './main/main';
 export { default as Button } from './button/button-ya';
 export { default as Tab } from './tab/tab-ya';
+export { default as CardOrder } from './card-order/card-order';
+export { default as OrderStatus } from './order-status/order-status';
+export { default as Orders } from './orders/orders';

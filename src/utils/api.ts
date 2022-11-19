@@ -1,4 +1,6 @@
+import { getCookie } from '../utils/cookie';
 export const BASE_URL = 'https://norma.nomoreparties.space/api';
+export const WSS_SERVER_URL = 'wss://norma.nomoreparties.space/orders';
 
 type TOptions = {
   method?: string;
@@ -26,6 +28,7 @@ export function makeOrder(ingredients: string[]) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
+      Authorization: 'Bearer ' + getCookie('accessToken'),
     },
     body: JSON.stringify(ingredients),
   });

@@ -1,0 +1,74 @@
+.card_order_wrapper {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    width: 580px;
+    padding: 24px;
+    background: #1C1C21;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 40px;
+}
+.card_order__top {
+    display: flex;
+    justify-content: space-between;
+}
+.card_order_id {
+    display: block;
+    width: 100px;
+}
+.card_order_time {
+    display: block;
+    color: #8585AD;
+}
+.card_order__bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.card_order__ingredients {
+    display: flex;
+    flex-direction: row;
+    width: 409px;
+    box-sizing: border-box;
+    overflow: hidden
+}
+.card_order__ingredients_img_wrapper {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    border: 2px solid rgba(128, 26, 178, 1);
+    background: #000000;
+}
+.card_order__ingredients_img_wrapper span {
+    position: absolute;
+    left: 20px;
+    top: 18px;
+}
+
+.card_order__ingredients_img {
+    position: relative;
+    left: -23px;
+    top: 4px;
+    box-sizing: border-box;
+    width: 112px;
+    height: 56px;
+}
+
+.card_order__ingredients_img__last {
+    position: relative;
+    left: -23px;
+    top: 4px;
+    box-sizing: border-box;
+    width: 112px;
+    height: 56px;
+    opacity: 0.3;
+}
+
+.card_order__price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

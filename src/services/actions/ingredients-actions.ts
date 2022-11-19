@@ -1,30 +1,21 @@
-import { loadIngredients } from '../../utils/api';
-import { Dispatch, Action } from 'redux';
+import { IIngredient } from '../../interfaces/IIngredient';
+export const GET_ITEMS_REQUEST: 'GET_ITEMS_REQUEST' = 'GET_ITEMS_REQUEST';
+export const GET_ITEMS_SUCCESS: 'GET_ITEMS_SUCCESS' = 'GET_ITEMS_SUCCESS';
+export const GET_ITEMS_FAILED: 'GET_ITEMS_FAILED' = 'GET_ITEMS_FAILED';
 
-export const GET_ITEMS_REQUEST = 'GET_ITEMS_REQUEST';
-export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
-export const GET_ITEMS_FAILED = 'GET_ITEMS_FAILED';
-
-export function getItems() {
-  return function (dispatch: Dispatch<Action>) {
-    dispatch({
-      type: GET_ITEMS_REQUEST,
-    });
-    loadIngredients()
-      .then((res) => {
-        if (res && res.success) {
-          dispatch({
-            type: GET_ITEMS_SUCCESS,
-            menu: res.data,
-            MenuQuantity: res.data.length,
-          });
-        }
-      })
-      .catch((error) => {
-        dispatch({
-          type: GET_ITEMS_FAILED,
-          error,
-        });
-      });
-  };
+export interface IGetItemsRequest {
+  readonly type: typeof GET_ITEMS_REQUEST;
 }
+export interface IGetItemsSuccess {
+  readonly type: typeof GET_ITEMS_SUCCESS;
+  readonly menu: Array<IIngredient>;
+  readonly MenuQuantity: number;
+}
+export interface IGetItemsFailed {
+  readonly type: typeof GET_ITEMS_FAILED;
+  readonly error: string;
+}
+export type TIngredientsActions =
+  | IGetItemsRequest
+  | IGetItemsSuccess
+  | IGetItemsFailed;

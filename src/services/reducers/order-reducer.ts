@@ -2,9 +2,19 @@ import {
   SEND_ORDER_REQUEST,
   ORDER_REQUEST_SUCCESS,
   ORDER_REQUEST_FAILED,
+  ORDER_RESET,
 } from '../actions/order-actions';
+import { TOrderActions } from '../actions/order-actions';
 
-const orderInitialState = {
+type TOrderInitialState = {
+  itemsId: ReadonlyArray<string>;
+  orderNumber: number | string;
+  isLoading: boolean;
+  isError: boolean;
+  errorStatus: null | string;
+};
+
+const orderInitialState: TOrderInitialState = {
   itemsId: [],
   orderNumber: '',
   isLoading: false,
@@ -12,7 +22,10 @@ const orderInitialState = {
   errorStatus: null,
 };
 
-export const orderReducer = (state: any = orderInitialState, action: any) => {
+export const orderReducer = (
+  state: TOrderInitialState = orderInitialState,
+  action: TOrderActions
+): TOrderInitialState => {
   switch (action.type) {
     case SEND_ORDER_REQUEST: {
       return {
@@ -37,6 +50,9 @@ export const orderReducer = (state: any = orderInitialState, action: any) => {
         errorStatus: action.error,
         orderNumber: 'Ошибка',
       };
+    }
+    case ORDER_RESET: {
+      return orderInitialState;
     }
     default: {
       return state;

@@ -1,17 +1,15 @@
-import { userRequest } from '../../utils/api';
-import { setCookie, getCookie } from '../../utils/cookie';
-import { BASE_URL } from '../../utils/api';
-import { Dispatch, Action } from 'redux';
+import { userRequest } from '../../../utils/api';
+import { setCookie, getCookie } from '../../../utils/cookie';
+import { BASE_URL } from '../../../utils/api';
+import { LOG_OUT_REQUEST, LOG_OUT, LOG_OUT_ERROR } from '../user-actions';
+import { AppDispatch } from '../../types';
+import { AppThunk } from '../../types';
 
-export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
-export const LOG_OUT = 'LOG_OUT';
-export const LOG_OUT_ERROR = 'LOG_OUT_ERROR';
-
-export function logOut() {
-  const token: { token: any } = {
+export function logOut(): AppThunk {
+  const token: { token: string | undefined } = {
     token: getCookie('refreshToken'),
   };
-  return function (dispatch: Dispatch<Action>): void {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: LOG_OUT_REQUEST,
     });

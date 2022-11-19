@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 
 import stylesBurgerCard from './burger-ingredients-card.module.css';
 
@@ -19,12 +19,12 @@ function BurgerIngredientCard({ ingredient }: IBurgerIngredientCard) {
   const [ingredientsQuantity, setIngredientsQuantity] = useState<number>(0);
   const [bunQuantity, setBunQuantity] = useState<number>(0);
 
-  const cart = useSelector((state: any) => state.cart.items);
-  const bun = useSelector((state: any) => state.cart.bun);
+  const cart = useSelector((state) => state.cart.items);
+  const bun = useSelector((state) => state.cart.bun);
 
   //D&D
-  const id: any = ingredient._id;
-  const [{ isDrag }, dragRef] = useDrag<any, any, any>({
+  const id: string = ingredient._id;
+  const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredient',
     item: { id },
     collect: (monitor) => ({

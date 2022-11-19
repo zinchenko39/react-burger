@@ -1,23 +1,23 @@
 import { useState, FormEvent } from 'react';
 import { Link, useHistory, Redirect } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import styles from './forgot-password.module.css';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '../../components';
 import { BASE_URL, userRequest } from '../../utils/api';
-import { FORGOT_PASSWORD_VISITED } from '../../services/actions/forgot-password-actions';
+import { FORGOT_PASSWORD_VISITED } from '../../services/actions/user-actions';
 import { useForm } from '../../hooks/useForm';
+import { useDispatch, useSelector } from '../../services/hooks';
 
 export default function ForgotPassword() {
-  const dispatch = useDispatch<any>();
-  const history = useHistory<any>();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const { values, handleChange } = useForm({
     email: '',
   });
   const [error, setError] = useState<boolean>(false);
 
-  const userLoggedIn = useSelector((state: any) => state.user.userLoggedIn);
-  const userLoaded = useSelector((state: any) => state.user.userLoaded);
+  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
+  const userLoaded = useSelector((state) => state.user.userLoaded);
 
   if (!userLoaded) {
     return null;

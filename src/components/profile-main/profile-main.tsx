@@ -1,42 +1,42 @@
 import { useState, useRef, useEffect, ChangeEvent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import styles from './profile-main.module.css';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '..';
-import { getUserData } from '../../services/actions/get-user-actions';
-import { updateUserData } from '../../services/actions/update-user-actions';
+import { getUserData } from '../../services/actions/thunks/get-user';
+import { updateUserData } from '../../services/actions/thunks/update-user';
+import { useSelector, useDispatch } from '../../services/hooks';
 
 export default function ProfileMain() {
-  const dispatch = useDispatch<any>();
-  const userName = useSelector((state: any) => state.user.name);
-  const userLogin = useSelector((state: any) => state.user.email);
+  const dispatch = useDispatch();
+  const userName = useSelector((state) => state.user.name);
+  const userLogin = useSelector((state) => state.user.email);
   const updateUserDataError = useSelector(
-    (state: any) => state.user.updateUserDataError
+    (state) => state.user.updateUserDataError
   );
 
-  const [fieldName, setFieldName] = useState<string>(userName);
-  const [fieldLogin, setFieldLogin] = useState<string>(userLogin);
+  const [fieldName, setFieldName] = useState<string>(userName!);
+  const [fieldLogin, setFieldLogin] = useState<string>(userLogin!);
   const [fieldPassword, setFieldPassword] = useState<string>('123456789');
 
-  const nameRef = useRef<any>(null);
-  const loginRef = useRef<any>(null);
-  const passwordRef = useRef<any>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const loginRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const [disabledName, setDisabledName] = useState<boolean>(true);
   const [disabledLogin, setDisabledLogin] = useState<boolean>(true);
   const [disabledPassword, setDisabledPassword] = useState<boolean>(true);
 
   const changeName = (): void => {
-    setTimeout(() => nameRef.current.focus(), 0);
+    setTimeout(() => nameRef.current!.focus(), 0);
     setDisabledName(!disabledName);
   };
 
   const changeLogin = (): void => {
-    setTimeout(() => loginRef.current.focus(), 0);
+    setTimeout(() => loginRef.current!.focus(), 0);
     setDisabledLogin(!disabledLogin);
   };
   const changePassword = (): void => {
-    setTimeout(() => passwordRef.current.focus(), 0);
+    setTimeout(() => passwordRef.current!.focus(), 0);
     setDisabledPassword(!disabledPassword);
   };
 
@@ -50,8 +50,8 @@ export default function ProfileMain() {
     setDisabledName(true);
     setDisabledLogin(true);
     setDisabledPassword(true);
-    setFieldName(userName);
-    setFieldLogin(userLogin);
+    setFieldName(userName!);
+    setFieldLogin(userLogin!);
     setFieldPassword(fieldPassword);
   };
 

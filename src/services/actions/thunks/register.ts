@@ -1,21 +1,22 @@
-import { Dispatch, Action } from 'redux';
-import { userRequest } from '../../utils/api';
-import { setCookie } from '../../utils/cookie';
-import { BASE_URL } from '../../utils/api';
+import { userRequest } from '../../../utils/api';
+import { setCookie } from '../../../utils/cookie';
+import { BASE_URL } from '../../../utils/api';
+import { IData } from '../../../interfaces/IData';
+import { REGISTER_REQUEST, REGISTER, REGISTER_ERROR } from '../user-actions';
+import { AppDispatch } from '../../types';
+import { AppThunk } from '../../types';
 
-import { IData } from '../../interfaces/IData';
-
-export const REGISTER = 'REGISTER';
-export const REGISTER_REQUEST = 'REGISTER_REQUEST';
-export const REGISTER_ERROR = 'USER_ERROR';
-
-export function register(email: string, password: string, name: string) {
+export function register(
+  email: string,
+  password: string,
+  name: string
+): AppThunk {
   const data: IData = {
     email,
     password,
     name,
   };
-  return function (dispatch: Dispatch<Action>) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: REGISTER_REQUEST,
     });

@@ -1,0 +1,87 @@
+.order_card__wrapper {
+    position: relative;
+    top: 200px;
+    width: 640px;
+    margin: 0 auto;
+}
+.order_card__wrapper_modal {
+    position: relative;
+    left: 30px;
+    width: 640px;
+}
+.order_card__number {
+    text-align: center;
+}
+.order_card__number_modal {
+    margin-top: 20px;
+}
+.order_card__title {
+    margin-top: 40px;
+}
+.order_card__status {
+    margin-top: 12px;
+    color: #00CCCC;
+}
+.order_card__properties {
+    margin-top: 60px;
+}
+.order_card__ingredients {
+    height: 370px;
+}
+.order_card__ingredient_details {
+    display: flex;
+    flex-direction: column;
+    height: 315px;
+    overflow-y: scroll;
+}
+.order_card__ingredient {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+    align-items: center
+}
+.order_card__ingredient_name {
+    width: 375px;
+}
+.order_card__ingredient_img__wrapper {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    border: 2px solid rgba(128, 26, 178, 1);
+}
+
+.order_card__ingredient_img {
+    width: 112px;
+    height: 56px;
+    position: absolute;
+    right: -25px;
+    top: 5px;
+}
+.order_card__ingredient_price {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.order_card__ingredient_bottom {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.order_card__ingredient_bottom_modal {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.order_card__ingredient_total_price {
+    display: flex;
+    gap: 10px;
+}
+.order_card__loading {
+    position: relative;
+    height: 300px;
+    text-align: center;
+    top: 130px;
+}

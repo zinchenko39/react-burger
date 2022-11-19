@@ -2,36 +2,42 @@ import {
   REGISTER_REQUEST,
   REGISTER,
   REGISTER_ERROR,
-} from '../actions/register-actions';
-import {
   LOG_IN_REQUEST,
   LOG_IN,
   LOG_IN_ERROR,
-} from '../actions/log-in-actions';
-import {
   LOG_OUT_REQUEST,
   LOG_OUT,
   LOG_OUT_ERROR,
-} from '../actions/log-out-actions';
-import {
   GET_USER_REQUEST,
   GET_USER,
   GET_USER_ERROR,
-} from '../actions/get-user-actions';
-import {
   UPDATE_USER_DATA_REQUEST,
   UPDATE_USER_DATA,
   UPDATE_USER_DATA_ERROR,
-} from '../actions/update-user-actions';
-import {
   REFRESH_TOKEN_REQUEST,
   REFRESH_TOKEN,
   REFRESH_TOKEN_ERROR,
-} from '../actions/refresh-token-actions';
-import { FORGOT_PASSWORD_VISITED } from '../actions/forgot-password-actions';
-import { RESET_PASSWORD } from '../actions/reset-password-actions';
+  FORGOT_PASSWORD_VISITED,
+  RESET_PASSWORD,
+} from '../actions/user-actions';
+import { TUserActions } from '../actions/user-actions';
 
-const userInitialState = {
+type TUserInitialState = {
+  email: string | null;
+  name: string | null;
+  userLoggedIn: boolean;
+  userLoaded: boolean;
+  registerError: boolean | string;
+  logInError: boolean | string;
+  logOutError: boolean | string;
+  getUserError: boolean | string;
+  updateUserDataError: boolean | string;
+  setUserError: boolean | string;
+  forgotPasswordError: boolean | string;
+  forgotPasswordVisited: boolean | string;
+};
+
+const userInitialState: TUserInitialState = {
   email: null,
   name: null,
   userLoggedIn: false,
@@ -46,7 +52,10 @@ const userInitialState = {
   forgotPasswordVisited: false,
 };
 
-export const userReducer = (state: any = userInitialState, action: any) => {
+export const userReducer = (
+  state: TUserInitialState = userInitialState,
+  action: TUserActions
+): TUserInitialState => {
   switch (action.type) {
     case REGISTER_REQUEST: {
       return {
