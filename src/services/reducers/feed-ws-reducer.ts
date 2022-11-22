@@ -6,6 +6,14 @@ import {
   ORDER_WS_ERROR,
   ORDER_WS_MESSAGE,
 } from '../actions/feed-ws-actions';
+// import { IFeedOrder } from '../../interfaces/IFeedOrder';
+
+// export type TData = {
+//   success: boolean;
+//   orders: Array<IFeedOrder>;
+//   total: number;
+//   totalToday: number;
+// };
 
 export type TFeedInitialState = {
   data: any;
