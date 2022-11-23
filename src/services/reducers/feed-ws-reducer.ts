@@ -22,7 +22,7 @@ export type TFeedInitialState = {
   connected: boolean;
 };
 
-const feedInitialState: TFeedInitialState = {
+export const feedInitialState: TFeedInitialState = {
   data: [],
   isLoading: false,
   error: '',
@@ -56,6 +56,7 @@ export const feedWsReducer = (
     case ORDER_WS_CLOSE: {
       return {
         ...state,
+        data: [],
         connected: false,
       };
     }
