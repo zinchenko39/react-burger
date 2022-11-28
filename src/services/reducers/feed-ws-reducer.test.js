@@ -1,5 +1,5 @@
-import { feedInitialState, feedWsReducer } from './feed-ws-reducer';
-import {
+  import { feedInitialState, feedWsReducer } from './feed-ws-reducer';
+  import {
     ORDER_WS_CONNECTING,
     ORDER_WS_OPEN,
     ORDER_WS_CLOSE,
@@ -9,7 +9,7 @@ import {
 
 
 
-describe('burger constructor reducer', () => {
+  describe('feed ws reducer', () => {
     let state = feedWsReducer(undefined, {});
     it('should return the initial state', () => {
       expect(state).toEqual(feedInitialState);
