@@ -14,7 +14,7 @@ type TIngredientsInitialState = {
   MenuQuantity: number;
 };
 
-const ingredientsInitialState: TIngredientsInitialState = {
+export const ingredientsInitialState: TIngredientsInitialState = {
   menu: [],
   isLoading: false,
   isError: false,
@@ -45,6 +45,8 @@ export const ingredientsReducer = (
     case GET_ITEMS_FAILED: {
       return {
         ...state,
+        menu: [],
+        MenuQuantity: 0,
         isError: true,
         isLoading: false,
         errorStatus: action.error,

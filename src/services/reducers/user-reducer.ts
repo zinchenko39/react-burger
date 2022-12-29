@@ -37,7 +37,7 @@ type TUserInitialState = {
   forgotPasswordVisited: boolean | string;
 };
 
-const userInitialState: TUserInitialState = {
+export const userInitialState: TUserInitialState = {
   email: null,
   name: null,
   userLoggedIn: false,
@@ -74,10 +74,18 @@ export const userReducer = (
         name: action.user.name,
         userLoggedIn: true,
         userLoaded: true,
+        registerError: false,
       };
     }
     case REGISTER_ERROR: {
-      return { ...state, userLoggedIn: false, registerError: true };
+      return {
+        ...state,
+        userLoggedIn: false,
+        registerError: true,
+        email: null,
+        name: null,
+        userLoaded: true,
+      };
     }
     case LOG_IN_REQUEST: {
       return {
@@ -96,6 +104,7 @@ export const userReducer = (
         name: action.user.name,
         userLoggedIn: true,
         userLoaded: true,
+        logInError: false,
       };
     }
     case LOG_IN_ERROR: {
@@ -121,6 +130,7 @@ export const userReducer = (
         email: null,
         name: null,
         userLoggedIn: false,
+        logOutError: false,
       };
     }
     case LOG_OUT_ERROR: {

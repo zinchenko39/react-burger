@@ -12,7 +12,7 @@ type TConstructorInitialState = {
   bun: any;
 };
 
-const constructorInitialState: TConstructorInitialState = {
+export const constructorInitialState: TConstructorInitialState = {
   items: [],
   bun: {},
 };

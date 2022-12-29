@@ -10,7 +10,7 @@ type TIngridienDetailstInitialState = {
   isOpen: boolean;
 };
 
-const ingridienDetailstInitialState: TIngridienDetailstInitialState = {
+export const ingridienDetailstInitialState: TIngridienDetailstInitialState = {
   currentItem: null,
   isOpen: false,
 };

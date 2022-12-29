@@ -52,7 +52,7 @@ export default function ProfileMain() {
     setDisabledPassword(true);
     setFieldName(userName!);
     setFieldLogin(userLogin!);
-    setFieldPassword(fieldPassword);
+    setFieldPassword('123456789');
   };
 
   const sendUserData = (): void => {
