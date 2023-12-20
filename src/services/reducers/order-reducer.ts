@@ -14,7 +14,7 @@ type TOrderInitialState = {
   errorStatus: null | string;
 };
 
-const orderInitialState: TOrderInitialState = {
+export const orderInitialState: TOrderInitialState = {
   itemsId: [],
   orderNumber: '',
   isLoading: false,
@@ -45,6 +45,7 @@ export const orderReducer = (
     case ORDER_REQUEST_FAILED: {
       return {
         ...state,
+        itemsId: [],
         isError: true,
         isLoading: false,
         errorStatus: action.error,

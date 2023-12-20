@@ -8,7 +8,7 @@ import {
 import { TProfileFeedActions } from '../actions/profile-feed-ws-actions';
 import { TFeedInitialState } from './feed-ws-reducer';
 
-const PersonalFeedInitialState: TFeedInitialState = {
+export const personalFeedInitialState: TFeedInitialState = {
   data: [],
   isLoading: false,
   error: '',
@@ -16,7 +16,7 @@ const PersonalFeedInitialState: TFeedInitialState = {
 };
 
 export const PersonalFeedWsReducer = (
-  state: TFeedInitialState = PersonalFeedInitialState,
+  state: TFeedInitialState = personalFeedInitialState,
   action: TProfileFeedActions
 ) => {
   switch (action.type) {
@@ -42,6 +42,7 @@ export const PersonalFeedWsReducer = (
     case PROFILE_ORDER_WS_CLOSE: {
       return {
         ...state,
+        data: [],
         connected: false,
       };
     }
